@@ -35,4 +35,31 @@ def collision(x1, y1, x2, y2, grid):
             return True  #obstacle
     return False
 
-def 
+def distance_angle(x1, y1, x2, y2):
+    distance = math.sqrt(((x1 - x2)**2) + ((y1 - y2)**2))
+    dy = y2 - y1
+    dx = x2 - x1
+    angle = math.atan(dy, dx)
+    return (distance, angle)
+
+def nearest_node(node_list, x, y):
+    closest_node = None
+    min_distance = float('inf') #setting minimum distance to large value
+
+    for node in node_list:
+        distance = math.sqrt(((node.x - x)**2) + ((node.y- y)**2))
+
+        if distance < min_distance:
+            min_distance = distance
+            closest_node = node
+
+    return closest_node
+
+#moves toward target while limmitting step size
+def steer(from_node, to_x, to_y, step_size):
+    distance, angle = distance_angle(from_node.x, from_node.y, to_x, to_y)
+
+    new_x = int(from_node.x + step_size * math.cos(angle))
+    new_y = int(from_node.y + setp_size * math.sin(angle))
+
+    return new_x, new_y
