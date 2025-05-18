@@ -51,23 +51,29 @@ def nearest_node(node_list, x, y):
 
     return closest_node
 
+def random_point(grid_size, goal, goal_sample_rate=0.05):
+    if random.random() < goal_sample_rate:
+        return goal  # bias towards goal
+    return (random.randint(0, grid_size-1), random.randint(0, grid_size-1))
+
+
 #moves toward target while limmitting step size
 def steer(from_node, to_x, to_y, step_size):
     distance, angle = distance_angle(from_node.x, from_node.y, to_x, to_y)
-
-    new_x = int(from_node.x + step_size * math.cos(angle))
-    new_y = int(from_node.y + step_size * math.sin(angle))
+    distance = min(distance, step_size)
+    new_x = int(from_node.x + distance * math.cos(angle))
+    new_y = int(from_node.y + distance * math.sin(angle))
 
     return new_x, new_y
 
 #main function
-def rrt(grid, start, goal, step_size=5, max_iter=500):
-    start_node = Node(*start)
-    goal_node = Node(*goal)
+def rrt(grid, start, goal, step_size=10, max_iter=1000):
+    start_node = Node(start[0], start[1])
+    goal_node = Node(goal[0], goal[1])
     nodes = [start_node]
 
     for _ in range(max_iter):
-        rand_x, rand_y = random.randint(0, grid.shape[1]-1), random.randint(0, grid.shape[0]-1)
+        rand_x, rand_y = random_point(grid.shape[0], goal)
         nearest = nearest_node(nodes, rand_x, rand_y)
         new_x, new_y = steer(nearest, rand_x, rand_y, step_size)
 
@@ -78,7 +84,7 @@ def rrt(grid, start, goal, step_size=5, max_iter=500):
             nodes.append(new_node)
 
             #check if new node can directly connect to the goal
-            if not collision(new_x, new_y, goal_node.x, goal_node.y, grid):
+            if math.hypot(new_x - goal[0], new_y - goal[1]) < step_size:
                 goal_node.parent = new_node
                 nodes.append(goal_node)
                 print("Path found!")
@@ -86,6 +92,11 @@ def rrt(grid, start, goal, step_size=5, max_iter=500):
             
     print("Path not found")
     return None
+
+def draw_tree(nodes, ax):
+    for node in nodes:
+        if node.parent is not None:
+            ax.plot([node.parent.x, node.x], [node.parent.y, node.y], color='orange', linewidth=0.5)
 
 #Extract path
 def path(goal_node):
@@ -105,6 +116,30 @@ nodes = rrt(grid, start, goal, step_size=5)
 
 #visualize
 if nodes:
+    final_path = path(nodes[-1])
+
+    fig, ax = plt.subplots()
+    ax.imshow(grid, cmap='gray')
+
+    # Draw RRT tree
+    draw_tree(nodes, ax)
+
+    # Scatter all explored nodes (tiny dots)
+    explored_x = [node.x for node in nodes]
+    explored_y = [node.y for node in nodes]
+    ax.scatter(explored_x, explored_y, color='red', s=5)  # s=5 for tiny dots
+
+    # Plot the final path
+    path_x, path_y = zip(*final_path)
+    ax.plot(path_x, path_y, color='blue', linewidth=2)
+
+    ax.set_title("RRT Path and Tree")
+    plt.axis('equal')
+    plt.savefig("rrt_path.png", dpi=300, bbox_inches='tight')
+    plt.show()
+    
+    
+    '''
     path = path(nodes[-1])
     
     explored_x = [node.x for node in nodes]
@@ -122,3 +157,4 @@ if nodes:
     plt.show(block=True)
 
     #input("Press Enter to exit")
+    '''
