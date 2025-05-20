@@ -134,8 +134,26 @@ if nodes:
     ax.plot(path_x, path_y, color='blue', linewidth=2)
 
     ax.set_title("RRT Path and Tree")
-    plt.axis('equal')
-    plt.savefig("rrt_path.png", dpi=300, bbox_inches='tight')
+
+    # Get grid size
+    height, width = grid.shape
+
+    # Major ticks every 10 (with labels)
+    ax.set_xticks(np.arange(0, width + 1, 10))
+    ax.set_yticks(np.arange(0, height + 1, 10))
+
+    # Minor ticks every 1 (for grid lines)
+    ax.set_xticks(np.arange(0, width + 1, 1), minor=True)
+    ax.set_yticks(np.arange(0, height + 1, 1), minor=True)
+
+    # Show grid for both major and minor ticks
+    ax.grid(which='minor', color='gray', linestyle='--', linewidth=0.5)
+    ax.grid(which='major', color='black', linestyle='-', linewidth=0.8)
+
+
+    ax.set_aspect('equal')
+    plt.axis('on')  # Turn on axis if you want to see tick labels
+    #plt.savefig("rrt_path4.png", dpi=300, bbox_inches='tight')
     plt.show()
     
     
