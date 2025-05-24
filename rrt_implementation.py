@@ -18,18 +18,6 @@ grid[20:40, 20:40] = 0
 grid[60:80, 10:30] = 0
 grid[50:70, 60:90] = 0
 
-def collision(x1, y1, x2, y2, grid):
-    #generates 100 evenly spaced points for each axis
-    x_points = np.linspace(x1, x2, 100).astype(int)
-    y_points = np.linspace(y1, y2, 100).astype(int)
-
-    #iterates over each x,y pair
-    for x, y in zip(x_points, y_points):
-        if x < 0 or x >=  grid.shape[1] or y < 0 or y >=  grid.shape[0]:
-            return True #out of bounds
-        if grid[y, x] == 0:
-            return True  #obstacle
-    return False
 
 def distance_angle(x1, y1, x2, y2):
     distance = math.sqrt(((x1 - x2)**2) + ((y1 - y2)**2))
@@ -64,6 +52,10 @@ def steer(from_node, to_x, to_y, step_size):
     new_x = int(from_node.x + distance * math.cos(angle))
     new_y = int(from_node.y + distance * math.sin(angle))
 
+    # keep on grid limits
+    new_x = max(0, min(new_x, grid.shape[1] - 1))
+    new_y = max(0, min(new_y, grid.shape[0] - 1))
+
     return new_x, new_y
 
 #main function
@@ -93,10 +85,43 @@ def rrt(grid, start, goal, step_size=10, max_iter=1000):
     print("Path not found")
     return None
 
+def interpolate_path(x1, y1, x2, y2):
+    """
+    Interpolates a path along grid lines using 1x1 Manahttan steps
+    d = |x_1 - x_2| + |y_1 - y_2| -> formula
+    """
+    path = []
+    x, y = x1, y1
+    dx = np.sign(x2-x1)
+    dy = np.sign(y2 - y1)
+
+    while x!= x2:
+        x += dx
+        path.append((x, y))
+
+    while y != y2:
+        y += dy
+        path.append((x, y))
+
+    return path
+
+def collision(x1, y1, x2, y2, grid):
+    path = interpolate_path(x1, y1, x2, y2)
+    #iterates over each x,y pair
+    for x, y in path:
+        if x < 0 or x >=  grid.shape[1] or y < 0 or y >=  grid.shape[0]:
+            return True #out of bounds
+        if grid[y, x] == 0:
+            return True  #obstacle
+    return False
+
 def draw_tree(nodes, ax):
     for node in nodes:
         if node.parent is not None:
-            ax.plot([node.parent.x, node.x], [node.parent.y, node.y], color='orange', linewidth=0.5)
+            steps = interpolate_path(node.parent.x, node.parent.y, node.x, node.y)
+            step_x, step_y = zip(*steps)
+            ax.plot(step_x, step_y, color='orange', linewidth=0.5)
+            ax.scatter(step_x, step_y, color='orange', s=1)  # dots for every step taken
 
 #Extract path
 def path(goal_node):
@@ -130,8 +155,22 @@ if nodes:
     ax.scatter(explored_x, explored_y, color='red', s=5)  # s=5 for tiny dots
 
     # Plot the final path
+    # Plot the final path with intermediate steps
+    for i in range(len(final_path) - 1):
+        x1, y1 = final_path[i]
+        x2, y2 = final_path[i + 1]
+        steps = interpolate_path(x1, y1, x2, y2)
+        step_x, step_y = zip(*steps)
+        ax.plot(step_x, step_y, color='blue', linewidth=2)
+
     path_x, path_y = zip(*final_path)
-    ax.plot(path_x, path_y, color='blue', linewidth=2)
+
+
+    ax.scatter(path_x, path_y, color='cyan', s=20, zorder=5, label='Path Points')  # larger cyan dots
+    #for i, (x, y) in enumerate(zip(path_x, path_y)):
+        #ax.text(x + 1, y + 1, str(i), fontsize=6, color='black')  # small number label
+
+    ax.legend(loc='upper left')
 
     ax.set_title("RRT Path and Tree")
 
@@ -153,7 +192,7 @@ if nodes:
 
     ax.set_aspect('equal')
     plt.axis('on')  # Turn on axis if you want to see tick labels
-    #plt.savefig("rrt_path4.png", dpi=300, bbox_inches='tight')
+    plt.savefig("rrt_path.png", dpi=300, bbox_inches='tight')
     plt.show()
     
     
