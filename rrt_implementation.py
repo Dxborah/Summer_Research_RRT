@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import random
+import heapq
 
 class Node:
     def __init__(self, x, y):
@@ -85,40 +86,153 @@ def rrt(grid, start, goal, step_size=10, max_iter=1000):
     print("Path not found")
     return None
 
-def interpolate_path(x1, y1, x2, y2):
+def is_moving_towards_goal(current, next_node, goal):
     """
-    Interpolates a path along grid lines using 1x1 Manahttan steps
-    d = |x_1 - x_2| + |y_1 - y_2| -> formula
+    Helper to ensure Dijkstra only progresses roughly toward the goal.
+    This limits excessive branching.
     """
+    dx1 = goal[0] - current[0]
+    dy1 = goal[1] - current[1]
+    dx2 = next_node[0] - current[0]
+    dy2 = next_node[1] - current[1]
+
+    # dot product should be positive (angle < 90 degrees)
+    return dx1 * dx2 + dy1 * dy2 > 0
+
+def interpolate_path(x1, y1, x2, y2, grid):
+    """
+    Uses Dijkstra's algorithm to find grid-aligned path that avoids obstacles
+    in binary grid.
+    """
+    """
+    height, width = grid.shape
+    start = (x1, y1)
+    goal = (x2, y2)
+
+    visited = set()
+    parent = {}        #stores path (child -> parent)
+    cost = {start: 0}  #cost to reach each node from start
+
+    heap = [(0, start)] #priority queue: (cost, node)
+
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1), 
+                  (-1, -1), (-1, 1), (1, -1), (1, 1)] # 8-way movement
+
+    while heap:
+        curr_cost, current = heapq.heappop(heap) #gets node with lowest cost
+
+        if current in visited:
+            continue #already processed node
+        visited.add(current)
+
+        if current == goal:
+            break
+
+        #Exploring neighboring grid cells
+        for dx, dy in directions:
+            nx, ny = current[0] + dx, current[1] + dy
+
+            if 0 <= nx < width and 0 <= ny < height and grid[ny, nx] != 0:
+                next_node = (nx, ny)
+                new_cost = cost[current] + 1
+
+                if next_node not in cost or new_cost < cost[next_node]:
+                    cost[next_node] = new_cost
+                    priority = new_cost
+                    heapq.heappush(heap, (priority, next_node))
+                    parent[next_node] = current
+
+    if goal not in parent:
+        return []
+
+    #final path
     path = []
-    x, y = x1, y1
-    dx = np.sign(x2-x1)
-    dy = np.sign(y2 - y1)
+    node = goal
+    while node != start:
+        path.append(node)
+        node = parent[node]
 
-    while x!= x2:
-        x += dx
-        path.append((x, y))
+    path.append(start)
+    path.reverse()
 
-    while y != y2:
-        y += dy
-        path.append((x, y))
+    return path
+    """
+    height, width = grid.shape
+    start = (x1, y1)
+    goal = (x2, y2)
+
+    # Early exit if start or goal is invalid
+    if grid[y1, x1] == 0 or grid[y2, x2] == 0:
+        return []
+
+    visited = set()
+    parent = {}
+    cost = {start: 0}
+    heap = [(0, start)]
+
+    # Directions for 8-connectivity
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1), 
+                  (-1, -1), (-1, 1), (1, -1), (1, 1)]
+
+    while heap:
+        curr_cost, current = heapq.heappop(heap)
+        if current in visited:
+            continue
+        visited.add(current)
+
+        if current == goal:
+            break
+
+        for dx, dy in directions:
+            nx, ny = current[0] + dx, current[1] + dy
+
+            if 0 <= nx < width and 0 <= ny < height and grid[ny, nx] != 0:
+                next_node = (nx, ny)
+                new_cost = cost[current] + 1
+
+                # Only allow movement roughly in the direction of goal
+                # to limit to a narrow corridor (emulating a line)
+                if is_moving_towards_goal(current, next_node, goal):
+                    if next_node not in cost or new_cost < cost[next_node]:
+                        cost[next_node] = new_cost
+                        parent[next_node] = current
+                        heapq.heappush(heap, (new_cost, next_node))
+
+    # Reconstruct path if found
+    if goal not in parent:
+        return []
+
+    path = []
+    node = goal
+    while node != start:
+        path.append(node)
+        node = parent[node]
+
+    path.append(start)
+    path.reverse()
 
     return path
 
+
 def collision(x1, y1, x2, y2, grid):
-    path = interpolate_path(x1, y1, x2, y2)
-    #iterates over each x,y pair
+    path = interpolate_path(x1, y1, x2, y2, grid)
+   
+    '''
     for x, y in path:
         if x < 0 or x >=  grid.shape[1] or y < 0 or y >=  grid.shape[0]:
             return True #out of bounds
         if grid[y, x] == 0:
             return True  #obstacle
     return False
+    '''
+    return len(path) == 0  # if no path found, there’s a collision
 
-def draw_tree(nodes, ax):
+def draw_tree(nodes, ax, grid):
     for node in nodes:
         if node.parent is not None:
-            steps = interpolate_path(node.parent.x, node.parent.y, node.x, node.y)
+            steps = interpolate_path(node.parent.x, node.parent.y, node.x, node.y, grid)
+            if not steps:  # Skip if path is invalid
+                continue
             step_x, step_y = zip(*steps)
             ax.plot(step_x, step_y, color='orange', linewidth=0.5)
             ax.scatter(step_x, step_y, color='orange', s=1)  # dots for every step taken
@@ -137,6 +251,10 @@ def path(goal_node):
 #Running main function RRT
 start= (10, 10)
 goal = (90, 90)
+
+if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
+    raise ValueError("Start or goal is inside an obstacle.")
+
 nodes = rrt(grid, start, goal, step_size=5)
 
 #visualize
@@ -147,7 +265,7 @@ if nodes:
     ax.imshow(grid, cmap='gray')
 
     # Draw RRT tree
-    draw_tree(nodes, ax)
+    draw_tree(nodes, ax, grid)
 
     # Scatter all explored nodes (tiny dots)
     explored_x = [node.x for node in nodes]
@@ -159,7 +277,9 @@ if nodes:
     for i in range(len(final_path) - 1):
         x1, y1 = final_path[i]
         x2, y2 = final_path[i + 1]
-        steps = interpolate_path(x1, y1, x2, y2)
+        steps = interpolate_path(x1, y1, x2, y2, grid)  
+        if not steps:
+            continue
         step_x, step_y = zip(*steps)
         ax.plot(step_x, step_y, color='blue', linewidth=2)
 
@@ -192,26 +312,6 @@ if nodes:
 
     ax.set_aspect('equal')
     plt.axis('on')  # Turn on axis if you want to see tick labels
-    plt.savefig("rrt_path.png", dpi=300, bbox_inches='tight')
+    plt.savefig("rrt_path2.png", dpi=300, bbox_inches='tight')
     plt.show()
     
-    
-    '''
-    path = path(nodes[-1])
-    
-    explored_x = [node.x for node in nodes]
-    explored_y = [node.y for node in nodes]
-
-    path_x = [x for x, y in path]
-    path_y = [y for x, y in path]
-
-    plt.imshow(grid, cmap='gray')
-    plt.scatter(explored_x, explored_y, color='red')
-    plt.plot(path_x, path_y, color='blue', linewidth=2)
-    plt.title("RRT")
-
-    #plt.savefig("rrt_path2.png", dpi=300, bbox_inches='tight')
-    plt.show(block=True)
-
-    #input("Press Enter to exit")
-    '''
