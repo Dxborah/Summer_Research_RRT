@@ -46,7 +46,7 @@ def random_point(grid_size, goal, goal_sample_rate=0.05):
     return (random.randint(0, grid_size-1), random.randint(0, grid_size-1))
 
 
-#moves toward target while limmitting step size
+#moves toward target while limitting step size
 def steer(from_node, to_x, to_y, step_size):
     distance, angle = distance_angle(from_node.x, from_node.y, to_x, to_y)
     distance = min(distance, step_size)
@@ -312,6 +312,6 @@ if nodes:
 
     ax.set_aspect('equal')
     plt.axis('on')  # Turn on axis if you want to see tick labels
-    plt.savefig("rrt_path2.png", dpi=300, bbox_inches='tight')
+    plt.savefig("rrt_path3.png", dpi=300, bbox_inches='tight')
     plt.show()
     
