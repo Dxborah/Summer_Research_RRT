@@ -40,7 +40,7 @@ def nearest_node(node_list, x, y):
 
     return closest_node
 
-def random_point(grid_size, goal, goal_sample_rate=0.05):
+def random_point(grid_size, goal, goal_sample_rate=0.005):
     if random.random() < goal_sample_rate:
         return goal  # bias towards goal
     return (random.randint(0, grid_size-1), random.randint(0, grid_size-1))
@@ -48,6 +48,7 @@ def random_point(grid_size, goal, goal_sample_rate=0.05):
 
 #moves toward target while limitting step size
 def steer(from_node, to_x, to_y, step_size):
+    '''
     distance, angle = distance_angle(from_node.x, from_node.y, to_x, to_y)
     distance = min(distance, step_size)
     new_x = int(from_node.x + distance * math.cos(angle))
@@ -58,16 +59,34 @@ def steer(from_node, to_x, to_y, step_size):
     new_y = max(0, min(new_y, grid.shape[0] - 1))
 
     return new_x, new_y
+    '''
+    """Move from from_node toward (to_x, to_y) on grid lines"""
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1,-1), (-1,1), (1,-1), (1,1)]
+    best = None
+    min_dist = float('inf')
+    for dx, dy in directions:
+        new_x = from_node.x + dx
+        new_y = from_node.y + dy
+        if 0 <= new_x < grid.shape[1] and 0 <= new_y < grid.shape[0]:
+            dist = math.hypot(new_x - to_x, new_y - to_y)
+            if dist < min_dist and grid[new_y, new_x] != 0:
+                min_dist = dist
+                best = (new_x, new_y)
+    return best
 
 #main function
 def rrt(grid, start, goal, step_size=10, max_iter=1000):
+    visited = set()
+
     start_node = Node(start[0], start[1])
     goal_node = Node(goal[0], goal[1])
+    visited.add((start_node.x, start_node.y))
     nodes = [start_node]
 
     for _ in range(max_iter):
         rand_x, rand_y = random_point(grid.shape[0], goal)
         nearest = nearest_node(nodes, rand_x, rand_y)
+        '''
         new_x, new_y = steer(nearest, rand_x, rand_y, step_size)
 
         #checking if new node collides w/ obstacles
@@ -82,6 +101,23 @@ def rrt(grid, start, goal, step_size=10, max_iter=1000):
                 nodes.append(goal_node)
                 print("Path found!")
                 return nodes
+        '''
+        steered = steer(nearest, rand_x, rand_y, grid)
+        if steered:
+            new_x, new_y = steered
+            if (new_x, new_y) not in visited and not collision(nearest.x, nearest.y, new_x, new_y, grid):
+                new_node = Node(new_x, new_y)
+                new_node.parent = nearest
+                nodes.append(new_node)
+                visited.add((new_x, new_y))
+
+                # Check if goal is near
+                if abs(new_x - goal[0]) + abs(new_y - goal[1]) <= 1:
+                    goal_node.parent = new_node
+                    nodes.append(goal_node)
+                    print("Path found!")
+                    return nodes
+
             
     print("Path not found")
     return None
@@ -255,7 +291,7 @@ goal = (90, 90)
 if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
     raise ValueError("Start or goal is inside an obstacle.")
 
-nodes = rrt(grid, start, goal, step_size=5)
+nodes = rrt(grid, start, goal, step_size=1, max_iter=3000)
 
 #visualize
 if nodes:
