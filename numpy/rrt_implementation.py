@@ -14,12 +14,18 @@ class Node:
 grid_size = 100 #change this to liking
 grid = np.ones((grid_size, grid_size), dtype=np.uint8) * 255  
 
-# Adding more obstacles to increase complexity
-grid[10:30, 40:60] = 0  # Large rectangular obstacle
-grid[70:90, 20:40] = 0  # Another rectangular obstacle
-grid[30:50, 70:90] = 0  # Obstacle near the goal
-grid[40:60, 50:70] = 0  # Central obstacle
-grid[80:100, 80:100] = 0  # Corner obstacle
+# rectangle obstacles
+'''
+grid[10:30, 40:60] = 0  
+grid[70:90, 20:40] = 0  
+grid[30:50, 70:90] = 0  
+grid[40:60, 50:70] = 0  
+grid[80:100, 80:100] = 0 
+'''
+
+#maze-like obstacles
+grid[0:70, 20:25] = 0
+grid[30:100, 65:70] = 0
 
 
 
@@ -203,8 +209,8 @@ def path(goal_node):
     return path
 
 #Running main function RRT
-start= (50, 5)
-goal = (95, 75)
+start= (10, 10)
+goal = (85, 85)
 
 if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
     raise ValueError("Start or goal is inside an obstacle.")
@@ -264,6 +270,6 @@ if nodes:
 
     ax.set_aspect('equal')
     plt.axis('on')  # Turn on axis if you want to see tick labels
-    plt.savefig("rrt_path3.png", dpi=300, bbox_inches='tight')
+    plt.savefig("rrt_path4.png", dpi=300, bbox_inches='tight')
     plt.show()
     
