@@ -14,10 +14,13 @@ class Node:
 grid_size = 100 #change this to liking
 grid = np.ones((grid_size, grid_size), dtype=np.uint8) * 255  
 
-#adding black obstacles
-grid[20:40, 20:40] = 0
-grid[60:80, 10:30] = 0
-grid[50:70, 60:90] = 0
+# Adding more obstacles to increase complexity
+grid[10:30, 40:60] = 0  # Large rectangular obstacle
+grid[70:90, 20:40] = 0  # Another rectangular obstacle
+grid[30:50, 70:90] = 0  # Obstacle near the goal
+grid[40:60, 50:70] = 0  # Central obstacle
+grid[80:100, 80:100] = 0  # Corner obstacle
+
 
 
 def distance_angle(x1, y1, x2, y2):
@@ -28,17 +31,17 @@ def distance_angle(x1, y1, x2, y2):
     return (distance, angle)
 
 def nearest_node(node_list, x, y):
-    closest_node = None
-    min_distance = float('inf') #setting minimum distance to large value
+    closest_node = None  # Initialize closest node as None
+    min_distance = float('inf')  # Set minimum distance to a large value
 
-    for node in node_list:
-        distance = math.sqrt(((node.x - x)**2) + ((node.y- y)**2))
+    for node in node_list:  # Iterate through all nodes
+        distance = math.sqrt(((node.x - x)**2) + ((node.y - y)**2))  # Compute distance
 
-        if distance < min_distance:
-            min_distance = distance
-            closest_node = node
+        if distance < min_distance:  # If a closer node is found
+            min_distance = distance  # Update minimum distance
+            closest_node = node  # Update closest node
 
-    return closest_node
+    return closest_node  # Return the nearest node
 
 def random_point(grid_size, goal, goal_sample_rate=0.005):
     if random.random() < goal_sample_rate:
@@ -48,79 +51,50 @@ def random_point(grid_size, goal, goal_sample_rate=0.005):
 
 #moves toward target while limitting step size
 def steer(from_node, to_x, to_y, step_size):
-    '''
-    distance, angle = distance_angle(from_node.x, from_node.y, to_x, to_y)
-    distance = min(distance, step_size)
-    new_x = int(from_node.x + distance * math.cos(angle))
-    new_y = int(from_node.y + distance * math.sin(angle))
-
-    # keep on grid limits
-    new_x = max(0, min(new_x, grid.shape[1] - 1))
-    new_y = max(0, min(new_y, grid.shape[0] - 1))
-
-    return new_x, new_y
-    '''
-    """Move from from_node toward (to_x, to_y) on grid lines"""
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1,-1), (-1,1), (1,-1), (1,1)]
     best = None
     min_dist = float('inf')
-    for dx, dy in directions:
+    for dx, dy in directions: # Iterate through possible moves
         new_x = from_node.x + dx
         new_y = from_node.y + dy
-        if 0 <= new_x < grid.shape[1] and 0 <= new_y < grid.shape[0]:
-            dist = math.hypot(new_x - to_x, new_y - to_y)
-            if dist < min_dist and grid[new_y, new_x] != 0:
-                min_dist = dist
-                best = (new_x, new_y)
+        if 0 <= new_x < grid.shape[1] and 0 <= new_y < grid.shape[0]:  # Ensure within grid bounds
+            dist = math.hypot(new_x - to_x, new_y - to_y)  # Compute distance to target
+            if dist < min_dist and grid[new_y, new_x] != 0:  # Ensure it's not an obstacle
+                min_dist = dist  # Update minimum distance
+                best = (new_x, new_y)  # Update best move
     return best
 
 #main function
 def rrt(grid, start, goal, step_size=10, max_iter=1000):
-    visited = set()
+    visited = set()  # Track visited nodes
 
-    start_node = Node(start[0], start[1])
-    goal_node = Node(goal[0], goal[1])
-    visited.add((start_node.x, start_node.y))
-    nodes = [start_node]
+    start_node = Node(start[0], start[1])  
+    goal_node = Node(goal[0], goal[1])  
+    visited.add((start_node.x, start_node.y))  
+    nodes = [start_node]  
 
-    for _ in range(max_iter):
-        rand_x, rand_y = random_point(grid.shape[0], goal)
-        nearest = nearest_node(nodes, rand_x, rand_y)
-        '''
-        new_x, new_y = steer(nearest, rand_x, rand_y, step_size)
+    for _ in range(max_iter):  
+        rand_x, rand_y = random_point(grid.shape[0], goal)  # Generate random point
+        nearest = nearest_node(nodes, rand_x, rand_y)  # Find nearest node
+        steered = steer(nearest, rand_x, rand_y, grid)  # Move toward random point
 
-        #checking if new node collides w/ obstacles
-        if not collision(nearest.x, nearest.y, new_x, new_y, grid):
-            new_node = Node(new_x, new_y)
-            new_node.parent = nearest
-            nodes.append(new_node)
-
-            #check if new node can directly connect to the goal
-            if math.hypot(new_x - goal[0], new_y - goal[1]) < step_size:
-                goal_node.parent = new_node
-                nodes.append(goal_node)
-                print("Path found!")
-                return nodes
-        '''
-        steered = steer(nearest, rand_x, rand_y, grid)
-        if steered:
+        if steered:  # If a valid move is found
             new_x, new_y = steered
-            if (new_x, new_y) not in visited and not collision(nearest.x, nearest.y, new_x, new_y, grid):
-                new_node = Node(new_x, new_y)
-                new_node.parent = nearest
-                nodes.append(new_node)
-                visited.add((new_x, new_y))
+            if (new_x, new_y) not in visited and not collision(nearest.x, nearest.y, new_x, new_y, grid):  #if no collision
+                new_node = Node(new_x, new_y)  # Create new node
+                new_node.parent = nearest  # Set parent
+                nodes.append(new_node)  # Add node to list
+                visited.add((new_x, new_y))  # Mark as visited
 
-                # Check if goal is near
-                if abs(new_x - goal[0]) + abs(new_y - goal[1]) <= 1:
-                    goal_node.parent = new_node
-                    nodes.append(goal_node)
-                    print("Path found!")
-                    return nodes
+                if abs(new_x - goal[0]) + abs(new_y - goal[1]) <= 1:  # Check if goal is reached
+                    goal_node.parent = new_node  # Set goal parent
+                    nodes.append(goal_node)  # Add goal node
+                    print("Path found!")  
+                    return nodes  
 
-            
-    print("Path not found")
-    return None
+    print("Path not found")  
+    return None  
+
 
 def is_moving_towards_goal(current, next_node, goal):
     """
@@ -132,66 +106,13 @@ def is_moving_towards_goal(current, next_node, goal):
     dx2 = next_node[0] - current[0]
     dy2 = next_node[1] - current[1]
 
-    # dot product should be positive (angle < 90 degrees)
+    # dot product should be positive (angle < 90 degrees) and ensures path is moving towards gaol
     return dx1 * dx2 + dy1 * dy2 > 0
 
 def interpolate_path(x1, y1, x2, y2, grid):
     """
-    Uses Dijkstra's algorithm to find grid-aligned path that avoids obstacles
-    in binary grid.
-    """
-    """
-    height, width = grid.shape
-    start = (x1, y1)
-    goal = (x2, y2)
-
-    visited = set()
-    parent = {}        #stores path (child -> parent)
-    cost = {start: 0}  #cost to reach each node from start
-
-    heap = [(0, start)] #priority queue: (cost, node)
-
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1), 
-                  (-1, -1), (-1, 1), (1, -1), (1, 1)] # 8-way movement
-
-    while heap:
-        curr_cost, current = heapq.heappop(heap) #gets node with lowest cost
-
-        if current in visited:
-            continue #already processed node
-        visited.add(current)
-
-        if current == goal:
-            break
-
-        #Exploring neighboring grid cells
-        for dx, dy in directions:
-            nx, ny = current[0] + dx, current[1] + dy
-
-            if 0 <= nx < width and 0 <= ny < height and grid[ny, nx] != 0:
-                next_node = (nx, ny)
-                new_cost = cost[current] + 1
-
-                if next_node not in cost or new_cost < cost[next_node]:
-                    cost[next_node] = new_cost
-                    priority = new_cost
-                    heapq.heappush(heap, (priority, next_node))
-                    parent[next_node] = current
-
-    if goal not in parent:
-        return []
-
-    #final path
-    path = []
-    node = goal
-    while node != start:
-        path.append(node)
-        node = parent[node]
-
-    path.append(start)
-    path.reverse()
-
-    return path
+    Uses Dijkstra's algorithm to find a grid-aligned path that avoids obstacles.
+    This ensures smooth movement between two points.
     """
     height, width = grid.shape
     start = (x1, y1)
@@ -201,17 +122,17 @@ def interpolate_path(x1, y1, x2, y2, grid):
     if grid[y1, x1] == 0 or grid[y2, x2] == 0:
         return []
 
-    visited = set()
-    parent = {}
-    cost = {start: 0}
-    heap = [(0, start)]
+    visited = set()  # Set to track visited nodes
+    parent = {}  # Stores parent nodes for path reconstruction
+    cost = {start: 0}  # Stores cost from start to each node (edges)
+    heap = [(0, start)]  # Priority queue (min-heap) for Dijkstra's algorithm
 
     # Directions for 8-connectivity
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1), 
                   (-1, -1), (-1, 1), (1, -1), (1, 1)]
 
-    while heap:
-        curr_cost, current = heapq.heappop(heap)
+    while heap: # Process nodes in priority queue
+        curr_cost, current = heapq.heappop(heap) # Get node with lowest cost
         if current in visited:
             continue
         visited.add(current)
@@ -219,25 +140,24 @@ def interpolate_path(x1, y1, x2, y2, grid):
         if current == goal:
             break
 
-        for dx, dy in directions:
-            nx, ny = current[0] + dx, current[1] + dy
+        for dx, dy in directions: # Explore neighboring nodes
+            nx, ny = current[0] + dx, current[1] + dy # Compute new coordinates
 
             if 0 <= nx < width and 0 <= ny < height and grid[ny, nx] != 0:
                 next_node = (nx, ny)
-                new_cost = cost[current] + 1
+                new_cost = cost[current] + 1 #cost to reach next node
 
                 # Only allow movement roughly in the direction of goal
-                # to limit to a narrow corridor (emulating a line)
                 if is_moving_towards_goal(current, next_node, goal):
-                    if next_node not in cost or new_cost < cost[next_node]:
+                    if next_node not in cost or new_cost < cost[next_node]: # Update cost if lower
                         cost[next_node] = new_cost
                         parent[next_node] = current
-                        heapq.heappush(heap, (new_cost, next_node))
+                        heapq.heappush(heap, (new_cost, next_node)) # Add to priority queue
 
-    # Reconstruct path if found
     if goal not in parent:
         return []
 
+    # Reconstruct path from goal to start    
     path = []
     node = goal
     while node != start:
@@ -251,27 +171,25 @@ def interpolate_path(x1, y1, x2, y2, grid):
 
 
 def collision(x1, y1, x2, y2, grid):
+    """
+    Checks if there is a valid path between two points.
+    If no path is found, it means there is an obstacle blocking movement.
+    """
     path = interpolate_path(x1, y1, x2, y2, grid)
-   
-    '''
-    for x, y in path:
-        if x < 0 or x >=  grid.shape[1] or y < 0 or y >=  grid.shape[0]:
-            return True #out of bounds
-        if grid[y, x] == 0:
-            return True  #obstacle
-    return False
-    '''
     return len(path) == 0  # if no path found, there’s a collision
 
 def draw_tree(nodes, ax, grid):
+    """
+    Visualizes the RRT tree by drawing connections between nodes.
+    """
     for node in nodes:
         if node.parent is not None:
-            steps = interpolate_path(node.parent.x, node.parent.y, node.x, node.y, grid)
+            steps = interpolate_path(node.parent.x, node.parent.y, node.x, node.y, grid)  # Compute path
             if not steps:  # Skip if path is invalid
                 continue
-            step_x, step_y = zip(*steps)
-            ax.plot(step_x, step_y, color='orange', linewidth=0.5)
-            ax.scatter(step_x, step_y, color='orange', s=1)  # dots for every step taken
+            step_x, step_y = zip(*steps) # Extract x and y coordinates from path
+            ax.plot(step_x, step_y, color='orange', linewidth=0.5) # Draw path as thin orange lines
+            ax.scatter(step_x, step_y, color='orange', s=1)  #each step as small orange dots
 
 #Extract path
 def path(goal_node):
@@ -285,20 +203,20 @@ def path(goal_node):
     return path
 
 #Running main function RRT
-start= (10, 10)
-goal = (90, 90)
+start= (50, 5)
+goal = (95, 75)
 
 if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
     raise ValueError("Start or goal is inside an obstacle.")
 
-nodes = rrt(grid, start, goal, step_size=1, max_iter=3000)
+nodes = rrt(grid, start, goal, step_size=1, max_iter=5000)
 
 #visualize
 if nodes:
     final_path = path(nodes[-1])
 
-    fig, ax = plt.subplots()
-    ax.imshow(grid, cmap='gray')
+    fig, ax = plt.subplots(figsize=(10, 10))  # Larger figure
+    ax.imshow(grid, cmap='gray', alpha=0.8)
 
     # Draw RRT tree
     draw_tree(nodes, ax, grid)
@@ -323,8 +241,6 @@ if nodes:
 
 
     ax.scatter(path_x, path_y, color='cyan', s=20, zorder=5, label='Path Points')  # larger cyan dots
-    #for i, (x, y) in enumerate(zip(path_x, path_y)):
-        #ax.text(x + 1, y + 1, str(i), fontsize=6, color='black')  # small number label
 
     ax.legend(loc='upper left')
 
