@@ -257,7 +257,7 @@ goal = (75, 75)
 if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
     raise ValueError("Start or goal is inside an obstacle.")
 
-nodes = rrt(grid, start, goal, step_size=2, max_iter=5000)
+nodes = rrt(grid, start, goal, step_size=5, max_iter=5000)
 
 # === NEW: Deposit pheromones on successful path ===
 def deposit_pheromones(path, amount=1.0):
@@ -319,5 +319,5 @@ if nodes:
 
     ax.set_aspect('equal')
     plt.axis('on')  # Turn on axis if you want to see tick labels
-    #plt.savefig("rrt_path4.png", dpi=300, bbox_inches='tight')
+    plt.savefig("aco_radius_observibility_step5.png", dpi=300, bbox_inches='tight')
     plt.show()
