@@ -95,13 +95,26 @@ def steer(from_node, to_x, to_y, step_size):
     return None  # Fallback if nothing valid found
 
 
-def update_visibility(x, y, radius=6):
-    for dx in range(-radius, radius + 1):
-        for dy in range(-radius, radius + 1):
-            nx, ny = x + dx, y + dy
-            if 0 <= nx < grid.shape[1] and 0 <= ny < grid.shape[0]:
-                if grid[ny, nx] != 0:
-                    visible_grid[ny, nx] = 1
+def update_visibility(x, y, max_distance=grid_size):
+    """
+    Cast rays in 360° around the agent.
+    Stops each ray when it hits an obstacle.
+    Marks visible cells in visible_grid.
+    """
+    num_rays = 360  # Angular resolution (1 degree steps)
+    for angle in np.linspace(0, 2 * np.pi, num_rays, endpoint=False):
+        for dist in range(1, max_distance):
+            dx = int(round(x + dist * math.cos(angle)))
+            dy = int(round(y + dist * math.sin(angle)))
+
+            if 0 <= dx < grid.shape[1] and 0 <= dy < grid.shape[0]:
+                visible_grid[dy, dx] = 1
+
+                if grid[dy, dx] == 0:  # Hit obstacle — stop ray
+                    break
+            else:
+                break  # Out of bounds — stop ray
+
 
 
 #main function
@@ -110,7 +123,7 @@ def rrt(grid, start, goal, step_size=10, max_iter=1000):
     visited = set()  # Track visited nodes
 
     start_node = Node(start[0], start[1])
-    update_visibility(start_node.x, start_node.y, radius=15)
+    update_visibility(start_node.x, start_node.y)
     goal_node = Node(goal[0], goal[1])
     visited.add((start_node.x, start_node.y))
     nodes = [start_node]
@@ -128,7 +141,7 @@ def rrt(grid, start, goal, step_size=10, max_iter=1000):
                 nodes.append(new_node)  # Add node to list
                 visited.add((new_x, new_y))  # Mark as visited
 
-                update_visibility(new_x, new_y, radius=6)  # Update local visibility after adding node
+                update_visibility(new_x, new_y)  # Update local visibility after adding node
                 pheromone_grid *= 0.998  # Evaporate pheromones gradually
 
 
@@ -257,7 +270,7 @@ goal = (75, 75)
 if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
     raise ValueError("Start or goal is inside an obstacle.")
 
-nodes = rrt(grid, start, goal, step_size=5, max_iter=5000)
+nodes = rrt(grid, start, goal, step_size=3, max_iter=5000)
 
 # === NEW: Deposit pheromones on successful path ===
 def deposit_pheromones(path, amount=1.0):
@@ -319,5 +332,5 @@ if nodes:
 
     ax.set_aspect('equal')
     plt.axis('on')  # Turn on axis if you want to see tick labels
-    plt.savefig("aco_radius_observibility_step5.png", dpi=300, bbox_inches='tight')
+    plt.savefig("aco_grid_observibility_step3.png", dpi=300, bbox_inches='tight')
     plt.show()
