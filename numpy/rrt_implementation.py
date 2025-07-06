@@ -1,8 +1,21 @@
+import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import math
 import random
 import heapq
+import json
+
+#load grid from image
+map_img = cv2.imread("IMG_8864.png", cv2.IMREAD_GRAYSCALE)
+map_img = cv2.resize(map_img, (50, 50), interpolation=cv2.INTER_NEAREST)
+grid = np.where(map_img > 127, 255, 0).astype(np.uint8)
+grid_size = grid.shape[0]
+
+# Load visibility map from JSON
+with open('FILE_3036.json', 'r') as f:
+    visibility_map = json.load(f)
+
 
 # Node class representing each RRT vertex
 class Node:
@@ -10,17 +23,6 @@ class Node:
         self.x = x + 0.5  # Shift to center of grid cell
         self.y = y + 0.5
         self.parent = None  # Used to trace the path back
-
-# Define grid size and obstacle layout
-grid_size = 100
-grid = np.ones((grid_size, grid_size), dtype=np.uint8) * 255
-
-# Add obstacles to the grid
-grid[10:30, 40:60] = 0
-grid[70:90, 20:40] = 0
-grid[30:50, 70:90] = 0
-grid[40:60, 50:70] = 0
-grid[80:100, 80:100] = 0
 
 # Grid to track visible areas and pheromones
 visible_grid = np.zeros_like(grid, dtype=np.uint8)
@@ -47,16 +49,22 @@ def nearest_node(node_list, x, y):
 # Biased random sampling based on visible space and pheromones
 def ant_random_point(goal, goal_sample_rate=0.05):
     if random.random() < goal_sample_rate:
-        return goal
+        return goal #bias toward goal
+    
+    #union of visble cells from all visited positions
+    global visited, visibility_map
+    visible_union = set()
 
-    candidates = np.argwhere(visible_grid == 1)
-    if candidates.size == 0:
-        return random.randint(0, grid_size - 1), random.randint(0, grid_size - 1)
+    for pos in visited:
+        key = str(pos) #keys as strings
+        visible_cells = visibility_map.get(key, [])
+        visible_union.update(tuple(cell) for cell in visible_cells)
 
-    pheromones = pheromone_grid[candidates[:, 0], candidates[:, 1]]
-    probs = pheromones / pheromones.sum() if pheromones.sum() > 0 else None
-    idx = np.random.choice(len(candidates), p=probs) if probs is not None else random.choice(range(len(candidates)))
-    return tuple(candidates[idx][::-1])
+    if not visible_union:
+        #no visibility yet, fallback to full random
+        return random.randint(0, grid_size - 1), random.randint(0, grid_size -1)
+    
+    return random.choice(list(visible_union))
 
 # Moves from from_node toward (to_x, to_y) while limiting step size
 def steer(from_node, to_x, to_y, step_size):
@@ -169,6 +177,7 @@ def path(goal_node):
 # RRT algorithm main function
 def rrt(grid, start, goal, step_size=10, max_iter=1000):
     global pheromone_grid, visible_grid
+    global visited
 
     start_node = Node(*start)  # Create starting node
     goal_node = Node(*goal)    # Create goal node
@@ -220,42 +229,48 @@ def deposit_pheromones(path, amount=1.0):
         if 0 <= iy < grid.shape[0] and 0 <= ix < grid.shape[1]:
             pheromone_grid[iy, ix] += amount
 
-# Initial positions
-start = (5, 5)
-goal = (75, 75)
+#opencv visualization
+def draw_result_on_image(grid, nodes, path_points, filename="rrt_output.png"):
+    # Convert grayscale grid to BGR image
+    img = np.stack([grid] * 3, axis=-1)
+    img[grid == 255] = [255, 255, 255]
+    img[grid == 0] = [0, 0, 0]
+
+    scale = 15  # upscale factor for clarity
+    img = cv2.resize(img, (grid.shape[1] * scale, grid.shape[0] * scale), interpolation=cv2.INTER_NEAREST)
+
+    # === Draw full tree: orange lines between node and parent ===
+    for node in nodes:
+        if node.parent:
+            x1, y1 = int(node.parent.x * scale), int(node.parent.y * scale)
+            x2, y2 = int(node.x * scale), int(node.y * scale)
+            cv2.line(img, (x1, y1), (x2, y2), (0, 165, 255), 1)  # orange
+
+    # === Draw final path: thicker blue lines ===
+    for i in range(len(path_points) - 1):
+        x1, y1 = path_points[i]
+        x2, y2 = path_points[i + 1]
+        cx1, cy1 = int(x1 * scale), int(y1 * scale)
+        cx2, cy2 = int(x2 * scale), int(y2 * scale)
+        cv2.line(img, (cx1, cy1), (cx2, cy2), (255, 0, 0), 2)  # blue
+
+    # Optional: draw circles at path points for clarity
+    for (x, y) in path_points:
+        cx, cy = int(x * scale), int(y * scale)
+        cv2.circle(img, (cx, cy), 2, (255, 0, 0), -1)
+
+    cv2.imwrite(filename, img)
+    print(f"Image saved: {filename}")
+
+start = (8, 21)
+goal = (30, 16)
 
 if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
     raise ValueError("Start or goal is inside an obstacle.")
 
 nodes = rrt(grid, start, goal, step_size=1, max_iter=5000)
 
-# Visualization
 if nodes:
     final_path = path(nodes[-1])
-    deposit_pheromones(final_path, amount=2.5)
-    fig, ax = plt.subplots(figsize=(10, 10))
-    ax.imshow(grid, cmap='gray', alpha=0.8)
-    draw_tree(nodes, ax, grid)
-
-    path_x, path_y = zip(*final_path)
-    ax.scatter(path_x, path_y, color='cyan', s=20, zorder=5, label='Path Points')
-
-    for i in range(len(final_path) - 1):
-        x1, y1 = final_path[i]
-        x2, y2 = final_path[i + 1]
-        steps = interpolate_path(x1, y1, x2, y2, grid)
-        if steps:
-            sx, sy = zip(*[(x + 0.5, y + 0.5) for x, y in steps])
-            ax.plot(sx, sy, color='blue', linewidth=2)
-
-    ax.legend(loc='upper left')
-    ax.set_title("RRT Path and Tree")
-    ax.set_xticks(np.arange(0, grid.shape[1] + 1, 10))
-    ax.set_yticks(np.arange(0, grid.shape[0] + 1, 10))
-    ax.set_xticks(np.arange(0, grid.shape[1] + 1, 1), minor=True)
-    ax.set_yticks(np.arange(0, grid.shape[0] + 1, 1), minor=True)
-    ax.grid(which='minor', color='gray', linestyle='--', linewidth=0.5)
-    ax.grid(which='major', color='black', linestyle='-', linewidth=0.8)
-    ax.set_aspect('equal')
-    plt.savefig("aco_centered_nodes.png", dpi=300, bbox_inches='tight')
-    plt.show()
+    draw_result_on_image(grid, nodes, final_path)
+    print("Image saved as rrt_output.png")
