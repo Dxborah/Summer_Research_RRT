@@ -4,194 +4,113 @@ import math
 import random
 import heapq
 
+# Node class representing each RRT vertex
 class Node:
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.parent = None
+        self.x = x + 0.5  # Shift to center of grid cell
+        self.y = y + 0.5
+        self.parent = None  # Used to trace the path back
 
-
-grid_size = 100 #change this to liking
+# Define grid size and obstacle layout
+grid_size = 100
 grid = np.ones((grid_size, grid_size), dtype=np.uint8) * 255
 
-# rectangle obstacles
-
+# Add obstacles to the grid
 grid[10:30, 40:60] = 0
 grid[70:90, 20:40] = 0
 grid[30:50, 70:90] = 0
 grid[40:60, 50:70] = 0
 grid[80:100, 80:100] = 0
-'''
 
-#maze-like obstacles
-grid[0:70, 20:25] = 0
-grid[30:100, 65:70] = 0
-'''
-# For Partial observability and pheromone tracking
-visible_grid = np.zeros_like(grid, dtype=np.uint8)  # 0 = unknown, 1 = seen
-pheromone_grid = np.zeros_like(grid, dtype=np.float32)  # stores pheromone levels
+# Grid to track visible areas and pheromones
+visible_grid = np.zeros_like(grid, dtype=np.uint8)
+pheromone_grid = np.zeros_like(grid, dtype=np.float32)
 
+# Returns the value of the grid cell corresponding to (x, y)
+def grid_value(x, y):
+    ix = int(math.floor(x))
+    iy = int(math.floor(y))
+    if 0 <= iy < grid.shape[0] and 0 <= ix < grid.shape[1]:
+        return grid[iy, ix]
+    return 0
 
+# Computes Euclidean distance and angle between two points
 def distance_angle(x1, y1, x2, y2):
-    distance = math.sqrt(((x1 - x2)**2) + ((y1 - y2)**2))
-    dy = y2 - y1
-    dx = x2 - x1
-    angle = math.atan2(dy, dx)
+    distance = math.hypot(x2 - x1, y2 - y1)
+    angle = math.atan2(y2 - y1, x2 - x1)
     return (distance, angle)
 
+# Finds the closest node in node_list to (x, y)
 def nearest_node(node_list, x, y):
-    closest_node = None  # Initialize closest node as None
-    min_distance = float('inf')  # Set minimum distance to a large value
+    return min(node_list, key=lambda node: math.hypot(node.x - x, node.y - y))
 
-    for node in node_list:  # Iterate through all nodes
-        distance = math.sqrt(((node.x - x)**2) + ((node.y - y)**2))  # Compute distance
-
-        if distance < min_distance:  # If a closer node is found
-            min_distance = distance  # Update minimum distance
-            closest_node = node  # Update closest node
-
-    return closest_node  # Return the nearest node
-
-#Bias sampling based on visible world and pheromone trails 
+# Biased random sampling based on visible space and pheromones
 def ant_random_point(goal, goal_sample_rate=0.05):
     if random.random() < goal_sample_rate:
-        return goal  # Only bias if goal is seen
+        return goal
 
     candidates = np.argwhere(visible_grid == 1)
     if candidates.size == 0:
         return random.randint(0, grid_size - 1), random.randint(0, grid_size - 1)
 
     pheromones = pheromone_grid[candidates[:, 0], candidates[:, 1]]
-    if pheromones.sum() == 0:
-        idx = random.choice(range(len(candidates)))
-    else:
-        probs = pheromones / pheromones.sum()
-        idx = np.random.choice(len(candidates), p=probs)
-
+    probs = pheromones / pheromones.sum() if pheromones.sum() > 0 else None
+    idx = np.random.choice(len(candidates), p=probs) if probs is not None else random.choice(range(len(candidates)))
     return tuple(candidates[idx][::-1])
 
-
-#moves toward target while limitting step size
+# Moves from from_node toward (to_x, to_y) while limiting step size
 def steer(from_node, to_x, to_y, step_size):
-    distance, angle = distance_angle(from_node.x, from_node.y, to_x, to_y)
+    distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
     step = min(step_size, distance)
 
     for i in range(1, int(step) + 1):
-        new_x = int(round(from_node.x + i * math.cos(angle)))
-        new_y = int(round(from_node.y + i * math.sin(angle)))
-
-        # Bounds check
-        if not (0 <= new_x < grid.shape[1] and 0 <= new_y < grid.shape[0]):
+        new_x = from_node.x + i * math.cos(angle)
+        new_y = from_node.y + i * math.sin(angle)
+        if grid_value(new_x, new_y) == 0:
             return None
-        
-        # Obstacle check
-        if grid[new_y, new_x] == 0:
-            return None
-        
-        # Early return if we're at max step or near goal
-        if i == int(step):
-            return (new_x, new_y)
+    return (from_node.x + step * math.cos(angle), from_node.y + step * math.sin(angle))
 
-    return None  # Fallback if nothing valid found
-
-
+# Updates visibility from a given position by casting rays in all directions
 def update_visibility(x, y, max_distance=grid_size):
-    """
-    Cast rays in 360° around the agent.
-    Stops each ray when it hits an obstacle.
-    Marks visible cells in visible_grid.
-    """
-    num_rays = 360  # Angular resolution (1 degree steps)
+    num_rays = 360
     for angle in np.linspace(0, 2 * np.pi, num_rays, endpoint=False):
         for dist in range(1, max_distance):
-            dx = int(round(x + dist * math.cos(angle)))
-            dy = int(round(y + dist * math.sin(angle)))
-
-            if 0 <= dx < grid.shape[1] and 0 <= dy < grid.shape[0]:
-                visible_grid[dy, dx] = 1
-
-                if grid[dy, dx] == 0:  # Hit obstacle — stop ray
+            dx = x + dist * math.cos(angle)
+            dy = y + dist * math.sin(angle)
+            ix = int(math.floor(dx))
+            iy = int(math.floor(dy))
+            if 0 <= ix < grid.shape[1] and 0 <= iy < grid.shape[0]:
+                visible_grid[iy, ix] = 1
+                if grid[iy, ix] == 0:
                     break
             else:
-                break  # Out of bounds — stop ray
+                break
 
-
-
-#main function
-def rrt(grid, start, goal, step_size=10, max_iter=1000):
-    global pheromone_grid, visible_grid
-    visited = set()  # Track visited nodes
-
-    start_node = Node(start[0], start[1])
-    update_visibility(start_node.x, start_node.y)
-    goal_node = Node(goal[0], goal[1])
-    visited.add((start_node.x, start_node.y))
-    nodes = [start_node]
-
-    for _ in range(max_iter):
-        rand_x, rand_y = ant_random_point(goal) # Generate random point
-        nearest = nearest_node(nodes, rand_x, rand_y)  # Find nearest node
-        steered = steer(nearest, rand_x, rand_y, step_size)  # Move toward random point
-
-        if steered:  # If a valid move is found
-            new_x, new_y = steered
-            if (new_x, new_y) not in visited and not collision(nearest.x, nearest.y, new_x, new_y, grid):  #if no collision
-                new_node = Node(new_x, new_y)  # Create new node
-                new_node.parent = nearest  # Set parent
-                nodes.append(new_node)  # Add node to list
-                visited.add((new_x, new_y))  # Mark as visited
-
-                update_visibility(new_x, new_y)  # Update local visibility after adding node
-                pheromone_grid *= 0.998  # Evaporate pheromones gradually
-
-
-                if abs(new_x - goal[0]) + abs(new_y - goal[1]) <= 3:  # Check if goal is reached
-                    goal_node.parent = new_node  # Set goal parent
-                    nodes.append(goal_node)  # Add goal node
-                    print("Path found!")
-                    return nodes
-
-    print("Path not found")
-    return None
-
-
-def is_moving_towards_goal(current, next_node, goal):
-    """
-    Helper to ensure Dijkstra only progresses roughly toward the goal.
-    This limits excessive branching.
-    """
-    dx1 = goal[0] - current[0]
-    dy1 = goal[1] - current[1]
-    dx2 = next_node[0] - current[0]
-    dy2 = next_node[1] - current[1]
-
-    # dot product should be positive (angle < 90 degrees) and ensures path is moving towards gaol
-    return dx1 * dx2 + dy1 * dy2 > 0
-
+# Dijkstra-based interpolation to find a grid-aligned path between two real-valued points
 def interpolate_path(x1, y1, x2, y2, grid):
-    """
-    Uses Dijkstra's algorithm to find a grid-aligned path that avoids obstacles.
-    This ensures smooth movement between two points.
-    """
+    # Convert float coordinates to grid indices
+    x1, y1 = int(math.floor(x1)), int(math.floor(y1))
+    x2, y2 = int(math.floor(x2)), int(math.floor(y2))
+
+    # Early exit if start or goal is on obstacle
+    if grid[y1, x1] == 0 or grid[y2, x2] == 0:
+        return []
+
     height, width = grid.shape
     start = (x1, y1)
     goal = (x2, y2)
 
-    # Early exit if start or goal is invalid
-    if grid[y1, x1] == 0 or grid[y2, x2] == 0:
-        return []
+    visited = set()
+    parent = {}
+    cost = {start: 0}
+    heap = [(0, start)]  # Priority queue for Dijkstra
 
-    visited = set()  # Set to track visited nodes
-    parent = {}  # Stores parent nodes for path reconstruction
-    cost = {start: 0}  # Stores cost from start to each node (edges)
-    heap = [(0, start)]  # Priority queue (min-heap) for Dijkstra's algorithm
-
-    # Directions for 8-connectivity
+    # 8-connected neighborhood
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1),
                   (-1, -1), (-1, 1), (1, -1), (1, 1)]
 
-    while heap: # Process nodes in priority queue
-        curr_cost, current = heapq.heappop(heap) # Get node with lowest cost
+    while heap:
+        curr_cost, current = heapq.heappop(heap)
         if current in visited:
             continue
         visited.add(current)
@@ -199,138 +118,144 @@ def interpolate_path(x1, y1, x2, y2, grid):
         if current == goal:
             break
 
-        for dx, dy in directions: # Explore neighboring nodes
-            nx, ny = current[0] + dx, current[1] + dy # Compute new coordinates
-
+        # Check all neighbors
+        for dx, dy in directions:
+            nx, ny = current[0] + dx, current[1] + dy
             if 0 <= nx < width and 0 <= ny < height and grid[ny, nx] != 0:
                 next_node = (nx, ny)
-                new_cost = cost[current] + 1 #cost to reach next node
-
-                # Only allow movement roughly in the direction of goal
-                if is_moving_towards_goal(current, next_node, goal):
-                    if next_node not in cost or new_cost < cost[next_node]: # Update cost if lower
-                        cost[next_node] = new_cost
-                        parent[next_node] = current
-                        heapq.heappush(heap, (new_cost, next_node)) # Add to priority queue
+                new_cost = cost[current] + 1
+                if next_node not in cost or new_cost < cost[next_node]:
+                    cost[next_node] = new_cost
+                    parent[next_node] = current
+                    heapq.heappush(heap, (new_cost, next_node))
 
     if goal not in parent:
-        return []
+        return []  # No path found
 
-    # Reconstruct path from goal to start
+    # Reconstruct path
     path = []
     node = goal
     while node != start:
         path.append(node)
         node = parent[node]
-
     path.append(start)
     path.reverse()
-
     return path
 
-
+# Checks for collision between two points using path interpolation
 def collision(x1, y1, x2, y2, grid):
-    """
-    Checks if there is a valid path between two points.
-    If no path is found, it means there is an obstacle blocking movement.
-    """
-    path = interpolate_path(x1, y1, x2, y2, grid)
-    return len(path) == 0  # if no path found, there’s a collision
+    return len(interpolate_path(x1, y1, x2, y2, grid)) == 0
 
+# Draws the RRT tree
 def draw_tree(nodes, ax, grid):
-    """
-    Visualizes the RRT tree by drawing connections between nodes.
-    """
     for node in nodes:
-        if node.parent is not None:
-            steps = interpolate_path(node.parent.x, node.parent.y, node.x, node.y, grid)  # Compute path
-            if not steps:  # Skip if path is invalid
+        if node.parent:
+            steps = interpolate_path(node.parent.x, node.parent.y, node.x, node.y, grid)
+            if not steps:
                 continue
-            step_x, step_y = zip(*steps) # Extract x and y coordinates from path
-            ax.plot(step_x, step_y, color='orange', linewidth=0.5) # Draw path as thin orange lines
-            ax.scatter(step_x, step_y, color='orange', s=1)  #each step as small orange dots
+            step_x, step_y = zip(*[(x + 0.5, y + 0.5) for x, y in steps])
+            ax.plot(step_x, step_y, color='orange', linewidth=0.5)
+            ax.scatter(step_x, step_y, color='orange', s=1)
 
-#Extract path
+# Extracts the final path from start to goal
 def path(goal_node):
     path = []
     node = goal_node
-    while node is not None:
+    while node:
         path.append((node.x, node.y))
         node = node.parent
+    return path[::-1]
 
-    path.reverse() #start->goal
-    return path
+# RRT algorithm main function
+def rrt(grid, start, goal, step_size=10, max_iter=1000):
+    global pheromone_grid, visible_grid
 
-#Running main function RRT
-#start= (10, 10)
-#goal = (85, 85)
+    start_node = Node(*start)  # Create starting node
+    goal_node = Node(*goal)    # Create goal node
+
+    update_visibility(start_node.x, start_node.y)  # Update what the agent can see
+    nodes = [start_node]  # List of nodes in the RRT
+
+    visited = set([(int(start_node.x), int(start_node.y))])  # Keep track of visited grid cells
+
+    for _ in range(max_iter):
+        # Sample a new point using ant-inspired bias
+        rand_x, rand_y = ant_random_point(goal)
+
+        # Find nearest node to that point
+        nearest = nearest_node(nodes, rand_x + 0.5, rand_y + 0.5)
+
+        # Try to move toward sampled point
+        steered = steer(nearest, rand_x, rand_y, step_size)
+
+        if steered:
+            new_x, new_y = steered
+            ix, iy = int(math.floor(new_x)), int(math.floor(new_y))
+
+            # If not visited and path is collision-free
+            if (ix, iy) not in visited and not collision(nearest.x, nearest.y, new_x, new_y, grid):
+                new_node = Node(ix, iy)
+                new_node.x, new_node.y = new_x, new_y  # Use exact float position
+                new_node.parent = nearest
+                nodes.append(new_node)
+                visited.add((ix, iy))
+
+                update_visibility(new_x, new_y)  # Reveal new area
+                pheromone_grid *= 0.998  # Evaporate pheromones
+
+                # Check if goal is reached (within distance threshold)
+                if abs(new_x - goal_node.x) + abs(new_y - goal_node.y) <= 3:
+                    goal_node.parent = new_node
+                    nodes.append(goal_node)
+                    print("Path found!")
+                    return nodes
+
+    print("Path not found")
+    return None
+
+# Deposit pheromones along the path
+def deposit_pheromones(path, amount=1.0):
+    for x, y in path:
+        ix, iy = int(math.floor(x)), int(math.floor(y))
+        if 0 <= iy < grid.shape[0] and 0 <= ix < grid.shape[1]:
+            pheromone_grid[iy, ix] += amount
+
+# Initial positions
 start = (5, 5)
 goal = (75, 75)
 
 if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
     raise ValueError("Start or goal is inside an obstacle.")
 
-nodes = rrt(grid, start, goal, step_size=3, max_iter=5000)
+nodes = rrt(grid, start, goal, step_size=1, max_iter=5000)
 
-# === NEW: Deposit pheromones on successful path ===
-def deposit_pheromones(path, amount=1.0):
-    for x, y in path:
-        pheromone_grid[y, x] += amount
-
-#visualize
+# Visualization
 if nodes:
     final_path = path(nodes[-1])
     deposit_pheromones(final_path, amount=2.5)
-
-
-    fig, ax = plt.subplots(figsize=(10, 10))  # Larger figure
+    fig, ax = plt.subplots(figsize=(10, 10))
     ax.imshow(grid, cmap='gray', alpha=0.8)
-
-    # Draw RRT tree
     draw_tree(nodes, ax, grid)
 
-    # Scatter all explored nodes (tiny dots)
-    explored_x = [node.x for node in nodes]
-    explored_y = [node.y for node in nodes]
-    ax.scatter(explored_x, explored_y, color='red', s=5)  # s=5 for tiny dots
+    path_x, path_y = zip(*final_path)
+    ax.scatter(path_x, path_y, color='cyan', s=20, zorder=5, label='Path Points')
 
-    # Plot the final path
-    # Plot the final path with intermediate steps
     for i in range(len(final_path) - 1):
         x1, y1 = final_path[i]
         x2, y2 = final_path[i + 1]
         steps = interpolate_path(x1, y1, x2, y2, grid)
-        if not steps:
-            continue
-        step_x, step_y = zip(*steps)
-        ax.plot(step_x, step_y, color='blue', linewidth=2)
-
-    path_x, path_y = zip(*final_path)
-
-
-    ax.scatter(path_x, path_y, color='cyan', s=20, zorder=5, label='Path Points')  # larger cyan dots
+        if steps:
+            sx, sy = zip(*[(x + 0.5, y + 0.5) for x, y in steps])
+            ax.plot(sx, sy, color='blue', linewidth=2)
 
     ax.legend(loc='upper left')
-
     ax.set_title("RRT Path and Tree")
-
-    # Get grid size
-    height, width = grid.shape
-
-    # Major ticks every 10 (with labels)
-    ax.set_xticks(np.arange(0, width + 1, 10))
-    ax.set_yticks(np.arange(0, height + 1, 10))
-
-    # Minor ticks every 1 (for grid lines)
-    ax.set_xticks(np.arange(0, width + 1, 1), minor=True)
-    ax.set_yticks(np.arange(0, height + 1, 1), minor=True)
-
-    # Show grid for both major and minor ticks
+    ax.set_xticks(np.arange(0, grid.shape[1] + 1, 10))
+    ax.set_yticks(np.arange(0, grid.shape[0] + 1, 10))
+    ax.set_xticks(np.arange(0, grid.shape[1] + 1, 1), minor=True)
+    ax.set_yticks(np.arange(0, grid.shape[0] + 1, 1), minor=True)
     ax.grid(which='minor', color='gray', linestyle='--', linewidth=0.5)
     ax.grid(which='major', color='black', linestyle='-', linewidth=0.8)
-
-
     ax.set_aspect('equal')
-    plt.axis('on')  # Turn on axis if you want to see tick labels
-    plt.savefig("aco_grid_observibility_step3.png", dpi=300, bbox_inches='tight')
+    plt.savefig("aco_centered_nodes.png", dpi=300, bbox_inches='tight')
     plt.show()
