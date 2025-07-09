@@ -5,6 +5,8 @@ import math
 import random
 import heapq
 import json
+import time
+
 
 #load grid from image
 map_img = cv2.imread("IMG_8864.png", cv2.IMREAD_GRAYSCALE)
@@ -15,6 +17,14 @@ grid_size = grid.shape[0]
 # Load visibility map from JSON
 with open('FILE_3036.json', 'r') as f:
     visibility_map = json.load(f)
+
+# Convert JSON coordinates to set of walkable and blocked cells
+all_cells = set(map(tuple, visibility_map["all"]))      # All white cells (navigable)
+blocked_cells = set(map(tuple, visibility_map["blocked"]))  # All black cells (obstacles)
+
+# Derive walkable white cells by subtracting blocked cells
+walkable_cells = all_cells - blocked_cells
+
 
 
 # Node class representing each RRT vertex
@@ -49,22 +59,34 @@ def nearest_node(node_list, x, y):
 # Biased random sampling based on visible space and pheromones
 def ant_random_point(goal, goal_sample_rate=0.05):
     if random.random() < goal_sample_rate:
-        return goal #bias toward goal
-    
-    #union of visble cells from all visited positions
-    global visited, visibility_map
-    visible_union = set()
+        return goal  # Bias toward goal
 
+    # Gather visible white cells from visited positions
+    visible_union = set()
     for pos in visited:
-        key = str(pos) #keys as strings
-        visible_cells = visibility_map.get(key, [])
-        visible_union.update(tuple(cell) for cell in visible_cells)
+        key = str(pos)
+        if key in visibility_map:
+            visible_cells = visibility_map[key]
+            visible_union.update(tuple(cell) for cell in visible_cells)
 
     if not visible_union:
-        #no visibility yet, fallback to full random
-        return random.randint(0, grid_size - 1), random.randint(0, grid_size -1)
-    
-    return random.choice(list(visible_union))
+        # If nothing visible, just random
+        return random.randint(0, grid_size - 1), random.randint(0, grid_size - 1)
+
+    # Pheromone-weighted sampling over visible space
+    candidates = list(visible_union)
+    weights = [pheromone_grid[y, x] + 1e-6 for (x, y) in candidates]
+    total = sum(weights)
+
+    if total == 0 or not np.isfinite(total):
+        return random.choice(candidates)
+
+    probs = np.array(weights, dtype=np.float32)
+    probs /= probs.sum()
+    sampled_index = np.random.choice(len(candidates), p=probs)
+    return candidates[sampled_index]
+
+
 
 # Moves from from_node toward (to_x, to_y) while limiting step size
 def steer(from_node, to_x, to_y, step_size):
@@ -217,10 +239,10 @@ def rrt(grid, start, goal, step_size=10, max_iter=1000):
                     goal_node.parent = new_node
                     nodes.append(goal_node)
                     print("Path found!")
-                    return nodes
+                    return nodes, len(nodes)
 
     print("Path not found")
-    return None
+    return None, 0
 
 # Deposit pheromones along the path
 def deposit_pheromones(path, amount=1.0):
@@ -230,7 +252,7 @@ def deposit_pheromones(path, amount=1.0):
             pheromone_grid[iy, ix] += amount
 
 #opencv visualization
-def draw_result_on_image(grid, nodes, path_points, filename="rrt_output.png"):
+def draw_result_on_image(grid, nodes, path_points, filename="rrt_output2.png"):
     # Convert grayscale grid to BGR image
     img = np.stack([grid] * 3, axis=-1)
     img[grid == 255] = [255, 255, 255]
@@ -268,9 +290,14 @@ goal = (30, 16)
 if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
     raise ValueError("Start or goal is inside an obstacle.")
 
-nodes = rrt(grid, start, goal, step_size=1, max_iter=5000)
+start_time = time.time()
+nodes, steps = rrt(grid, start, goal, step_size=1, max_iter=5000)
+end_time = time.time()
+cpu_time = end_time - start_time
+
+print(f"Time to reach goal: {cpu_time:.4f} seconds")
+print(f"Number of RRT steps: {steps}")
 
 if nodes:
     final_path = path(nodes[-1])
     draw_result_on_image(grid, nodes, final_path)
-    print("Image saved as rrt_output.png")
