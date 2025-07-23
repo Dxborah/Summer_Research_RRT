@@ -55,40 +55,68 @@ def distance_angle(x1, y1, x2, y2):
 def nearest_node(node_list, x, y):
     return min(node_list, key=lambda node: math.hypot(node.x - x, node.y - y))
 
-# Biased random sampling based on visible space and pheromones
-def ant_random_point(goal, goal_sample_rate=0.05):
-    if random.random() < goal_sample_rate:
-        return goal  # Bias toward goal
+def find_270deg_corners(edge_of_coverage, grid):
+    height, width = grid.shape
+    corners = []
 
-    # Compute frontier edge
+    # Define 4-connected neighbors
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # left, right, up, down
+
+    for (x, y) in edge_of_coverage:
+        blocked_count = 0
+
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if not (0 <= nx < width and 0 <= ny < height):
+                blocked_count += 1  # Treat out-of-bounds as blocked
+            elif grid[ny, nx] == 0:
+                blocked_count += 1  # Obstacle cell
+
+        if blocked_count == 3:
+            corners.append((x, y))
+
+    return corners
+
+def nearest_corner(corners, current_x, current_y):
+    if not corners:
+        return None
+    return min(corners, key=lambda c: math.hypot(c[0] + 0.5 - current_x, c[1] + 0.5 - current_y))
+
+
+
+# Biased random sampling based on visible space and pheromones
+def ant_random_point(goal, current_node, edge_of_coverage, goal_sample_rate=0.05):
+    '''
+
+    if random.random() < goal_sample_rate:
+        return goal
+
     edge_of_coverage = compute_edge_of_coverage(grid, visible_grid, walkable_cells)
 
     if not edge_of_coverage:
-        # Fallback to full random if nothing to explore
         return random.randint(0, grid_size - 1), random.randint(0, grid_size - 1)
 
-    edge_list = list(edge_of_coverage)
-    weights = []
-    for (x, y) in edge_list:
-        # Weight by pheromone level (or use 1 if you want uniform)
-        weights.append(pheromone_grid[y, x] + 1e-6)
+    # === NEW: Find corner ===
+    corners = find_270deg_corners(edge_of_coverage, grid)
+    corner = nearest_corner(corners, current_node.x, current_node.y)
 
-    # Normalize weights to probabilities
-    total = sum(weights)
-    if total == 0 or not np.isfinite(total):
-        # fallback: uniform choice if all weights are zero or invalid
-        return random.choice(edge_list)
+    if corner:
+        return corner
+    else:
+        # Fallback to existing pheromone-weighted sampling
+        edge_list = list(edge_of_coverage)
+        weights = [pheromone_grid[y, x] + 1e-6 for (x, y) in edge_list]
+        total = sum(weights)
+        if total <= 0 or not np.isfinite(total):
+            return random.choice(edge_list)
+        probs = np.array(weights) / total
+        sampled_index = np.random.choice(len(edge_list), p=probs)
+        return edge_list[sampled_index]
+    '''
+    # force random sampling
+    return random.randint(0, grid_size - 1), random.randint(0, grid_size - 1)
 
-    probs = [w / total for w in weights]
-
-    # Optional: re-normalize to avoid floating point sum errors
-    probs = np.array(probs)
-    probs /= probs.sum()
-
-    sampled_index = np.random.choice(len(edge_list), p=probs)
-    return edge_list[sampled_index]
-
-
+'''
 # Moves from from_node toward (to_x, to_y) while limiting step size
 def steer(from_node, to_x, to_y, step_size):
     distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
@@ -98,6 +126,19 @@ def steer(from_node, to_x, to_y, step_size):
         new_x = from_node.x + i * math.cos(angle)
         new_y = from_node.y + i * math.sin(angle)
         if grid_value(new_x, new_y) == 0:
+            return None
+    return (from_node.x + step * math.cos(angle), from_node.y + step * math.sin(angle))
+'''
+def steer(from_node, to_x, to_y, step_size):
+    distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
+    step = min(step_size, distance)
+
+    for i in range(1, int(step) + 1):
+        new_x = from_node.x + i * math.cos(angle)
+        new_y = from_node.y + i * math.sin(angle)
+        val = grid_value(new_x, new_y)
+        if val == 0:
+            print(f"steer: Collision at ({new_x:.2f}, {new_y:.2f})")
             return None
     return (from_node.x + step * math.cos(angle), from_node.y + step * math.sin(angle))
 
@@ -198,7 +239,7 @@ def path(goal_node):
     return path[::-1]
 
 # RRT algorithm main function
-def rrt(grid, start, goal, step_size=10, max_iter=1000):
+def rrt(grid, start, goal, step_size=10, max_iter=1000, direct_target=False):
     global pheromone_grid, visible_grid
     global visited
 
@@ -211,9 +252,14 @@ def rrt(grid, start, goal, step_size=10, max_iter=1000):
     visited = set([(int(start_node.x), int(start_node.y))])  # Keep track of visited grid cells
 
     for _ in range(max_iter):
-        # Sample a new point using ant-inspired bias
-        rand_x, rand_y = ant_random_point(goal)
+        edge_of_coverage = compute_edge_of_coverage(grid, visible_grid, walkable_cells)
 
+        # Sample point based on visibility and ACO-inspired logic
+        if direct_target:
+            rand_x, rand_y = goal  # force direct sampling
+        else:
+            rand_x, rand_y = ant_random_point(goal, nodes[-1], edge_of_coverage)
+                
         # Find nearest node to that point
         nearest = nearest_node(nodes, rand_x + 0.5, rand_y + 0.5)
 
@@ -244,6 +290,49 @@ def rrt(grid, start, goal, step_size=10, max_iter=1000):
 
     print("Path not found")
     return None, 0
+def corner_guided_rrt(start, goal, step_size=1, max_iter=5000):
+    current_pos = start
+    all_nodes = []
+
+    while True:
+        update_visibility(current_pos[0] + 0.5, current_pos[1] + 0.5)
+
+        test_path = interpolate_path(current_pos[0] + 0.5, current_pos[1] + 0.5, 4 + 0.5, 16 + 0.5, grid)
+        if len(test_path) == 0:
+            print("No direct path exists from current_pos to corner (4,16)")
+        else:
+            print("Path exists to corner (4,16)")
+
+
+        # Check if goal is visible
+        goal_ix, goal_iy = int(goal[0]), int(goal[1])
+        if visible_grid[goal_iy, goal_ix] == 1:
+            print("✅ Goal is now visible. Planning final path.")
+            nodes, _ = rrt(grid, current_pos, goal, step_size, max_iter, direct_target=True)
+            if nodes:
+                all_nodes += nodes
+                return all_nodes
+            else:
+                print("❌ Final path to goal failed.")
+                return None
+
+        # If goal not visible, find closest 270° corner
+        edge = compute_edge_of_coverage(grid, visible_grid, walkable_cells)
+        corners = find_270deg_corners(edge, grid)
+        next_corner = nearest_corner(corners, current_pos[0] + 0.5, current_pos[1] + 0.5)
+
+        if next_corner is None:
+            print("❌ Explored all corners, goal still not visible.\nPath not found")
+            return None
+
+        print(f"🔁 Moving to next 270° corner at {next_corner}")
+        nodes, _ = rrt(grid, current_pos, next_corner, step_size=1, max_iter=20000, direct_target=True)
+        if nodes is None:
+            print("❌ Failed to reach corner.")
+            return None
+        current_pos = (int(nodes[-1].x), int(nodes[-1].y))
+        all_nodes += nodes
+
 
 # Deposit pheromones along the path
 def deposit_pheromones(path, amount=1.0):
@@ -253,7 +342,7 @@ def deposit_pheromones(path, amount=1.0):
             pheromone_grid[iy, ix] += amount
 
 #opencv visualization
-def draw_result_on_image(grid, nodes, path_points, filename="rrt_output.png"):
+def draw_result_on_image(grid, nodes, path_points, filename="rrt_output_270.png"):
     # Convert grayscale grid to BGR image
     img = np.stack([grid] * 3, axis=-1)
     img[grid == 255] = [255, 255, 255]
@@ -318,23 +407,17 @@ goal = (30, 16)
 if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
     raise ValueError("Start or goal is inside an obstacle.")
 
-# Start timer
-start_time = time.time()
-
 # Run RRT and get both result and step count
-nodes, step_count = rrt(grid, start, goal, step_size=1, max_iter=5000)
+nodes = corner_guided_rrt(start, goal, step_size=1, max_iter=5000)
 
-# End timer
-end_time = time.time()
-cpu_time = end_time - start_time
+val = grid_value(5.38, 17.60)
+print(f"Grid value at collision point: {val}")
+
+
 
 # Report results
-if nodes:
+if nodes:   
     final_path = path(nodes[-1])
     draw_result_on_image(grid, nodes, final_path)
-
-    # Metrics
-    print(f"✅ Goal reached in {step_count} steps")
-    print(f"⏱️  CPU time: {cpu_time:.4f} seconds")
 
 
