@@ -7,6 +7,12 @@ import heapq
 import json
 import time
 
+# Set seed for reproducible results
+SEED = 100  # You can change this to any number
+random.seed(SEED)
+np.random.seed(SEED)
+print(f"Using seed: {SEED}")
+
 #load grid from image
 map_img = cv2.imread("IMG_8864.png", cv2.IMREAD_GRAYSCALE)
 map_img = cv2.resize(map_img, (50, 50), interpolation=cv2.INTER_NEAREST)
@@ -23,7 +29,6 @@ blocked_cells = set(map(tuple, visibility_map["blocked"]))  # All black cells (o
 
 # Derive walkable white cells by subtracting blocked cells
 walkable_cells = all_cells - blocked_cells
-
 
 
 # Node class representing each RRT vertex
@@ -324,7 +329,7 @@ def compute_edge_of_coverage(grid, visible_grid, walkable_cells):
     edge_of_coverage = edge_candidates & unseen_white
     return edge_of_coverage
 
-
+'''
 start = (8, 21)
 goal = (30, 16)
 
@@ -341,5 +346,33 @@ nodes, length = rrt(grid, start, goal, step_size=1, max_iter=5000)
 if nodes:   
     final_path = path(nodes[-1])
     draw_result_on_image(grid, nodes, final_path)
+'''
 
+# Ensure same start and goal for comparison
+start = (8, 21)
+goal = (30, 16)
+print(f"Start: {start}, Goal: {goal}")
 
+if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
+    raise ValueError("Start or goal is inside an obstacle.")
+
+# Run RRT and get both result and step count
+print("Running original RRT with ant-colony sampling...")
+start_time = time.time()
+
+nodes, length = rrt(grid, start, goal, step_size=1, max_iter=5000)
+
+end_time = time.time()
+execution_time = end_time - start_time
+
+# Report results
+if nodes:   
+    final_path = path(nodes[-1])
+    print(f"SUCCESS - Path found!")
+    print(f"Number of RRT nodes: {len(nodes)}")
+    print(f"Path length: {len(final_path)} points")
+    print(f"Execution time: {execution_time:.2f} seconds")
+    draw_result_on_image(grid, nodes, final_path, "original_rrt_result.png")
+else:
+    print(f"FAILED - No path found in 5000 iterations")
+    print(f"Execution time: {execution_time:.2f} seconds")
