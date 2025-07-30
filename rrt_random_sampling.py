@@ -372,7 +372,7 @@ if nodes:
     print(f"Number of RRT nodes: {len(nodes)}")
     print(f"Path length: {len(final_path)} points")
     print(f"Execution time: {execution_time:.2f} seconds")
-    draw_result_on_image(grid, nodes, final_path, "original_rrt_result.png")
+    #draw_result_on_image(grid, nodes, final_path, "original_rrt_result.png")
 else:
     print(f"FAILED - No path found in 5000 iterations")
     print(f"Execution time: {execution_time:.2f} seconds")
