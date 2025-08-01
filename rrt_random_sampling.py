@@ -88,18 +88,6 @@ def ant_random_point(goal, current_node, edge_of_coverage, goal_sample_rate=0.05
     return edge_list[sampled_index]
 
 '''
-# Moves from from_node toward (to_x, to_y) while limiting step size
-def steer(from_node, to_x, to_y, step_size):
-    distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
-    step = min(step_size, distance)
-
-    for i in range(1, int(step) + 1):
-        new_x = from_node.x + i * math.cos(angle)
-        new_y = from_node.y + i * math.sin(angle)
-        if grid_value(new_x, new_y) == 0:
-            return None
-    return (from_node.x + step * math.cos(angle), from_node.y + step * math.sin(angle))
-'''
 def steer(from_node, to_x, to_y, step_size):
     distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
     step = min(step_size, distance)
@@ -112,6 +100,32 @@ def steer(from_node, to_x, to_y, step_size):
             #print(f"steer: Collision at ({new_x:.2f}, {new_y:.2f})")
             return None
     return (from_node.x + step * math.cos(angle), from_node.y + step * math.sin(angle))
+'''
+
+def steer(from_node, to_x, to_y, step_size):
+    # Direction toward target (centered)
+    distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
+    max_step = min(step_size, distance)
+
+    last_valid_x, last_valid_y = from_node.x, from_node.y
+    # sample along the ray with fine resolution (e.g., 1 unit increments)
+    num_samples = int(math.ceil(max_step * 4))  # 4 samples per unit for smoother probing
+    for i in range(1, num_samples + 1):
+        frac = i / num_samples
+        step = frac * max_step
+        new_x = from_node.x + step * math.cos(angle)
+        new_y = from_node.y + step * math.sin(angle)
+        if grid_value(new_x, new_y) == 0:
+            break  # collision: stop before this
+        last_valid_x, last_valid_y = new_x, new_y
+
+    # If the extension didn't move to a new discrete cell, consider it failed
+    orig_cell = (int(math.floor(from_node.x)), int(math.floor(from_node.y)))
+    new_cell = (int(math.floor(last_valid_x)), int(math.floor(last_valid_y)))
+    if new_cell == orig_cell:
+        return None
+
+    return (last_valid_x, last_valid_y)
 
 # Updates visibility from a given position by casting rays in all directions
 def update_visibility(x, y, max_distance=grid_size):
@@ -360,7 +374,7 @@ if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
 print("Running original RRT with ant-colony sampling...")
 start_time = time.time()
 
-nodes, length = rrt(grid, start, goal, step_size=1, max_iter=5000)
+nodes, length = rrt(grid, start, goal, step_size=2, max_iter=5000)
 
 end_time = time.time()
 execution_time = end_time - start_time
@@ -372,7 +386,7 @@ if nodes:
     print(f"Number of RRT nodes: {len(nodes)}")
     print(f"Path length: {len(final_path)} points")
     print(f"Execution time: {execution_time:.2f} seconds")
-    #draw_result_on_image(grid, nodes, final_path, "original_rrt_result.png")
+    draw_result_on_image(grid, nodes, final_path, "edge_full_result.png")
 else:
     print(f"FAILED - No path found in 5000 iterations")
     print(f"Execution time: {execution_time:.2f} seconds")

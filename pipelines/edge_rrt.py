@@ -10,8 +10,9 @@ from pathlib import Path
 
 class Node:
     def __init__(self, x, y):
-        self.x = x + 0.5
-        self.y = y + 0.5
+        # Use float coordinates with 0.5 offset like standalone for better precision
+        self.x = x + 0.5 if isinstance(x, int) else x
+        self.y = y + 0.5 if isinstance(y, int) else y
         self.parent = None
 
 # Global grids for visibility and pheromones
@@ -21,6 +22,7 @@ walkable_cells = None
 grid = None
 
 def grid_value(x, y, grid):
+    # Fix coordinate conversion
     ix = int(math.floor(x))
     iy = int(math.floor(y))
     if 0 <= iy < grid.shape[0] and 0 <= ix < grid.shape[1]:
@@ -60,42 +62,109 @@ def compute_edge_of_coverage(grid, visible_grid, walkable_cells):
 def ant_random_point(goal, current_node, edge_of_coverage, pheromone_grid, grid_size, goal_sample_rate=0.05):
     global walkable_cells
     
+    # Lower goal sampling rate like standalone for more edge focus
     if random.random() < goal_sample_rate:
         return goal
+    
+    # Always recompute edge to ensure it's current (like standalone)
+    edge_of_coverage = compute_edge_of_coverage(grid, visible_grid, walkable_cells)
+    
+    # More aggressive edge-focused sampling like standalone
+    sampling_strategy = random.random()
+    
+    if sampling_strategy < 0.85 and edge_of_coverage:
+        # 85% chance: Sample from edge of coverage (much higher than before)
+        edge_list = list(edge_of_coverage)
+        weights = [pheromone_grid[y, x] + 1e-6 for (x, y) in edge_list]
+        total = sum(weights)
 
-    if not edge_of_coverage:
-        edge_of_coverage = compute_edge_of_coverage(grid, visible_grid, walkable_cells)
-        if not edge_of_coverage:
-            return random.randint(0, grid_size - 1), random.randint(0, grid_size - 1)
-
-    edge_list = list(edge_of_coverage)
-    weights = [pheromone_grid[y, x] + 1e-6 for (x, y) in edge_list]
-    total = sum(weights)
-
-    if total <= 0 or not np.isfinite(total):
+        if total > 0 and np.isfinite(total):
+            probs = np.array(weights) / total
+            if np.all(np.isfinite(probs)):
+                sampled_index = np.random.choice(len(edge_list), p=probs)
+                return edge_list[sampled_index]
+        
+        # Fallback to uniform edge sampling
         return random.choice(edge_list)
+    
+    elif sampling_strategy < 0.95 and walkable_cells:
+        # 10% chance: Sample from all walkable cells (reduced from 25%)
+        return random.choice(list(walkable_cells))
+    
+    else:
+        # 5% chance: Uniform random sampling (reduced from 15%)
+        max_attempts = 20
+        for _ in range(max_attempts):
+            rand_x = random.randint(0, grid_size - 1)
+            rand_y = random.randint(0, grid_size - 1)
+            if (rand_x, rand_y) in walkable_cells:
+                return (rand_x, rand_y)
+        
+        # Final fallback
+        if walkable_cells:
+            return random.choice(list(walkable_cells))
+        return (grid_size // 2, grid_size // 2)
+    
+def steer(from_node, to_x, to_y, grid, max_step=None, delta=0.2):
+    """
+    Extend from from_node toward (to_x, to_y) as far as possible (up to target or max_step),
+    stopping before collision. delta controls sampling granularity along the ray.
+    If max_step is None, the full distance to target is attempted.
+    """
+    distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
+    limit = distance if max_step is None else min(max_step, distance)
 
-    probs = np.array(weights) / total
-    sampled_index = np.random.choice(len(edge_list), p=probs)
-    return edge_list[sampled_index]
+    last_valid_x, last_valid_y = from_node.x, from_node.y
+    traveled = delta
+    while traveled <= limit:
+        new_x = from_node.x + traveled * math.cos(angle)
+        new_y = from_node.y + traveled * math.sin(angle)
+        if grid_value(new_x, new_y, grid) == 0:  # collision at this sample
+            break
+        last_valid_x, last_valid_y = new_x, new_y
+        traveled += delta
 
+    # If no progress into a new discrete cell, fail
+    orig_cell = (int(math.floor(from_node.x)), int(math.floor(from_node.y)))
+    new_cell = (int(math.floor(last_valid_x)), int(math.floor(last_valid_y)))
+    if new_cell == orig_cell:
+        return None
+
+    return (last_valid_x, last_valid_y)
+
+'''
 def steer(from_node, to_x, to_y, grid, step_size):
+    # Use standalone's more precise steering with linspace
     distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
     step = min(step_size, distance)
 
+    # Use linspace like standalone for better precision
     for i in np.linspace(1, step, int(step) + 1):
         new_x = from_node.x + i * math.cos(angle)
         new_y = from_node.y + i * math.sin(angle)
         val = grid_value(new_x, new_y, grid)
         if val == 0:
             return None
-    return (from_node.x + step * math.cos(angle), from_node.y + step * math.sin(angle))
-
-def update_visibility(x, y, grid, visible_grid, max_distance=None):
-    if max_distance is None:
-        max_distance = max(grid.shape)
     
-    num_rays = 360
+    final_x = from_node.x + step * math.cos(angle)
+    final_y = from_node.y + step * math.sin(angle)
+    return (final_x, final_y)  # Return float coordinates
+'''
+def update_visibility(x, y, grid, visible_grid, max_distance=None):
+    # Use standalone's more intensive visibility like standalone
+    if max_distance is None:
+        max_distance = max(grid.shape)  # Full range like standalone
+    
+    # Bounds check
+    ix, iy = int(math.floor(x)), int(math.floor(y))
+    if not (0 <= ix < grid.shape[1] and 0 <= iy < grid.shape[0]):
+        return
+    
+    # Mark current position as visible
+    visible_grid[iy, ix] = 1
+    
+    # More rays for better coverage like standalone (compromise between 36 and 360)
+    num_rays = 180  # Every 2 degrees
     for angle in np.linspace(0, 2 * np.pi, num_rays, endpoint=False):
         for dist in range(1, max_distance):
             dx = x + dist * math.cos(angle)
@@ -104,14 +173,20 @@ def update_visibility(x, y, grid, visible_grid, max_distance=None):
             iy = int(math.floor(dy))
             if 0 <= ix < grid.shape[1] and 0 <= iy < grid.shape[0]:
                 visible_grid[iy, ix] = 1
-                if grid[iy, ix] == 0:
+                if grid[iy, ix] == 0:  # Hit obstacle
                     break
             else:
                 break
 
 def interpolate_path(x1, y1, x2, y2, grid):
-    x1, y1 = int(math.floor(x1)), int(math.floor(y1))
-    x2, y2 = int(math.floor(x2)), int(math.floor(y2))
+    # Ensure integer coordinates
+    x1, y1 = int(x1), int(y1)
+    x2, y2 = int(x2), int(y2)
+
+    # Bounds checking
+    if not (0 <= x1 < grid.shape[1] and 0 <= y1 < grid.shape[0] and 
+            0 <= x2 < grid.shape[1] and 0 <= y2 < grid.shape[0]):
+        return []
 
     if grid[y1, x1] == 0 or grid[y2, x2] == 0:
         return []
@@ -188,43 +263,68 @@ def rrt_edge_sampling(grid_param, start, goal, walkable_cells_param, step_size=1
     # Initialize global grids and walkable cells
     grid = grid_param
     visible_grid = np.zeros_like(grid, dtype=np.uint8)
-    pheromone_grid = np.zeros_like(grid, dtype=np.float32)
+    pheromone_grid = np.ones_like(grid, dtype=np.float32)  # Initialize with ones instead of zeros
     walkable_cells = walkable_cells_param
 
-    start_node = Node(*start)
-    goal_node = Node(*goal)
+    # Fix coordinate system - use integers consistently
+    start_node = Node(start[0], start[1])
+    goal_node = Node(goal[0], goal[1])
 
+    # Initial visibility update
     update_visibility(start_node.x, start_node.y, grid, visible_grid)
     nodes = [start_node]
 
-    visited = set([(int(start_node.x), int(start_node.y))])
+    visited = set([(start_node.x, start_node.y)])
 
-    for _ in range(max_iter):
+    for iteration in range(max_iter):
+        # Compute edge of coverage every iteration like standalone (more responsive)
         edge_of_coverage = compute_edge_of_coverage(grid, visible_grid, walkable_cells)
-
+        
+        # Sample point using focused edge sampling
         rand_x, rand_y = ant_random_point(goal, nodes[-1], edge_of_coverage, pheromone_grid, grid.shape[0])
                 
+        # Find nearest node
         nearest = nearest_node(nodes, rand_x + 0.5, rand_y + 0.5)
+        
+        # Steer towards sampled point
         steered = steer(nearest, rand_x, rand_y, grid, step_size)
 
         if steered:
             new_x, new_y = steered
             ix, iy = int(math.floor(new_x)), int(math.floor(new_y))
-
+            
+            # Check if already visited and no collision
             if (ix, iy) not in visited and not collision(nearest.x, nearest.y, new_x, new_y, grid):
                 new_node = Node(ix, iy)
-                new_node.x, new_node.y = new_x, new_y
+                new_node.x, new_node.y = new_x, new_y  # Use exact float position like standalone
                 new_node.parent = nearest
                 nodes.append(new_node)
                 visited.add((ix, iy))
 
+                # Update visibility every iteration like standalone (more accurate)
                 update_visibility(new_x, new_y, grid, visible_grid)
+                
+                # Pheromone decay every iteration like standalone
                 pheromone_grid *= 0.998
+                
+                # Add pheromone at new location
+                if 0 <= iy < pheromone_grid.shape[0] and 0 <= ix < pheromone_grid.shape[1]:
+                    pheromone_grid[iy, ix] += 0.1  # Higher pheromone deposit
 
+                # Check if goal is reached (use Manhattan distance like standalone)
                 if abs(new_x - goal_node.x) + abs(new_y - goal_node.y) <= 3:
-                    goal_node.parent = new_node
-                    nodes.append(goal_node)
-                    return nodes, len(nodes)
+                    # Try to connect directly to goal
+                    if not collision(new_x, new_y, goal_node.x, goal_node.y, grid):
+                        goal_node.parent = new_node
+                        nodes.append(goal_node)
+                        return nodes, len(nodes)
+                        
+                # Less frequent debug output
+                if iteration % 1000 == 0 and iteration > 0:
+                    visible_count = np.sum(visible_grid > 0)
+                    total_walkable = len(walkable_cells)
+                    edge_count = len(edge_of_coverage) if edge_of_coverage else 0
+                    print(f"    Iteration {iteration}: {len(nodes)} nodes, {visible_count}/{total_walkable} visible, {edge_count} edge points")
 
     return None, 0
 
@@ -404,7 +504,7 @@ def run_experiment(shelf_dir="."):
     print("=" * 60)
     
     # Create results directory
-    results_dir = Path("edge_sampling_rrt_results")
+    results_dir = Path("edge_full_sampling_rrt_results")
     results_dir.mkdir(exist_ok=True)
     
     # Load existing shelf worlds
@@ -470,7 +570,7 @@ def run_experiment(shelf_dir="."):
             results.append(result)
     
     # Save results
-    results_file = results_dir / "edge_sampling_rrt_results.json"
+    results_file = results_dir / "edge_full_sampling_rrt_results.json"
     with open(results_file, 'w') as f:
         json.dump(results, f, indent=2)
     

@@ -1,0 +1,5402 @@
+[
+  {
+    "world_id": 0,
+    "shelf_name": "15000-15999_dungeon_1142_0.shelf",
+    "pair_id": 0,
+    "start": [
+      80,
+      67
+    ],
+    "goal": [
+      59,
+      19
+    ],
+    "success": true,
+    "nodes_explored": 92,
+    "path_length": 36,
+    "execution_time": 2.7759382724761963,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 0,
+    "shelf_name": "15000-15999_dungeon_1142_0.shelf",
+    "pair_id": 1,
+    "start": [
+      8,
+      92
+    ],
+    "goal": [
+      50,
+      14
+    ],
+    "success": true,
+    "nodes_explored": 318,
+    "path_length": 59,
+    "execution_time": 8.347322225570679,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 0,
+    "shelf_name": "15000-15999_dungeon_1142_0.shelf",
+    "pair_id": 2,
+    "start": [
+      62,
+      6
+    ],
+    "goal": [
+      63,
+      80
+    ],
+    "success": true,
+    "nodes_explored": 328,
+    "path_length": 66,
+    "execution_time": 10.747902393341064,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 0,
+    "shelf_name": "15000-15999_dungeon_1142_0.shelf",
+    "pair_id": 3,
+    "start": [
+      85,
+      91
+    ],
+    "goal": [
+      6,
+      34
+    ],
+    "success": true,
+    "nodes_explored": 125,
+    "path_length": 69,
+    "execution_time": 3.6551496982574463,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 0,
+    "shelf_name": "15000-15999_dungeon_1142_0.shelf",
+    "pair_id": 4,
+    "start": [
+      91,
+      7
+    ],
+    "goal": [
+      77,
+      88
+    ],
+    "success": true,
+    "nodes_explored": 139,
+    "path_length": 47,
+    "execution_time": 3.6308839321136475,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 1,
+    "shelf_name": "15000-15999_dungeon_1142_1.shelf",
+    "pair_id": 0,
+    "start": [
+      27,
+      92
+    ],
+    "goal": [
+      73,
+      10
+    ],
+    "success": true,
+    "nodes_explored": 112,
+    "path_length": 72,
+    "execution_time": 2.0992238521575928,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 1,
+    "shelf_name": "15000-15999_dungeon_1142_1.shelf",
+    "pair_id": 1,
+    "start": [
+      51,
+      86
+    ],
+    "goal": [
+      86,
+      48
+    ],
+    "success": true,
+    "nodes_explored": 98,
+    "path_length": 37,
+    "execution_time": 2.44412899017334,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 1,
+    "shelf_name": "15000-15999_dungeon_1142_1.shelf",
+    "pair_id": 2,
+    "start": [
+      33,
+      88
+    ],
+    "goal": [
+      21,
+      16
+    ],
+    "success": true,
+    "nodes_explored": 140,
+    "path_length": 45,
+    "execution_time": 4.992640018463135,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 1,
+    "shelf_name": "15000-15999_dungeon_1142_1.shelf",
+    "pair_id": 3,
+    "start": [
+      10,
+      67
+    ],
+    "goal": [
+      55,
+      14
+    ],
+    "success": true,
+    "nodes_explored": 266,
+    "path_length": 89,
+    "execution_time": 9.391496419906616,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 1,
+    "shelf_name": "15000-15999_dungeon_1142_1.shelf",
+    "pair_id": 4,
+    "start": [
+      45,
+      92
+    ],
+    "goal": [
+      9,
+      83
+    ],
+    "success": true,
+    "nodes_explored": 99,
+    "path_length": 21,
+    "execution_time": 1.1933677196502686,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 2,
+    "shelf_name": "15000-15999_dungeon_1142_2.shelf",
+    "pair_id": 0,
+    "start": [
+      17,
+      40
+    ],
+    "goal": [
+      70,
+      88
+    ],
+    "success": true,
+    "nodes_explored": 102,
+    "path_length": 52,
+    "execution_time": 2.0612478256225586,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 2,
+    "shelf_name": "15000-15999_dungeon_1142_2.shelf",
+    "pair_id": 1,
+    "start": [
+      13,
+      24
+    ],
+    "goal": [
+      83,
+      17
+    ],
+    "success": true,
+    "nodes_explored": 78,
+    "path_length": 38,
+    "execution_time": 1.4761860370635986,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 2,
+    "shelf_name": "15000-15999_dungeon_1142_2.shelf",
+    "pair_id": 2,
+    "start": [
+      57,
+      17
+    ],
+    "goal": [
+      13,
+      10
+    ],
+    "success": true,
+    "nodes_explored": 39,
+    "path_length": 26,
+    "execution_time": 0.6041479110717773,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 2,
+    "shelf_name": "15000-15999_dungeon_1142_2.shelf",
+    "pair_id": 3,
+    "start": [
+      70,
+      81
+    ],
+    "goal": [
+      34,
+      16
+    ],
+    "success": true,
+    "nodes_explored": 97,
+    "path_length": 63,
+    "execution_time": 1.5688879489898682,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 2,
+    "shelf_name": "15000-15999_dungeon_1142_2.shelf",
+    "pair_id": 4,
+    "start": [
+      58,
+      84
+    ],
+    "goal": [
+      90,
+      72
+    ],
+    "success": true,
+    "nodes_explored": 56,
+    "path_length": 22,
+    "execution_time": 1.0724592208862305,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 3,
+    "shelf_name": "15000-15999_dungeon_1142_3.shelf",
+    "pair_id": 0,
+    "start": [
+      13,
+      19
+    ],
+    "goal": [
+      84,
+      64
+    ],
+    "success": true,
+    "nodes_explored": 136,
+    "path_length": 66,
+    "execution_time": 4.111485958099365,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 3,
+    "shelf_name": "15000-15999_dungeon_1142_3.shelf",
+    "pair_id": 1,
+    "start": [
+      17,
+      88
+    ],
+    "goal": [
+      80,
+      24
+    ],
+    "success": true,
+    "nodes_explored": 187,
+    "path_length": 73,
+    "execution_time": 10.357094049453735,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 3,
+    "shelf_name": "15000-15999_dungeon_1142_3.shelf",
+    "pair_id": 2,
+    "start": [
+      19,
+      56
+    ],
+    "goal": [
+      42,
+      6
+    ],
+    "success": true,
+    "nodes_explored": 101,
+    "path_length": 36,
+    "execution_time": 1.5284428596496582,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 3,
+    "shelf_name": "15000-15999_dungeon_1142_3.shelf",
+    "pair_id": 3,
+    "start": [
+      41,
+      85
+    ],
+    "goal": [
+      86,
+      18
+    ],
+    "success": true,
+    "nodes_explored": 134,
+    "path_length": 56,
+    "execution_time": 3.3790037631988525,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 3,
+    "shelf_name": "15000-15999_dungeon_1142_3.shelf",
+    "pair_id": 4,
+    "start": [
+      84,
+      54
+    ],
+    "goal": [
+      5,
+      92
+    ],
+    "success": true,
+    "nodes_explored": 158,
+    "path_length": 62,
+    "execution_time": 6.026828050613403,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 4,
+    "shelf_name": "15000-15999_dungeon_1142_4.shelf",
+    "pair_id": 0,
+    "start": [
+      11,
+      94
+    ],
+    "goal": [
+      6,
+      19
+    ],
+    "success": true,
+    "nodes_explored": 82,
+    "path_length": 46,
+    "execution_time": 1.1334989070892334,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 4,
+    "shelf_name": "15000-15999_dungeon_1142_4.shelf",
+    "pair_id": 1,
+    "start": [
+      5,
+      42
+    ],
+    "goal": [
+      76,
+      86
+    ],
+    "success": true,
+    "nodes_explored": 98,
+    "path_length": 56,
+    "execution_time": 3.8936820030212402,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 4,
+    "shelf_name": "15000-15999_dungeon_1142_4.shelf",
+    "pair_id": 2,
+    "start": [
+      16,
+      56
+    ],
+    "goal": [
+      83,
+      90
+    ],
+    "success": true,
+    "nodes_explored": 187,
+    "path_length": 52,
+    "execution_time": 2.859496831893921,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 4,
+    "shelf_name": "15000-15999_dungeon_1142_4.shelf",
+    "pair_id": 3,
+    "start": [
+      93,
+      72
+    ],
+    "goal": [
+      29,
+      88
+    ],
+    "success": true,
+    "nodes_explored": 124,
+    "path_length": 42,
+    "execution_time": 2.778233766555786,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 4,
+    "shelf_name": "15000-15999_dungeon_1142_4.shelf",
+    "pair_id": 4,
+    "start": [
+      80,
+      85
+    ],
+    "goal": [
+      38,
+      86
+    ],
+    "success": true,
+    "nodes_explored": 59,
+    "path_length": 24,
+    "execution_time": 0.5586881637573242,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 5,
+    "shelf_name": "15000-15999_dungeon_1906_0.shelf",
+    "pair_id": 0,
+    "start": [
+      82,
+      17
+    ],
+    "goal": [
+      80,
+      92
+    ],
+    "success": true,
+    "nodes_explored": 108,
+    "path_length": 40,
+    "execution_time": 1.4884958267211914,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 5,
+    "shelf_name": "15000-15999_dungeon_1906_0.shelf",
+    "pair_id": 1,
+    "start": [
+      57,
+      10
+    ],
+    "goal": [
+      94,
+      81
+    ],
+    "success": true,
+    "nodes_explored": 201,
+    "path_length": 95,
+    "execution_time": 5.185423851013184,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 5,
+    "shelf_name": "15000-15999_dungeon_1906_0.shelf",
+    "pair_id": 2,
+    "start": [
+      62,
+      90
+    ],
+    "goal": [
+      93,
+      63
+    ],
+    "success": true,
+    "nodes_explored": 67,
+    "path_length": 26,
+    "execution_time": 1.1920828819274902,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 5,
+    "shelf_name": "15000-15999_dungeon_1906_0.shelf",
+    "pair_id": 3,
+    "start": [
+      85,
+      83
+    ],
+    "goal": [
+      54,
+      80
+    ],
+    "success": true,
+    "nodes_explored": 30,
+    "path_length": 17,
+    "execution_time": 0.22482800483703613,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 5,
+    "shelf_name": "15000-15999_dungeon_1906_0.shelf",
+    "pair_id": 4,
+    "start": [
+      16,
+      57
+    ],
+    "goal": [
+      48,
+      83
+    ],
+    "success": true,
+    "nodes_explored": 62,
+    "path_length": 31,
+    "execution_time": 1.803544282913208,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 6,
+    "shelf_name": "15000-15999_dungeon_1906_1.shelf",
+    "pair_id": 0,
+    "start": [
+      65,
+      9
+    ],
+    "goal": [
+      8,
+      6
+    ],
+    "success": true,
+    "nodes_explored": 69,
+    "path_length": 37,
+    "execution_time": 1.5676660537719727,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 6,
+    "shelf_name": "15000-15999_dungeon_1906_1.shelf",
+    "pair_id": 1,
+    "start": [
+      43,
+      90
+    ],
+    "goal": [
+      85,
+      53
+    ],
+    "success": true,
+    "nodes_explored": 86,
+    "path_length": 36,
+    "execution_time": 0.928555965423584,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 6,
+    "shelf_name": "15000-15999_dungeon_1906_1.shelf",
+    "pair_id": 2,
+    "start": [
+      93,
+      54
+    ],
+    "goal": [
+      34,
+      17
+    ],
+    "success": true,
+    "nodes_explored": 77,
+    "path_length": 46,
+    "execution_time": 0.8524279594421387,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 6,
+    "shelf_name": "15000-15999_dungeon_1906_1.shelf",
+    "pair_id": 3,
+    "start": [
+      53,
+      7
+    ],
+    "goal": [
+      11,
+      75
+    ],
+    "success": true,
+    "nodes_explored": 120,
+    "path_length": 54,
+    "execution_time": 3.1391761302948,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 6,
+    "shelf_name": "15000-15999_dungeon_1906_1.shelf",
+    "pair_id": 4,
+    "start": [
+      9,
+      89
+    ],
+    "goal": [
+      60,
+      11
+    ],
+    "success": true,
+    "nodes_explored": 506,
+    "path_length": 109,
+    "execution_time": 23.061742782592773,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 7,
+    "shelf_name": "15000-15999_dungeon_1906_2.shelf",
+    "pair_id": 0,
+    "start": [
+      93,
+      86
+    ],
+    "goal": [
+      92,
+      30
+    ],
+    "success": true,
+    "nodes_explored": 59,
+    "path_length": 34,
+    "execution_time": 0.6690919399261475,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 7,
+    "shelf_name": "15000-15999_dungeon_1906_2.shelf",
+    "pair_id": 1,
+    "start": [
+      51,
+      15
+    ],
+    "goal": [
+      84,
+      23
+    ],
+    "success": true,
+    "nodes_explored": 39,
+    "path_length": 20,
+    "execution_time": 0.777886152267456,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 7,
+    "shelf_name": "15000-15999_dungeon_1906_2.shelf",
+    "pair_id": 2,
+    "start": [
+      6,
+      42
+    ],
+    "goal": [
+      16,
+      8
+    ],
+    "success": true,
+    "nodes_explored": 72,
+    "path_length": 21,
+    "execution_time": 0.7235658168792725,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 7,
+    "shelf_name": "15000-15999_dungeon_1906_2.shelf",
+    "pair_id": 3,
+    "start": [
+      92,
+      68
+    ],
+    "goal": [
+      26,
+      87
+    ],
+    "success": true,
+    "nodes_explored": 112,
+    "path_length": 42,
+    "execution_time": 3.2764699459075928,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 7,
+    "shelf_name": "15000-15999_dungeon_1906_2.shelf",
+    "pair_id": 4,
+    "start": [
+      12,
+      76
+    ],
+    "goal": [
+      37,
+      93
+    ],
+    "success": true,
+    "nodes_explored": 60,
+    "path_length": 20,
+    "execution_time": 0.48893308639526367,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 8,
+    "shelf_name": "15000-15999_dungeon_1906_3.shelf",
+    "pair_id": 0,
+    "start": [
+      94,
+      46
+    ],
+    "goal": [
+      12,
+      94
+    ],
+    "success": true,
+    "nodes_explored": 119,
+    "path_length": 61,
+    "execution_time": 2.5772030353546143,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 8,
+    "shelf_name": "15000-15999_dungeon_1906_3.shelf",
+    "pair_id": 1,
+    "start": [
+      82,
+      74
+    ],
+    "goal": [
+      17,
+      84
+    ],
+    "success": true,
+    "nodes_explored": 82,
+    "path_length": 39,
+    "execution_time": 1.9381687641143799,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 8,
+    "shelf_name": "15000-15999_dungeon_1906_3.shelf",
+    "pair_id": 2,
+    "start": [
+      9,
+      78
+    ],
+    "goal": [
+      42,
+      13
+    ],
+    "success": true,
+    "nodes_explored": 63,
+    "path_length": 47,
+    "execution_time": 2.8235769271850586,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 8,
+    "shelf_name": "15000-15999_dungeon_1906_3.shelf",
+    "pair_id": 3,
+    "start": [
+      15,
+      85
+    ],
+    "goal": [
+      13,
+      28
+    ],
+    "success": true,
+    "nodes_explored": 68,
+    "path_length": 34,
+    "execution_time": 0.8952322006225586,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 8,
+    "shelf_name": "15000-15999_dungeon_1906_3.shelf",
+    "pair_id": 4,
+    "start": [
+      86,
+      39
+    ],
+    "goal": [
+      71,
+      10
+    ],
+    "success": true,
+    "nodes_explored": 62,
+    "path_length": 20,
+    "execution_time": 0.715623140335083,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 9,
+    "shelf_name": "15000-15999_dungeon_1906_4.shelf",
+    "pair_id": 0,
+    "start": [
+      49,
+      5
+    ],
+    "goal": [
+      8,
+      61
+    ],
+    "success": true,
+    "nodes_explored": 114,
+    "path_length": 43,
+    "execution_time": 1.9696218967437744,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 9,
+    "shelf_name": "15000-15999_dungeon_1906_4.shelf",
+    "pair_id": 1,
+    "start": [
+      12,
+      17
+    ],
+    "goal": [
+      86,
+      14
+    ],
+    "success": true,
+    "nodes_explored": 138,
+    "path_length": 41,
+    "execution_time": 2.1306090354919434,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 9,
+    "shelf_name": "15000-15999_dungeon_1906_4.shelf",
+    "pair_id": 2,
+    "start": [
+      83,
+      63
+    ],
+    "goal": [
+      8,
+      50
+    ],
+    "success": true,
+    "nodes_explored": 350,
+    "path_length": 80,
+    "execution_time": 14.264539957046509,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 9,
+    "shelf_name": "15000-15999_dungeon_1906_4.shelf",
+    "pair_id": 3,
+    "start": [
+      64,
+      5
+    ],
+    "goal": [
+      54,
+      94
+    ],
+    "success": true,
+    "nodes_explored": 140,
+    "path_length": 80,
+    "execution_time": 3.8660693168640137,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 9,
+    "shelf_name": "15000-15999_dungeon_1906_4.shelf",
+    "pair_id": 4,
+    "start": [
+      17,
+      27
+    ],
+    "goal": [
+      8,
+      89
+    ],
+    "success": true,
+    "nodes_explored": 60,
+    "path_length": 36,
+    "execution_time": 0.8128139972686768,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 10,
+    "shelf_name": "15000-15999_dungeon_2143_0.shelf",
+    "pair_id": 0,
+    "start": [
+      81,
+      46
+    ],
+    "goal": [
+      48,
+      81
+    ],
+    "success": true,
+    "nodes_explored": 91,
+    "path_length": 34,
+    "execution_time": 1.7105741500854492,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 10,
+    "shelf_name": "15000-15999_dungeon_2143_0.shelf",
+    "pair_id": 1,
+    "start": [
+      52,
+      6
+    ],
+    "goal": [
+      9,
+      49
+    ],
+    "success": true,
+    "nodes_explored": 114,
+    "path_length": 39,
+    "execution_time": 1.6232409477233887,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 10,
+    "shelf_name": "15000-15999_dungeon_2143_0.shelf",
+    "pair_id": 2,
+    "start": [
+      13,
+      20
+    ],
+    "goal": [
+      89,
+      24
+    ],
+    "success": true,
+    "nodes_explored": 79,
+    "path_length": 43,
+    "execution_time": 1.2012131214141846,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 10,
+    "shelf_name": "15000-15999_dungeon_2143_0.shelf",
+    "pair_id": 3,
+    "start": [
+      48,
+      91
+    ],
+    "goal": [
+      17,
+      78
+    ],
+    "success": true,
+    "nodes_explored": 43,
+    "path_length": 19,
+    "execution_time": 1.189465045928955,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 10,
+    "shelf_name": "15000-15999_dungeon_2143_0.shelf",
+    "pair_id": 4,
+    "start": [
+      86,
+      29
+    ],
+    "goal": [
+      43,
+      89
+    ],
+    "success": true,
+    "nodes_explored": 165,
+    "path_length": 55,
+    "execution_time": 10.008431196212769,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 11,
+    "shelf_name": "15000-15999_dungeon_2143_1.shelf",
+    "pair_id": 0,
+    "start": [
+      81,
+      30
+    ],
+    "goal": [
+      27,
+      8
+    ],
+    "success": true,
+    "nodes_explored": 76,
+    "path_length": 38,
+    "execution_time": 1.607301950454712,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 11,
+    "shelf_name": "15000-15999_dungeon_2143_1.shelf",
+    "pair_id": 1,
+    "start": [
+      58,
+      5
+    ],
+    "goal": [
+      5,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 123,
+    "path_length": 59,
+    "execution_time": 2.6722397804260254,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 11,
+    "shelf_name": "15000-15999_dungeon_2143_1.shelf",
+    "pair_id": 2,
+    "start": [
+      26,
+      16
+    ],
+    "goal": [
+      56,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 372,
+    "path_length": 82,
+    "execution_time": 15.843478918075562,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 11,
+    "shelf_name": "15000-15999_dungeon_2143_1.shelf",
+    "pair_id": 3,
+    "start": [
+      10,
+      77
+    ],
+    "goal": [
+      84,
+      5
+    ],
+    "success": true,
+    "nodes_explored": 236,
+    "path_length": 76,
+    "execution_time": 8.7082040309906,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 11,
+    "shelf_name": "15000-15999_dungeon_2143_1.shelf",
+    "pair_id": 4,
+    "start": [
+      21,
+      92
+    ],
+    "goal": [
+      54,
+      10
+    ],
+    "success": true,
+    "nodes_explored": 231,
+    "path_length": 80,
+    "execution_time": 6.5597100257873535,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 12,
+    "shelf_name": "15000-15999_dungeon_2143_2.shelf",
+    "pair_id": 0,
+    "start": [
+      12,
+      44
+    ],
+    "goal": [
+      52,
+      84
+    ],
+    "success": true,
+    "nodes_explored": 313,
+    "path_length": 44,
+    "execution_time": 7.437929153442383,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 12,
+    "shelf_name": "15000-15999_dungeon_2143_2.shelf",
+    "pair_id": 1,
+    "start": [
+      15,
+      66
+    ],
+    "goal": [
+      22,
+      9
+    ],
+    "success": true,
+    "nodes_explored": 94,
+    "path_length": 33,
+    "execution_time": 2.438656806945801,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 12,
+    "shelf_name": "15000-15999_dungeon_2143_2.shelf",
+    "pair_id": 2,
+    "start": [
+      7,
+      39
+    ],
+    "goal": [
+      94,
+      80
+    ],
+    "success": true,
+    "nodes_explored": 122,
+    "path_length": 82,
+    "execution_time": 2.804400682449341,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 12,
+    "shelf_name": "15000-15999_dungeon_2143_2.shelf",
+    "pair_id": 3,
+    "start": [
+      82,
+      18
+    ],
+    "goal": [
+      52,
+      11
+    ],
+    "success": true,
+    "nodes_explored": 74,
+    "path_length": 21,
+    "execution_time": 2.3479862213134766,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 12,
+    "shelf_name": "15000-15999_dungeon_2143_2.shelf",
+    "pair_id": 4,
+    "start": [
+      8,
+      87
+    ],
+    "goal": [
+      85,
+      86
+    ],
+    "success": true,
+    "nodes_explored": 146,
+    "path_length": 44,
+    "execution_time": 3.272426128387451,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 13,
+    "shelf_name": "15000-15999_dungeon_2143_3.shelf",
+    "pair_id": 0,
+    "start": [
+      88,
+      87
+    ],
+    "goal": [
+      69,
+      10
+    ],
+    "success": true,
+    "nodes_explored": 101,
+    "path_length": 48,
+    "execution_time": 1.2195959091186523,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 13,
+    "shelf_name": "15000-15999_dungeon_2143_3.shelf",
+    "pair_id": 1,
+    "start": [
+      12,
+      9
+    ],
+    "goal": [
+      87,
+      43
+    ],
+    "success": true,
+    "nodes_explored": 156,
+    "path_length": 52,
+    "execution_time": 2.7147531509399414,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 13,
+    "shelf_name": "15000-15999_dungeon_2143_3.shelf",
+    "pair_id": 2,
+    "start": [
+      55,
+      16
+    ],
+    "goal": [
+      20,
+      13
+    ],
+    "success": true,
+    "nodes_explored": 45,
+    "path_length": 21,
+    "execution_time": 0.4857931137084961,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 13,
+    "shelf_name": "15000-15999_dungeon_2143_3.shelf",
+    "pair_id": 3,
+    "start": [
+      6,
+      9
+    ],
+    "goal": [
+      79,
+      91
+    ],
+    "success": true,
+    "nodes_explored": 148,
+    "path_length": 81,
+    "execution_time": 3.793980836868286,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 13,
+    "shelf_name": "15000-15999_dungeon_2143_3.shelf",
+    "pair_id": 4,
+    "start": [
+      45,
+      16
+    ],
+    "goal": [
+      66,
+      91
+    ],
+    "success": true,
+    "nodes_explored": 310,
+    "path_length": 62,
+    "execution_time": 5.8345842361450195,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 14,
+    "shelf_name": "15000-15999_dungeon_2143_4.shelf",
+    "pair_id": 0,
+    "start": [
+      20,
+      91
+    ],
+    "goal": [
+      83,
+      58
+    ],
+    "success": true,
+    "nodes_explored": 217,
+    "path_length": 51,
+    "execution_time": 5.251471757888794,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 14,
+    "shelf_name": "15000-15999_dungeon_2143_4.shelf",
+    "pair_id": 1,
+    "start": [
+      11,
+      29
+    ],
+    "goal": [
+      85,
+      47
+    ],
+    "success": true,
+    "nodes_explored": 142,
+    "path_length": 79,
+    "execution_time": 5.568142890930176,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 14,
+    "shelf_name": "15000-15999_dungeon_2143_4.shelf",
+    "pair_id": 2,
+    "start": [
+      12,
+      34
+    ],
+    "goal": [
+      26,
+      7
+    ],
+    "success": true,
+    "nodes_explored": 55,
+    "path_length": 22,
+    "execution_time": 2.8726518154144287,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 14,
+    "shelf_name": "15000-15999_dungeon_2143_4.shelf",
+    "pair_id": 3,
+    "start": [
+      53,
+      9
+    ],
+    "goal": [
+      83,
+      42
+    ],
+    "success": true,
+    "nodes_explored": 54,
+    "path_length": 28,
+    "execution_time": 1.6064047813415527,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 14,
+    "shelf_name": "15000-15999_dungeon_2143_4.shelf",
+    "pair_id": 4,
+    "start": [
+      34,
+      83
+    ],
+    "goal": [
+      91,
+      37
+    ],
+    "success": true,
+    "nodes_explored": 304,
+    "path_length": 54,
+    "execution_time": 10.269304037094116,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 15,
+    "shelf_name": "15000-15999_dungeon_4251_0.shelf",
+    "pair_id": 0,
+    "start": [
+      60,
+      83
+    ],
+    "goal": [
+      87,
+      63
+    ],
+    "success": true,
+    "nodes_explored": 63,
+    "path_length": 25,
+    "execution_time": 2.301939010620117,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 15,
+    "shelf_name": "15000-15999_dungeon_4251_0.shelf",
+    "pair_id": 1,
+    "start": [
+      85,
+      11
+    ],
+    "goal": [
+      6,
+      89
+    ],
+    "success": true,
+    "nodes_explored": 92,
+    "path_length": 75,
+    "execution_time": 4.241369009017944,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 15,
+    "shelf_name": "15000-15999_dungeon_4251_0.shelf",
+    "pair_id": 2,
+    "start": [
+      87,
+      49
+    ],
+    "goal": [
+      15,
+      10
+    ],
+    "success": true,
+    "nodes_explored": 87,
+    "path_length": 54,
+    "execution_time": 2.1051530838012695,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 15,
+    "shelf_name": "15000-15999_dungeon_4251_0.shelf",
+    "pair_id": 3,
+    "start": [
+      85,
+      31
+    ],
+    "goal": [
+      52,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 183,
+    "path_length": 43,
+    "execution_time": 3.3927810192108154,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 15,
+    "shelf_name": "15000-15999_dungeon_4251_0.shelf",
+    "pair_id": 4,
+    "start": [
+      54,
+      86
+    ],
+    "goal": [
+      82,
+      20
+    ],
+    "success": true,
+    "nodes_explored": 237,
+    "path_length": 92,
+    "execution_time": 8.800913095474243,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 16,
+    "shelf_name": "15000-15999_dungeon_4251_1.shelf",
+    "pair_id": 0,
+    "start": [
+      18,
+      11
+    ],
+    "goal": [
+      60,
+      84
+    ],
+    "success": true,
+    "nodes_explored": 348,
+    "path_length": 81,
+    "execution_time": 5.290531158447266,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 16,
+    "shelf_name": "15000-15999_dungeon_4251_1.shelf",
+    "pair_id": 1,
+    "start": [
+      90,
+      32
+    ],
+    "goal": [
+      12,
+      29
+    ],
+    "success": true,
+    "nodes_explored": 111,
+    "path_length": 48,
+    "execution_time": 2.691472053527832,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 16,
+    "shelf_name": "15000-15999_dungeon_4251_1.shelf",
+    "pair_id": 2,
+    "start": [
+      85,
+      87
+    ],
+    "goal": [
+      17,
+      35
+    ],
+    "success": true,
+    "nodes_explored": 368,
+    "path_length": 68,
+    "execution_time": 7.308797836303711,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 16,
+    "shelf_name": "15000-15999_dungeon_4251_1.shelf",
+    "pair_id": 3,
+    "start": [
+      8,
+      75
+    ],
+    "goal": [
+      20,
+      11
+    ],
+    "success": true,
+    "nodes_explored": 54,
+    "path_length": 36,
+    "execution_time": 1.426055908203125,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 16,
+    "shelf_name": "15000-15999_dungeon_4251_1.shelf",
+    "pair_id": 4,
+    "start": [
+      26,
+      81
+    ],
+    "goal": [
+      57,
+      6
+    ],
+    "success": true,
+    "nodes_explored": 189,
+    "path_length": 57,
+    "execution_time": 6.547145128250122,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 17,
+    "shelf_name": "15000-15999_dungeon_4251_2.shelf",
+    "pair_id": 0,
+    "start": [
+      31,
+      83
+    ],
+    "goal": [
+      12,
+      55
+    ],
+    "success": true,
+    "nodes_explored": 81,
+    "path_length": 22,
+    "execution_time": 2.6185801029205322,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 17,
+    "shelf_name": "15000-15999_dungeon_4251_2.shelf",
+    "pair_id": 1,
+    "start": [
+      14,
+      14
+    ],
+    "goal": [
+      90,
+      78
+    ],
+    "success": true,
+    "nodes_explored": 195,
+    "path_length": 68,
+    "execution_time": 3.400269031524658,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 17,
+    "shelf_name": "15000-15999_dungeon_4251_2.shelf",
+    "pair_id": 2,
+    "start": [
+      32,
+      87
+    ],
+    "goal": [
+      19,
+      31
+    ],
+    "success": true,
+    "nodes_explored": 104,
+    "path_length": 35,
+    "execution_time": 2.692770004272461,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 17,
+    "shelf_name": "15000-15999_dungeon_4251_2.shelf",
+    "pair_id": 3,
+    "start": [
+      12,
+      90
+    ],
+    "goal": [
+      5,
+      48
+    ],
+    "success": true,
+    "nodes_explored": 78,
+    "path_length": 27,
+    "execution_time": 0.9739630222320557,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 17,
+    "shelf_name": "15000-15999_dungeon_4251_2.shelf",
+    "pair_id": 4,
+    "start": [
+      56,
+      94
+    ],
+    "goal": [
+      76,
+      5
+    ],
+    "success": true,
+    "nodes_explored": 299,
+    "path_length": 58,
+    "execution_time": 6.929595232009888,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 18,
+    "shelf_name": "15000-15999_dungeon_4251_3.shelf",
+    "pair_id": 0,
+    "start": [
+      50,
+      8
+    ],
+    "goal": [
+      87,
+      32
+    ],
+    "success": true,
+    "nodes_explored": 49,
+    "path_length": 26,
+    "execution_time": 0.8074140548706055,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 18,
+    "shelf_name": "15000-15999_dungeon_4251_3.shelf",
+    "pair_id": 1,
+    "start": [
+      74,
+      94
+    ],
+    "goal": [
+      88,
+      47
+    ],
+    "success": true,
+    "nodes_explored": 72,
+    "path_length": 30,
+    "execution_time": 3.3911218643188477,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 18,
+    "shelf_name": "15000-15999_dungeon_4251_3.shelf",
+    "pair_id": 2,
+    "start": [
+      7,
+      86
+    ],
+    "goal": [
+      37,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 31,
+    "path_length": 17,
+    "execution_time": 0.24767208099365234,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 18,
+    "shelf_name": "15000-15999_dungeon_4251_3.shelf",
+    "pair_id": 3,
+    "start": [
+      35,
+      12
+    ],
+    "goal": [
+      6,
+      52
+    ],
+    "success": true,
+    "nodes_explored": 78,
+    "path_length": 33,
+    "execution_time": 2.424921989440918,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 18,
+    "shelf_name": "15000-15999_dungeon_4251_3.shelf",
+    "pair_id": 4,
+    "start": [
+      94,
+      43
+    ],
+    "goal": [
+      85,
+      89
+    ],
+    "success": true,
+    "nodes_explored": 42,
+    "path_length": 28,
+    "execution_time": 0.32356882095336914,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 19,
+    "shelf_name": "15000-15999_dungeon_4251_4.shelf",
+    "pair_id": 0,
+    "start": [
+      9,
+      5
+    ],
+    "goal": [
+      58,
+      84
+    ],
+    "success": true,
+    "nodes_explored": 192,
+    "path_length": 86,
+    "execution_time": 6.486713171005249,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 19,
+    "shelf_name": "15000-15999_dungeon_4251_4.shelf",
+    "pair_id": 1,
+    "start": [
+      60,
+      82
+    ],
+    "goal": [
+      25,
+      91
+    ],
+    "success": true,
+    "nodes_explored": 50,
+    "path_length": 22,
+    "execution_time": 0.5469970703125,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 19,
+    "shelf_name": "15000-15999_dungeon_4251_4.shelf",
+    "pair_id": 2,
+    "start": [
+      72,
+      15
+    ],
+    "goal": [
+      30,
+      9
+    ],
+    "success": true,
+    "nodes_explored": 36,
+    "path_length": 25,
+    "execution_time": 0.4658069610595703,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 19,
+    "shelf_name": "15000-15999_dungeon_4251_4.shelf",
+    "pair_id": 3,
+    "start": [
+      12,
+      27
+    ],
+    "goal": [
+      85,
+      86
+    ],
+    "success": true,
+    "nodes_explored": 172,
+    "path_length": 74,
+    "execution_time": 3.780754804611206,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 19,
+    "shelf_name": "15000-15999_dungeon_4251_4.shelf",
+    "pair_id": 4,
+    "start": [
+      21,
+      81
+    ],
+    "goal": [
+      8,
+      52
+    ],
+    "success": true,
+    "nodes_explored": 65,
+    "path_length": 21,
+    "execution_time": 0.90444016456604,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 20,
+    "shelf_name": "15000-15999_dungeon_757_0.shelf",
+    "pair_id": 0,
+    "start": [
+      7,
+      46
+    ],
+    "goal": [
+      35,
+      91
+    ],
+    "success": true,
+    "nodes_explored": 75,
+    "path_length": 33,
+    "execution_time": 1.2935149669647217,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 20,
+    "shelf_name": "15000-15999_dungeon_757_0.shelf",
+    "pair_id": 1,
+    "start": [
+      84,
+      42
+    ],
+    "goal": [
+      89,
+      8
+    ],
+    "success": true,
+    "nodes_explored": 100,
+    "path_length": 23,
+    "execution_time": 3.035032033920288,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 20,
+    "shelf_name": "15000-15999_dungeon_757_0.shelf",
+    "pair_id": 2,
+    "start": [
+      82,
+      68
+    ],
+    "goal": [
+      56,
+      6
+    ],
+    "success": true,
+    "nodes_explored": 149,
+    "path_length": 45,
+    "execution_time": 2.8429882526397705,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 20,
+    "shelf_name": "15000-15999_dungeon_757_0.shelf",
+    "pair_id": 3,
+    "start": [
+      36,
+      17
+    ],
+    "goal": [
+      21,
+      86
+    ],
+    "success": true,
+    "nodes_explored": 130,
+    "path_length": 46,
+    "execution_time": 4.184170961380005,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 20,
+    "shelf_name": "15000-15999_dungeon_757_0.shelf",
+    "pair_id": 4,
+    "start": [
+      89,
+      26
+    ],
+    "goal": [
+      56,
+      90
+    ],
+    "success": true,
+    "nodes_explored": 121,
+    "path_length": 46,
+    "execution_time": 4.198529005050659,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 21,
+    "shelf_name": "15000-15999_dungeon_757_1.shelf",
+    "pair_id": 0,
+    "start": [
+      92,
+      39
+    ],
+    "goal": [
+      18,
+      70
+    ],
+    "success": true,
+    "nodes_explored": 432,
+    "path_length": 73,
+    "execution_time": 6.410282135009766,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 21,
+    "shelf_name": "15000-15999_dungeon_757_1.shelf",
+    "pair_id": 1,
+    "start": [
+      86,
+      63
+    ],
+    "goal": [
+      93,
+      29
+    ],
+    "success": true,
+    "nodes_explored": 65,
+    "path_length": 22,
+    "execution_time": 0.7697460651397705,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 21,
+    "shelf_name": "15000-15999_dungeon_757_1.shelf",
+    "pair_id": 2,
+    "start": [
+      62,
+      92
+    ],
+    "goal": [
+      9,
+      41
+    ],
+    "success": true,
+    "nodes_explored": 102,
+    "path_length": 48,
+    "execution_time": 1.3884270191192627,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 21,
+    "shelf_name": "15000-15999_dungeon_757_1.shelf",
+    "pair_id": 3,
+    "start": [
+      44,
+      17
+    ],
+    "goal": [
+      71,
+      80
+    ],
+    "success": true,
+    "nodes_explored": 270,
+    "path_length": 64,
+    "execution_time": 5.556354999542236,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 21,
+    "shelf_name": "15000-15999_dungeon_757_1.shelf",
+    "pair_id": 4,
+    "start": [
+      90,
+      30
+    ],
+    "goal": [
+      14,
+      86
+    ],
+    "success": true,
+    "nodes_explored": 117,
+    "path_length": 76,
+    "execution_time": 2.6693499088287354,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 22,
+    "shelf_name": "15000-15999_dungeon_757_2.shelf",
+    "pair_id": 0,
+    "start": [
+      10,
+      27
+    ],
+    "goal": [
+      16,
+      72
+    ],
+    "success": true,
+    "nodes_explored": 31,
+    "path_length": 26,
+    "execution_time": 0.4460020065307617,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 22,
+    "shelf_name": "15000-15999_dungeon_757_2.shelf",
+    "pair_id": 1,
+    "start": [
+      72,
+      7
+    ],
+    "goal": [
+      52,
+      86
+    ],
+    "success": true,
+    "nodes_explored": 179,
+    "path_length": 59,
+    "execution_time": 6.01333212852478,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 22,
+    "shelf_name": "15000-15999_dungeon_757_2.shelf",
+    "pair_id": 2,
+    "start": [
+      73,
+      12
+    ],
+    "goal": [
+      80,
+      75
+    ],
+    "success": true,
+    "nodes_explored": 60,
+    "path_length": 34,
+    "execution_time": 0.6456270217895508,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 22,
+    "shelf_name": "15000-15999_dungeon_757_2.shelf",
+    "pair_id": 3,
+    "start": [
+      11,
+      86
+    ],
+    "goal": [
+      10,
+      16
+    ],
+    "success": true,
+    "nodes_explored": 71,
+    "path_length": 40,
+    "execution_time": 1.0456569194793701,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 22,
+    "shelf_name": "15000-15999_dungeon_757_2.shelf",
+    "pair_id": 4,
+    "start": [
+      41,
+      92
+    ],
+    "goal": [
+      49,
+      7
+    ],
+    "success": true,
+    "nodes_explored": 307,
+    "path_length": 69,
+    "execution_time": 5.8513710498809814,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 23,
+    "shelf_name": "15000-15999_dungeon_757_3.shelf",
+    "pair_id": 0,
+    "start": [
+      12,
+      23
+    ],
+    "goal": [
+      9,
+      64
+    ],
+    "success": true,
+    "nodes_explored": 68,
+    "path_length": 27,
+    "execution_time": 0.99137282371521,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 23,
+    "shelf_name": "15000-15999_dungeon_757_3.shelf",
+    "pair_id": 1,
+    "start": [
+      9,
+      76
+    ],
+    "goal": [
+      75,
+      87
+    ],
+    "success": true,
+    "nodes_explored": 74,
+    "path_length": 37,
+    "execution_time": 0.7314167022705078,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 23,
+    "shelf_name": "15000-15999_dungeon_757_3.shelf",
+    "pair_id": 2,
+    "start": [
+      94,
+      14
+    ],
+    "goal": [
+      86,
+      43
+    ],
+    "success": true,
+    "nodes_explored": 34,
+    "path_length": 19,
+    "execution_time": 0.2669229507446289,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 23,
+    "shelf_name": "15000-15999_dungeon_757_3.shelf",
+    "pair_id": 3,
+    "start": [
+      47,
+      86
+    ],
+    "goal": [
+      85,
+      60
+    ],
+    "success": true,
+    "nodes_explored": 208,
+    "path_length": 38,
+    "execution_time": 6.537232875823975,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 23,
+    "shelf_name": "15000-15999_dungeon_757_3.shelf",
+    "pair_id": 4,
+    "start": [
+      81,
+      26
+    ],
+    "goal": [
+      44,
+      94
+    ],
+    "success": true,
+    "nodes_explored": 127,
+    "path_length": 54,
+    "execution_time": 4.213234901428223,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 24,
+    "shelf_name": "15000-15999_dungeon_757_4.shelf",
+    "pair_id": 0,
+    "start": [
+      59,
+      85
+    ],
+    "goal": [
+      13,
+      89
+    ],
+    "success": true,
+    "nodes_explored": 36,
+    "path_length": 27,
+    "execution_time": 0.6683149337768555,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 24,
+    "shelf_name": "15000-15999_dungeon_757_4.shelf",
+    "pair_id": 1,
+    "start": [
+      92,
+      70
+    ],
+    "goal": [
+      6,
+      38
+    ],
+    "success": true,
+    "nodes_explored": 246,
+    "path_length": 81,
+    "execution_time": 7.54741907119751,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 24,
+    "shelf_name": "15000-15999_dungeon_757_4.shelf",
+    "pair_id": 2,
+    "start": [
+      12,
+      84
+    ],
+    "goal": [
+      16,
+      48
+    ],
+    "success": true,
+    "nodes_explored": 36,
+    "path_length": 19,
+    "execution_time": 0.29219579696655273,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 24,
+    "shelf_name": "15000-15999_dungeon_757_4.shelf",
+    "pair_id": 3,
+    "start": [
+      58,
+      90
+    ],
+    "goal": [
+      83,
+      59
+    ],
+    "success": true,
+    "nodes_explored": 47,
+    "path_length": 26,
+    "execution_time": 0.5719578266143799,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 24,
+    "shelf_name": "15000-15999_dungeon_757_4.shelf",
+    "pair_id": 4,
+    "start": [
+      30,
+      90
+    ],
+    "goal": [
+      92,
+      26
+    ],
+    "success": true,
+    "nodes_explored": 139,
+    "path_length": 63,
+    "execution_time": 5.110942125320435,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 25,
+    "shelf_name": "16000-16999_dungeon_1682_0.shelf",
+    "pair_id": 0,
+    "start": [
+      77,
+      8
+    ],
+    "goal": [
+      16,
+      53
+    ],
+    "success": true,
+    "nodes_explored": 330,
+    "path_length": 86,
+    "execution_time": 8.73034119606018,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 25,
+    "shelf_name": "16000-16999_dungeon_1682_0.shelf",
+    "pair_id": 1,
+    "start": [
+      41,
+      88
+    ],
+    "goal": [
+      8,
+      6
+    ],
+    "success": true,
+    "nodes_explored": 154,
+    "path_length": 55,
+    "execution_time": 6.883615970611572,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 25,
+    "shelf_name": "16000-16999_dungeon_1682_0.shelf",
+    "pair_id": 2,
+    "start": [
+      45,
+      18
+    ],
+    "goal": [
+      93,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 153,
+    "path_length": 57,
+    "execution_time": 4.719821214675903,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 25,
+    "shelf_name": "16000-16999_dungeon_1682_0.shelf",
+    "pair_id": 3,
+    "start": [
+      62,
+      6
+    ],
+    "goal": [
+      34,
+      81
+    ],
+    "success": true,
+    "nodes_explored": 181,
+    "path_length": 67,
+    "execution_time": 4.149291038513184,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 25,
+    "shelf_name": "16000-16999_dungeon_1682_0.shelf",
+    "pair_id": 4,
+    "start": [
+      53,
+      87
+    ],
+    "goal": [
+      14,
+      40
+    ],
+    "success": true,
+    "nodes_explored": 361,
+    "path_length": 97,
+    "execution_time": 9.726338624954224,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 26,
+    "shelf_name": "16000-16999_dungeon_1682_1.shelf",
+    "pair_id": 0,
+    "start": [
+      27,
+      19
+    ],
+    "goal": [
+      45,
+      85
+    ],
+    "success": true,
+    "nodes_explored": 142,
+    "path_length": 54,
+    "execution_time": 7.067099094390869,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 26,
+    "shelf_name": "16000-16999_dungeon_1682_1.shelf",
+    "pair_id": 1,
+    "start": [
+      11,
+      68
+    ],
+    "goal": [
+      52,
+      19
+    ],
+    "success": true,
+    "nodes_explored": 81,
+    "path_length": 43,
+    "execution_time": 1.3795592784881592,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 26,
+    "shelf_name": "16000-16999_dungeon_1682_1.shelf",
+    "pair_id": 2,
+    "start": [
+      12,
+      53
+    ],
+    "goal": [
+      63,
+      9
+    ],
+    "success": true,
+    "nodes_explored": 103,
+    "path_length": 45,
+    "execution_time": 1.7812609672546387,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 26,
+    "shelf_name": "16000-16999_dungeon_1682_1.shelf",
+    "pair_id": 3,
+    "start": [
+      12,
+      58
+    ],
+    "goal": [
+      88,
+      30
+    ],
+    "success": true,
+    "nodes_explored": 176,
+    "path_length": 61,
+    "execution_time": 4.295264005661011,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 26,
+    "shelf_name": "16000-16999_dungeon_1682_1.shelf",
+    "pair_id": 4,
+    "start": [
+      74,
+      81
+    ],
+    "goal": [
+      18,
+      94
+    ],
+    "success": true,
+    "nodes_explored": 58,
+    "path_length": 34,
+    "execution_time": 0.9809720516204834,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 27,
+    "shelf_name": "16000-16999_dungeon_1682_2.shelf",
+    "pair_id": 0,
+    "start": [
+      38,
+      86
+    ],
+    "goal": [
+      59,
+      8
+    ],
+    "success": true,
+    "nodes_explored": 170,
+    "path_length": 69,
+    "execution_time": 3.6708059310913086,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 27,
+    "shelf_name": "16000-16999_dungeon_1682_2.shelf",
+    "pair_id": 1,
+    "start": [
+      87,
+      36
+    ],
+    "goal": [
+      30,
+      14
+    ],
+    "success": true,
+    "nodes_explored": 105,
+    "path_length": 42,
+    "execution_time": 3.3058018684387207,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 27,
+    "shelf_name": "16000-16999_dungeon_1682_2.shelf",
+    "pair_id": 2,
+    "start": [
+      56,
+      17
+    ],
+    "goal": [
+      9,
+      63
+    ],
+    "success": true,
+    "nodes_explored": 247,
+    "path_length": 93,
+    "execution_time": 6.526759147644043,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 27,
+    "shelf_name": "16000-16999_dungeon_1682_2.shelf",
+    "pair_id": 3,
+    "start": [
+      83,
+      93
+    ],
+    "goal": [
+      49,
+      93
+    ],
+    "success": true,
+    "nodes_explored": 61,
+    "path_length": 20,
+    "execution_time": 0.477323055267334,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 27,
+    "shelf_name": "16000-16999_dungeon_1682_2.shelf",
+    "pair_id": 4,
+    "start": [
+      6,
+      92
+    ],
+    "goal": [
+      67,
+      93
+    ],
+    "success": true,
+    "nodes_explored": 81,
+    "path_length": 39,
+    "execution_time": 1.0187978744506836,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 28,
+    "shelf_name": "16000-16999_dungeon_1682_3.shelf",
+    "pair_id": 0,
+    "start": [
+      90,
+      53
+    ],
+    "goal": [
+      5,
+      43
+    ],
+    "success": true,
+    "nodes_explored": 220,
+    "path_length": 68,
+    "execution_time": 3.863182783126831,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 28,
+    "shelf_name": "16000-16999_dungeon_1682_3.shelf",
+    "pair_id": 1,
+    "start": [
+      83,
+      87
+    ],
+    "goal": [
+      58,
+      18
+    ],
+    "success": true,
+    "nodes_explored": 261,
+    "path_length": 52,
+    "execution_time": 8.666614770889282,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 28,
+    "shelf_name": "16000-16999_dungeon_1682_3.shelf",
+    "pair_id": 2,
+    "start": [
+      91,
+      63
+    ],
+    "goal": [
+      11,
+      61
+    ],
+    "success": true,
+    "nodes_explored": 310,
+    "path_length": 59,
+    "execution_time": 7.627936601638794,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 28,
+    "shelf_name": "16000-16999_dungeon_1682_3.shelf",
+    "pair_id": 3,
+    "start": [
+      35,
+      94
+    ],
+    "goal": [
+      19,
+      51
+    ],
+    "success": true,
+    "nodes_explored": 48,
+    "path_length": 32,
+    "execution_time": 0.6764712333679199,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 28,
+    "shelf_name": "16000-16999_dungeon_1682_3.shelf",
+    "pair_id": 4,
+    "start": [
+      46,
+      18
+    ],
+    "goal": [
+      86,
+      69
+    ],
+    "success": true,
+    "nodes_explored": 251,
+    "path_length": 89,
+    "execution_time": 9.036379098892212,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 29,
+    "shelf_name": "16000-16999_dungeon_1682_4.shelf",
+    "pair_id": 0,
+    "start": [
+      5,
+      12
+    ],
+    "goal": [
+      45,
+      90
+    ],
+    "success": true,
+    "nodes_explored": 78,
+    "path_length": 58,
+    "execution_time": 3.190910816192627,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 29,
+    "shelf_name": "16000-16999_dungeon_1682_4.shelf",
+    "pair_id": 1,
+    "start": [
+      31,
+      91
+    ],
+    "goal": [
+      56,
+      13
+    ],
+    "success": true,
+    "nodes_explored": 195,
+    "path_length": 75,
+    "execution_time": 6.122528076171875,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 29,
+    "shelf_name": "16000-16999_dungeon_1682_4.shelf",
+    "pair_id": 2,
+    "start": [
+      35,
+      82
+    ],
+    "goal": [
+      6,
+      43
+    ],
+    "success": true,
+    "nodes_explored": 80,
+    "path_length": 34,
+    "execution_time": 2.2504570484161377,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 29,
+    "shelf_name": "16000-16999_dungeon_1682_4.shelf",
+    "pair_id": 3,
+    "start": [
+      15,
+      61
+    ],
+    "goal": [
+      77,
+      84
+    ],
+    "success": true,
+    "nodes_explored": 77,
+    "path_length": 44,
+    "execution_time": 1.321173906326294,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 29,
+    "shelf_name": "16000-16999_dungeon_1682_4.shelf",
+    "pair_id": 4,
+    "start": [
+      64,
+      94
+    ],
+    "goal": [
+      19,
+      22
+    ],
+    "success": true,
+    "nodes_explored": 106,
+    "path_length": 58,
+    "execution_time": 1.301185131072998,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 30,
+    "shelf_name": "16000-16999_dungeon_2210_0.shelf",
+    "pair_id": 0,
+    "start": [
+      62,
+      82
+    ],
+    "goal": [
+      89,
+      48
+    ],
+    "success": true,
+    "nodes_explored": 195,
+    "path_length": 34,
+    "execution_time": 5.508607864379883,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 30,
+    "shelf_name": "16000-16999_dungeon_2210_0.shelf",
+    "pair_id": 1,
+    "start": [
+      82,
+      33
+    ],
+    "goal": [
+      35,
+      13
+    ],
+    "success": true,
+    "nodes_explored": 68,
+    "path_length": 35,
+    "execution_time": 1.8559601306915283,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 30,
+    "shelf_name": "16000-16999_dungeon_2210_0.shelf",
+    "pair_id": 2,
+    "start": [
+      19,
+      18
+    ],
+    "goal": [
+      57,
+      83
+    ],
+    "success": true,
+    "nodes_explored": 99,
+    "path_length": 53,
+    "execution_time": 2.3413729667663574,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 30,
+    "shelf_name": "16000-16999_dungeon_2210_0.shelf",
+    "pair_id": 3,
+    "start": [
+      92,
+      89
+    ],
+    "goal": [
+      45,
+      6
+    ],
+    "success": true,
+    "nodes_explored": 202,
+    "path_length": 62,
+    "execution_time": 4.51783013343811,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 30,
+    "shelf_name": "16000-16999_dungeon_2210_0.shelf",
+    "pair_id": 4,
+    "start": [
+      7,
+      58
+    ],
+    "goal": [
+      63,
+      18
+    ],
+    "success": true,
+    "nodes_explored": 65,
+    "path_length": 46,
+    "execution_time": 0.7186169624328613,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 31,
+    "shelf_name": "16000-16999_dungeon_2210_1.shelf",
+    "pair_id": 0,
+    "start": [
+      9,
+      73
+    ],
+    "goal": [
+      84,
+      63
+    ],
+    "success": true,
+    "nodes_explored": 94,
+    "path_length": 49,
+    "execution_time": 2.74530291557312,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 31,
+    "shelf_name": "16000-16999_dungeon_2210_1.shelf",
+    "pair_id": 1,
+    "start": [
+      55,
+      8
+    ],
+    "goal": [
+      61,
+      89
+    ],
+    "success": true,
+    "nodes_explored": 114,
+    "path_length": 76,
+    "execution_time": 3.333853006362915,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 31,
+    "shelf_name": "16000-16999_dungeon_2210_1.shelf",
+    "pair_id": 2,
+    "start": [
+      8,
+      86
+    ],
+    "goal": [
+      79,
+      88
+    ],
+    "success": true,
+    "nodes_explored": 73,
+    "path_length": 42,
+    "execution_time": 0.7265069484710693,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 31,
+    "shelf_name": "16000-16999_dungeon_2210_1.shelf",
+    "pair_id": 3,
+    "start": [
+      9,
+      13
+    ],
+    "goal": [
+      94,
+      60
+    ],
+    "success": true,
+    "nodes_explored": 241,
+    "path_length": 88,
+    "execution_time": 9.190050840377808,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 31,
+    "shelf_name": "16000-16999_dungeon_2210_1.shelf",
+    "pair_id": 4,
+    "start": [
+      20,
+      94
+    ],
+    "goal": [
+      91,
+      28
+    ],
+    "success": true,
+    "nodes_explored": 137,
+    "path_length": 67,
+    "execution_time": 5.098231077194214,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 32,
+    "shelf_name": "16000-16999_dungeon_2210_2.shelf",
+    "pair_id": 0,
+    "start": [
+      66,
+      93
+    ],
+    "goal": [
+      9,
+      29
+    ],
+    "success": true,
+    "nodes_explored": 111,
+    "path_length": 57,
+    "execution_time": 2.3416500091552734,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 32,
+    "shelf_name": "16000-16999_dungeon_2210_2.shelf",
+    "pair_id": 1,
+    "start": [
+      68,
+      13
+    ],
+    "goal": [
+      8,
+      61
+    ],
+    "success": true,
+    "nodes_explored": 80,
+    "path_length": 54,
+    "execution_time": 1.6376030445098877,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 32,
+    "shelf_name": "16000-16999_dungeon_2210_2.shelf",
+    "pair_id": 2,
+    "start": [
+      15,
+      49
+    ],
+    "goal": [
+      15,
+      5
+    ],
+    "success": true,
+    "nodes_explored": 73,
+    "path_length": 24,
+    "execution_time": 1.3395888805389404,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 32,
+    "shelf_name": "16000-16999_dungeon_2210_2.shelf",
+    "pair_id": 3,
+    "start": [
+      83,
+      44
+    ],
+    "goal": [
+      68,
+      85
+    ],
+    "success": true,
+    "nodes_explored": 73,
+    "path_length": 27,
+    "execution_time": 1.580348014831543,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 32,
+    "shelf_name": "16000-16999_dungeon_2210_2.shelf",
+    "pair_id": 4,
+    "start": [
+      62,
+      87
+    ],
+    "goal": [
+      11,
+      77
+    ],
+    "success": true,
+    "nodes_explored": 77,
+    "path_length": 32,
+    "execution_time": 2.759085178375244,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 33,
+    "shelf_name": "16000-16999_dungeon_2210_3.shelf",
+    "pair_id": 0,
+    "start": [
+      69,
+      6
+    ],
+    "goal": [
+      8,
+      83
+    ],
+    "success": true,
+    "nodes_explored": 275,
+    "path_length": 81,
+    "execution_time": 5.586099147796631,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 33,
+    "shelf_name": "16000-16999_dungeon_2210_3.shelf",
+    "pair_id": 1,
+    "start": [
+      11,
+      20
+    ],
+    "goal": [
+      84,
+      26
+    ],
+    "success": true,
+    "nodes_explored": 78,
+    "path_length": 41,
+    "execution_time": 1.6744158267974854,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 33,
+    "shelf_name": "16000-16999_dungeon_2210_3.shelf",
+    "pair_id": 2,
+    "start": [
+      11,
+      50
+    ],
+    "goal": [
+      24,
+      13
+    ],
+    "success": true,
+    "nodes_explored": 292,
+    "path_length": 30,
+    "execution_time": 5.446430921554565,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 33,
+    "shelf_name": "16000-16999_dungeon_2210_3.shelf",
+    "pair_id": 3,
+    "start": [
+      54,
+      11
+    ],
+    "goal": [
+      82,
+      89
+    ],
+    "success": true,
+    "nodes_explored": 116,
+    "path_length": 53,
+    "execution_time": 2.9724819660186768,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 33,
+    "shelf_name": "16000-16999_dungeon_2210_3.shelf",
+    "pair_id": 4,
+    "start": [
+      86,
+      60
+    ],
+    "goal": [
+      11,
+      8
+    ],
+    "success": true,
+    "nodes_explored": 140,
+    "path_length": 64,
+    "execution_time": 2.765362024307251,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 34,
+    "shelf_name": "16000-16999_dungeon_2210_4.shelf",
+    "pair_id": 0,
+    "start": [
+      42,
+      83
+    ],
+    "goal": [
+      28,
+      9
+    ],
+    "success": true,
+    "nodes_explored": 150,
+    "path_length": 55,
+    "execution_time": 7.530512094497681,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 34,
+    "shelf_name": "16000-16999_dungeon_2210_4.shelf",
+    "pair_id": 1,
+    "start": [
+      46,
+      13
+    ],
+    "goal": [
+      52,
+      89
+    ],
+    "success": true,
+    "nodes_explored": 271,
+    "path_length": 76,
+    "execution_time": 8.122169017791748,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 34,
+    "shelf_name": "16000-16999_dungeon_2210_4.shelf",
+    "pair_id": 2,
+    "start": [
+      90,
+      92
+    ],
+    "goal": [
+      70,
+      19
+    ],
+    "success": true,
+    "nodes_explored": 122,
+    "path_length": 48,
+    "execution_time": 2.4523091316223145,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 34,
+    "shelf_name": "16000-16999_dungeon_2210_4.shelf",
+    "pair_id": 3,
+    "start": [
+      70,
+      17
+    ],
+    "goal": [
+      11,
+      49
+    ],
+    "success": true,
+    "nodes_explored": 60,
+    "path_length": 45,
+    "execution_time": 1.7754290103912354,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 34,
+    "shelf_name": "16000-16999_dungeon_2210_4.shelf",
+    "pair_id": 4,
+    "start": [
+      59,
+      92
+    ],
+    "goal": [
+      8,
+      84
+    ],
+    "success": true,
+    "nodes_explored": 71,
+    "path_length": 29,
+    "execution_time": 0.9925277233123779,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 35,
+    "shelf_name": "16000-16999_dungeon_2691_0.shelf",
+    "pair_id": 0,
+    "start": [
+      80,
+      71
+    ],
+    "goal": [
+      31,
+      88
+    ],
+    "success": true,
+    "nodes_explored": 74,
+    "path_length": 34,
+    "execution_time": 2.1359431743621826,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 35,
+    "shelf_name": "16000-16999_dungeon_2691_0.shelf",
+    "pair_id": 1,
+    "start": [
+      94,
+      13
+    ],
+    "goal": [
+      48,
+      11
+    ],
+    "success": true,
+    "nodes_explored": 69,
+    "path_length": 27,
+    "execution_time": 0.6965570449829102,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 35,
+    "shelf_name": "16000-16999_dungeon_2691_0.shelf",
+    "pair_id": 2,
+    "start": [
+      5,
+      54
+    ],
+    "goal": [
+      27,
+      19
+    ],
+    "success": true,
+    "nodes_explored": 40,
+    "path_length": 25,
+    "execution_time": 0.388930082321167,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 35,
+    "shelf_name": "16000-16999_dungeon_2691_0.shelf",
+    "pair_id": 3,
+    "start": [
+      35,
+      85
+    ],
+    "goal": [
+      75,
+      93
+    ],
+    "success": true,
+    "nodes_explored": 101,
+    "path_length": 28,
+    "execution_time": 1.1095139980316162,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 35,
+    "shelf_name": "16000-16999_dungeon_2691_0.shelf",
+    "pair_id": 4,
+    "start": [
+      9,
+      92
+    ],
+    "goal": [
+      49,
+      13
+    ],
+    "success": true,
+    "nodes_explored": 186,
+    "path_length": 98,
+    "execution_time": 11.456468105316162,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 36,
+    "shelf_name": "16000-16999_dungeon_2691_1.shelf",
+    "pair_id": 0,
+    "start": [
+      78,
+      5
+    ],
+    "goal": [
+      24,
+      16
+    ],
+    "success": true,
+    "nodes_explored": 63,
+    "path_length": 31,
+    "execution_time": 0.5569229125976562,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 36,
+    "shelf_name": "16000-16999_dungeon_2691_1.shelf",
+    "pair_id": 1,
+    "start": [
+      93,
+      83
+    ],
+    "goal": [
+      40,
+      13
+    ],
+    "success": true,
+    "nodes_explored": 112,
+    "path_length": 59,
+    "execution_time": 1.9286162853240967,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 36,
+    "shelf_name": "16000-16999_dungeon_2691_1.shelf",
+    "pair_id": 2,
+    "start": [
+      77,
+      14
+    ],
+    "goal": [
+      5,
+      27
+    ],
+    "success": true,
+    "nodes_explored": 112,
+    "path_length": 41,
+    "execution_time": 3.265211820602417,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 36,
+    "shelf_name": "16000-16999_dungeon_2691_1.shelf",
+    "pair_id": 3,
+    "start": [
+      13,
+      46
+    ],
+    "goal": [
+      15,
+      90
+    ],
+    "success": true,
+    "nodes_explored": 76,
+    "path_length": 25,
+    "execution_time": 1.198063850402832,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 36,
+    "shelf_name": "16000-16999_dungeon_2691_1.shelf",
+    "pair_id": 4,
+    "start": [
+      10,
+      45
+    ],
+    "goal": [
+      77,
+      14
+    ],
+    "success": true,
+    "nodes_explored": 186,
+    "path_length": 88,
+    "execution_time": 6.731732130050659,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 37,
+    "shelf_name": "16000-16999_dungeon_2691_2.shelf",
+    "pair_id": 0,
+    "start": [
+      94,
+      20
+    ],
+    "goal": [
+      35,
+      9
+    ],
+    "success": true,
+    "nodes_explored": 70,
+    "path_length": 34,
+    "execution_time": 0.7602639198303223,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 37,
+    "shelf_name": "16000-16999_dungeon_2691_2.shelf",
+    "pair_id": 1,
+    "start": [
+      78,
+      7
+    ],
+    "goal": [
+      16,
+      9
+    ],
+    "success": true,
+    "nodes_explored": 113,
+    "path_length": 38,
+    "execution_time": 1.5356128215789795,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 37,
+    "shelf_name": "16000-16999_dungeon_2691_2.shelf",
+    "pair_id": 2,
+    "start": [
+      27,
+      13
+    ],
+    "goal": [
+      9,
+      79
+    ],
+    "success": true,
+    "nodes_explored": 117,
+    "path_length": 41,
+    "execution_time": 2.260359048843384,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 37,
+    "shelf_name": "16000-16999_dungeon_2691_2.shelf",
+    "pair_id": 3,
+    "start": [
+      35,
+      83
+    ],
+    "goal": [
+      80,
+      80
+    ],
+    "success": true,
+    "nodes_explored": 31,
+    "path_length": 24,
+    "execution_time": 0.31042003631591797,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 37,
+    "shelf_name": "16000-16999_dungeon_2691_2.shelf",
+    "pair_id": 4,
+    "start": [
+      74,
+      94
+    ],
+    "goal": [
+      23,
+      83
+    ],
+    "success": true,
+    "nodes_explored": 62,
+    "path_length": 31,
+    "execution_time": 0.7090811729431152,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 38,
+    "shelf_name": "16000-16999_dungeon_2691_3.shelf",
+    "pair_id": 0,
+    "start": [
+      13,
+      46
+    ],
+    "goal": [
+      26,
+      93
+    ],
+    "success": true,
+    "nodes_explored": 161,
+    "path_length": 30,
+    "execution_time": 6.188160181045532,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 38,
+    "shelf_name": "16000-16999_dungeon_2691_3.shelf",
+    "pair_id": 1,
+    "start": [
+      62,
+      90
+    ],
+    "goal": [
+      85,
+      12
+    ],
+    "success": true,
+    "nodes_explored": 125,
+    "path_length": 93,
+    "execution_time": 3.565096855163574,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 38,
+    "shelf_name": "16000-16999_dungeon_2691_3.shelf",
+    "pair_id": 2,
+    "start": [
+      54,
+      86
+    ],
+    "goal": [
+      89,
+      32
+    ],
+    "success": true,
+    "nodes_explored": 101,
+    "path_length": 43,
+    "execution_time": 2.66060209274292,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 38,
+    "shelf_name": "16000-16999_dungeon_2691_3.shelf",
+    "pair_id": 3,
+    "start": [
+      85,
+      66
+    ],
+    "goal": [
+      9,
+      41
+    ],
+    "success": true,
+    "nodes_explored": 219,
+    "path_length": 73,
+    "execution_time": 6.535653829574585,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 38,
+    "shelf_name": "16000-16999_dungeon_2691_3.shelf",
+    "pair_id": 4,
+    "start": [
+      54,
+      90
+    ],
+    "goal": [
+      7,
+      60
+    ],
+    "success": true,
+    "nodes_explored": 149,
+    "path_length": 36,
+    "execution_time": 3.5310211181640625,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 39,
+    "shelf_name": "16000-16999_dungeon_2691_4.shelf",
+    "pair_id": 0,
+    "start": [
+      11,
+      92
+    ],
+    "goal": [
+      9,
+      20
+    ],
+    "success": true,
+    "nodes_explored": 88,
+    "path_length": 41,
+    "execution_time": 0.7439100742340088,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 39,
+    "shelf_name": "16000-16999_dungeon_2691_4.shelf",
+    "pair_id": 1,
+    "start": [
+      9,
+      37
+    ],
+    "goal": [
+      49,
+      80
+    ],
+    "success": true,
+    "nodes_explored": 92,
+    "path_length": 41,
+    "execution_time": 1.2542331218719482,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 39,
+    "shelf_name": "16000-16999_dungeon_2691_4.shelf",
+    "pair_id": 2,
+    "start": [
+      32,
+      10
+    ],
+    "goal": [
+      86,
+      18
+    ],
+    "success": true,
+    "nodes_explored": 54,
+    "path_length": 30,
+    "execution_time": 0.5008401870727539,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 39,
+    "shelf_name": "16000-16999_dungeon_2691_4.shelf",
+    "pair_id": 3,
+    "start": [
+      16,
+      33
+    ],
+    "goal": [
+      93,
+      54
+    ],
+    "success": true,
+    "nodes_explored": 229,
+    "path_length": 62,
+    "execution_time": 3.9267578125,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 39,
+    "shelf_name": "16000-16999_dungeon_2691_4.shelf",
+    "pair_id": 4,
+    "start": [
+      88,
+      67
+    ],
+    "goal": [
+      12,
+      23
+    ],
+    "success": true,
+    "nodes_explored": 136,
+    "path_length": 66,
+    "execution_time": 6.372650861740112,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 40,
+    "shelf_name": "16000-16999_dungeon_3051_0.shelf",
+    "pair_id": 0,
+    "start": [
+      45,
+      18
+    ],
+    "goal": [
+      14,
+      75
+    ],
+    "success": true,
+    "nodes_explored": 74,
+    "path_length": 46,
+    "execution_time": 1.873270034790039,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 40,
+    "shelf_name": "16000-16999_dungeon_3051_0.shelf",
+    "pair_id": 1,
+    "start": [
+      20,
+      7
+    ],
+    "goal": [
+      41,
+      84
+    ],
+    "success": true,
+    "nodes_explored": 225,
+    "path_length": 52,
+    "execution_time": 3.495021104812622,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 40,
+    "shelf_name": "16000-16999_dungeon_3051_0.shelf",
+    "pair_id": 2,
+    "start": [
+      22,
+      86
+    ],
+    "goal": [
+      18,
+      54
+    ],
+    "success": true,
+    "nodes_explored": 27,
+    "path_length": 18,
+    "execution_time": 0.18967294692993164,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 40,
+    "shelf_name": "16000-16999_dungeon_3051_0.shelf",
+    "pair_id": 3,
+    "start": [
+      64,
+      14
+    ],
+    "goal": [
+      85,
+      88
+    ],
+    "success": true,
+    "nodes_explored": 174,
+    "path_length": 96,
+    "execution_time": 3.36800217628479,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 40,
+    "shelf_name": "16000-16999_dungeon_3051_0.shelf",
+    "pair_id": 4,
+    "start": [
+      25,
+      81
+    ],
+    "goal": [
+      78,
+      17
+    ],
+    "success": true,
+    "nodes_explored": 144,
+    "path_length": 66,
+    "execution_time": 7.434278249740601,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 41,
+    "shelf_name": "16000-16999_dungeon_3051_1.shelf",
+    "pair_id": 0,
+    "start": [
+      8,
+      86
+    ],
+    "goal": [
+      17,
+      30
+    ],
+    "success": true,
+    "nodes_explored": 61,
+    "path_length": 33,
+    "execution_time": 0.478651762008667,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 41,
+    "shelf_name": "16000-16999_dungeon_3051_1.shelf",
+    "pair_id": 1,
+    "start": [
+      5,
+      60
+    ],
+    "goal": [
+      50,
+      80
+    ],
+    "success": true,
+    "nodes_explored": 53,
+    "path_length": 29,
+    "execution_time": 0.7330880165100098,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 41,
+    "shelf_name": "16000-16999_dungeon_3051_1.shelf",
+    "pair_id": 2,
+    "start": [
+      79,
+      6
+    ],
+    "goal": [
+      32,
+      84
+    ],
+    "success": true,
+    "nodes_explored": 123,
+    "path_length": 75,
+    "execution_time": 6.217790842056274,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 41,
+    "shelf_name": "16000-16999_dungeon_3051_1.shelf",
+    "pair_id": 3,
+    "start": [
+      84,
+      46
+    ],
+    "goal": [
+      67,
+      83
+    ],
+    "success": true,
+    "nodes_explored": 179,
+    "path_length": 30,
+    "execution_time": 3.4035823345184326,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 41,
+    "shelf_name": "16000-16999_dungeon_3051_1.shelf",
+    "pair_id": 4,
+    "start": [
+      8,
+      78
+    ],
+    "goal": [
+      20,
+      14
+    ],
+    "success": true,
+    "nodes_explored": 92,
+    "path_length": 35,
+    "execution_time": 1.141793966293335,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 42,
+    "shelf_name": "16000-16999_dungeon_3051_2.shelf",
+    "pair_id": 0,
+    "start": [
+      81,
+      90
+    ],
+    "goal": [
+      77,
+      19
+    ],
+    "success": true,
+    "nodes_explored": 104,
+    "path_length": 42,
+    "execution_time": 2.846637010574341,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 42,
+    "shelf_name": "16000-16999_dungeon_3051_2.shelf",
+    "pair_id": 1,
+    "start": [
+      62,
+      81
+    ],
+    "goal": [
+      19,
+      88
+    ],
+    "success": true,
+    "nodes_explored": 32,
+    "path_length": 27,
+    "execution_time": 0.3901088237762451,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 42,
+    "shelf_name": "16000-16999_dungeon_3051_2.shelf",
+    "pair_id": 2,
+    "start": [
+      24,
+      16
+    ],
+    "goal": [
+      10,
+      55
+    ],
+    "success": true,
+    "nodes_explored": 115,
+    "path_length": 26,
+    "execution_time": 2.8162970542907715,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 42,
+    "shelf_name": "16000-16999_dungeon_3051_2.shelf",
+    "pair_id": 3,
+    "start": [
+      20,
+      14
+    ],
+    "goal": [
+      25,
+      85
+    ],
+    "success": true,
+    "nodes_explored": 126,
+    "path_length": 41,
+    "execution_time": 5.274860143661499,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 42,
+    "shelf_name": "16000-16999_dungeon_3051_2.shelf",
+    "pair_id": 4,
+    "start": [
+      53,
+      10
+    ],
+    "goal": [
+      32,
+      90
+    ],
+    "success": true,
+    "nodes_explored": 168,
+    "path_length": 65,
+    "execution_time": 6.065782070159912,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 43,
+    "shelf_name": "16000-16999_dungeon_3051_3.shelf",
+    "pair_id": 0,
+    "start": [
+      6,
+      88
+    ],
+    "goal": [
+      82,
+      67
+    ],
+    "success": true,
+    "nodes_explored": 374,
+    "path_length": 53,
+    "execution_time": 9.891021013259888,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 43,
+    "shelf_name": "16000-16999_dungeon_3051_3.shelf",
+    "pair_id": 1,
+    "start": [
+      84,
+      59
+    ],
+    "goal": [
+      9,
+      39
+    ],
+    "success": true,
+    "nodes_explored": 325,
+    "path_length": 70,
+    "execution_time": 11.99626612663269,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 43,
+    "shelf_name": "16000-16999_dungeon_3051_3.shelf",
+    "pair_id": 2,
+    "start": [
+      15,
+      48
+    ],
+    "goal": [
+      6,
+      94
+    ],
+    "success": true,
+    "nodes_explored": 91,
+    "path_length": 29,
+    "execution_time": 2.4836909770965576,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 43,
+    "shelf_name": "16000-16999_dungeon_3051_3.shelf",
+    "pair_id": 3,
+    "start": [
+      14,
+      10
+    ],
+    "goal": [
+      85,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 131,
+    "path_length": 72,
+    "execution_time": 3.461461067199707,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 43,
+    "shelf_name": "16000-16999_dungeon_3051_3.shelf",
+    "pair_id": 4,
+    "start": [
+      53,
+      92
+    ],
+    "goal": [
+      80,
+      41
+    ],
+    "success": true,
+    "nodes_explored": 88,
+    "path_length": 37,
+    "execution_time": 1.5071728229522705,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 44,
+    "shelf_name": "16000-16999_dungeon_3051_4.shelf",
+    "pair_id": 0,
+    "start": [
+      16,
+      11
+    ],
+    "goal": [
+      38,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 320,
+    "path_length": 52,
+    "execution_time": 8.158147096633911,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 44,
+    "shelf_name": "16000-16999_dungeon_3051_4.shelf",
+    "pair_id": 1,
+    "start": [
+      13,
+      90
+    ],
+    "goal": [
+      16,
+      42
+    ],
+    "success": true,
+    "nodes_explored": 59,
+    "path_length": 26,
+    "execution_time": 0.49706101417541504,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 44,
+    "shelf_name": "16000-16999_dungeon_3051_4.shelf",
+    "pair_id": 2,
+    "start": [
+      91,
+      7
+    ],
+    "goal": [
+      13,
+      45
+    ],
+    "success": true,
+    "nodes_explored": 107,
+    "path_length": 53,
+    "execution_time": 1.862748146057129,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 44,
+    "shelf_name": "16000-16999_dungeon_3051_4.shelf",
+    "pair_id": 3,
+    "start": [
+      54,
+      9
+    ],
+    "goal": [
+      85,
+      70
+    ],
+    "success": true,
+    "nodes_explored": 267,
+    "path_length": 50,
+    "execution_time": 8.243788003921509,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 44,
+    "shelf_name": "16000-16999_dungeon_3051_4.shelf",
+    "pair_id": 4,
+    "start": [
+      82,
+      30
+    ],
+    "goal": [
+      15,
+      25
+    ],
+    "success": true,
+    "nodes_explored": 132,
+    "path_length": 43,
+    "execution_time": 4.4925971031188965,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 45,
+    "shelf_name": "16000-16999_dungeon_3691_0.shelf",
+    "pair_id": 0,
+    "start": [
+      38,
+      89
+    ],
+    "goal": [
+      91,
+      18
+    ],
+    "success": true,
+    "nodes_explored": 123,
+    "path_length": 63,
+    "execution_time": 2.929414987564087,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 45,
+    "shelf_name": "16000-16999_dungeon_3691_0.shelf",
+    "pair_id": 1,
+    "start": [
+      88,
+      36
+    ],
+    "goal": [
+      89,
+      73
+    ],
+    "success": true,
+    "nodes_explored": 34,
+    "path_length": 24,
+    "execution_time": 0.3821260929107666,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 45,
+    "shelf_name": "16000-16999_dungeon_3691_0.shelf",
+    "pair_id": 2,
+    "start": [
+      14,
+      51
+    ],
+    "goal": [
+      83,
+      74
+    ],
+    "success": true,
+    "nodes_explored": 237,
+    "path_length": 56,
+    "execution_time": 5.406306028366089,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 45,
+    "shelf_name": "16000-16999_dungeon_3691_0.shelf",
+    "pair_id": 3,
+    "start": [
+      91,
+      70
+    ],
+    "goal": [
+      91,
+      25
+    ],
+    "success": true,
+    "nodes_explored": 44,
+    "path_length": 28,
+    "execution_time": 1.1339530944824219,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 45,
+    "shelf_name": "16000-16999_dungeon_3691_0.shelf",
+    "pair_id": 4,
+    "start": [
+      22,
+      15
+    ],
+    "goal": [
+      80,
+      75
+    ],
+    "success": true,
+    "nodes_explored": 205,
+    "path_length": 66,
+    "execution_time": 4.43567681312561,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 46,
+    "shelf_name": "16000-16999_dungeon_3691_1.shelf",
+    "pair_id": 0,
+    "start": [
+      13,
+      24
+    ],
+    "goal": [
+      90,
+      32
+    ],
+    "success": true,
+    "nodes_explored": 129,
+    "path_length": 46,
+    "execution_time": 3.4323151111602783,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 46,
+    "shelf_name": "16000-16999_dungeon_3691_1.shelf",
+    "pair_id": 1,
+    "start": [
+      12,
+      69
+    ],
+    "goal": [
+      92,
+      77
+    ],
+    "success": true,
+    "nodes_explored": 177,
+    "path_length": 92,
+    "execution_time": 3.256105899810791,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 46,
+    "shelf_name": "16000-16999_dungeon_3691_1.shelf",
+    "pair_id": 2,
+    "start": [
+      90,
+      47
+    ],
+    "goal": [
+      16,
+      48
+    ],
+    "success": true,
+    "nodes_explored": 270,
+    "path_length": 69,
+    "execution_time": 5.29053521156311,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 46,
+    "shelf_name": "16000-16999_dungeon_3691_1.shelf",
+    "pair_id": 3,
+    "start": [
+      8,
+      74
+    ],
+    "goal": [
+      54,
+      19
+    ],
+    "success": true,
+    "nodes_explored": 91,
+    "path_length": 47,
+    "execution_time": 1.4087910652160645,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 46,
+    "shelf_name": "16000-16999_dungeon_3691_1.shelf",
+    "pair_id": 4,
+    "start": [
+      87,
+      88
+    ],
+    "goal": [
+      90,
+      58
+    ],
+    "success": true,
+    "nodes_explored": 38,
+    "path_length": 19,
+    "execution_time": 0.29600000381469727,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 47,
+    "shelf_name": "16000-16999_dungeon_3691_2.shelf",
+    "pair_id": 0,
+    "start": [
+      46,
+      83
+    ],
+    "goal": [
+      17,
+      36
+    ],
+    "success": true,
+    "nodes_explored": 63,
+    "path_length": 39,
+    "execution_time": 1.1210031509399414,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 47,
+    "shelf_name": "16000-16999_dungeon_3691_2.shelf",
+    "pair_id": 1,
+    "start": [
+      71,
+      93
+    ],
+    "goal": [
+      63,
+      5
+    ],
+    "success": true,
+    "nodes_explored": 194,
+    "path_length": 55,
+    "execution_time": 5.152806043624878,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 47,
+    "shelf_name": "16000-16999_dungeon_3691_2.shelf",
+    "pair_id": 2,
+    "start": [
+      60,
+      93
+    ],
+    "goal": [
+      27,
+      89
+    ],
+    "success": true,
+    "nodes_explored": 39,
+    "path_length": 21,
+    "execution_time": 0.7169780731201172,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 47,
+    "shelf_name": "16000-16999_dungeon_3691_2.shelf",
+    "pair_id": 3,
+    "start": [
+      81,
+      68
+    ],
+    "goal": [
+      12,
+      76
+    ],
+    "success": true,
+    "nodes_explored": 99,
+    "path_length": 45,
+    "execution_time": 2.013705015182495,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 47,
+    "shelf_name": "16000-16999_dungeon_3691_2.shelf",
+    "pair_id": 4,
+    "start": [
+      11,
+      67
+    ],
+    "goal": [
+      83,
+      51
+    ],
+    "success": true,
+    "nodes_explored": 138,
+    "path_length": 78,
+    "execution_time": 6.760749816894531,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 48,
+    "shelf_name": "16000-16999_dungeon_3691_3.shelf",
+    "pair_id": 0,
+    "start": [
+      28,
+      91
+    ],
+    "goal": [
+      11,
+      40
+    ],
+    "success": true,
+    "nodes_explored": 71,
+    "path_length": 32,
+    "execution_time": 1.9825031757354736,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 48,
+    "shelf_name": "16000-16999_dungeon_3691_3.shelf",
+    "pair_id": 1,
+    "start": [
+      43,
+      83
+    ],
+    "goal": [
+      90,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 44,
+    "path_length": 26,
+    "execution_time": 0.6043610572814941,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 48,
+    "shelf_name": "16000-16999_dungeon_3691_3.shelf",
+    "pair_id": 2,
+    "start": [
+      54,
+      16
+    ],
+    "goal": [
+      82,
+      77
+    ],
+    "success": true,
+    "nodes_explored": 114,
+    "path_length": 49,
+    "execution_time": 3.819457769393921,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 48,
+    "shelf_name": "16000-16999_dungeon_3691_3.shelf",
+    "pair_id": 3,
+    "start": [
+      5,
+      70
+    ],
+    "goal": [
+      94,
+      61
+    ],
+    "success": true,
+    "nodes_explored": 238,
+    "path_length": 56,
+    "execution_time": 7.621773958206177,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 48,
+    "shelf_name": "16000-16999_dungeon_3691_3.shelf",
+    "pair_id": 4,
+    "start": [
+      91,
+      72
+    ],
+    "goal": [
+      37,
+      8
+    ],
+    "success": true,
+    "nodes_explored": 254,
+    "path_length": 85,
+    "execution_time": 5.211246967315674,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 49,
+    "shelf_name": "16000-16999_dungeon_3691_4.shelf",
+    "pair_id": 0,
+    "start": [
+      45,
+      18
+    ],
+    "goal": [
+      19,
+      48
+    ],
+    "success": true,
+    "nodes_explored": 348,
+    "path_length": 44,
+    "execution_time": 10.766633987426758,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 49,
+    "shelf_name": "16000-16999_dungeon_3691_4.shelf",
+    "pair_id": 1,
+    "start": [
+      85,
+      86
+    ],
+    "goal": [
+      94,
+      22
+    ],
+    "success": true,
+    "nodes_explored": 83,
+    "path_length": 40,
+    "execution_time": 1.662466049194336,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 49,
+    "shelf_name": "16000-16999_dungeon_3691_4.shelf",
+    "pair_id": 2,
+    "start": [
+      91,
+      51
+    ],
+    "goal": [
+      23,
+      92
+    ],
+    "success": true,
+    "nodes_explored": 286,
+    "path_length": 91,
+    "execution_time": 6.089502811431885,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 49,
+    "shelf_name": "16000-16999_dungeon_3691_4.shelf",
+    "pair_id": 3,
+    "start": [
+      57,
+      90
+    ],
+    "goal": [
+      15,
+      47
+    ],
+    "success": true,
+    "nodes_explored": 60,
+    "path_length": 41,
+    "execution_time": 0.7254970073699951,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 49,
+    "shelf_name": "16000-16999_dungeon_3691_4.shelf",
+    "pair_id": 4,
+    "start": [
+      78,
+      92
+    ],
+    "goal": [
+      57,
+      17
+    ],
+    "success": true,
+    "nodes_explored": 319,
+    "path_length": 62,
+    "execution_time": 8.216311931610107,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 50,
+    "shelf_name": "17000-17999_dungeon_1094_0.shelf",
+    "pair_id": 0,
+    "start": [
+      85,
+      72
+    ],
+    "goal": [
+      16,
+      63
+    ],
+    "success": true,
+    "nodes_explored": 173,
+    "path_length": 49,
+    "execution_time": 4.006667613983154,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 50,
+    "shelf_name": "17000-17999_dungeon_1094_0.shelf",
+    "pair_id": 1,
+    "start": [
+      50,
+      6
+    ],
+    "goal": [
+      93,
+      33
+    ],
+    "success": true,
+    "nodes_explored": 118,
+    "path_length": 32,
+    "execution_time": 2.5927162170410156,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 50,
+    "shelf_name": "17000-17999_dungeon_1094_0.shelf",
+    "pair_id": 2,
+    "start": [
+      14,
+      6
+    ],
+    "goal": [
+      86,
+      94
+    ],
+    "success": true,
+    "nodes_explored": 421,
+    "path_length": 80,
+    "execution_time": 8.68818712234497,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 50,
+    "shelf_name": "17000-17999_dungeon_1094_0.shelf",
+    "pair_id": 3,
+    "start": [
+      32,
+      17
+    ],
+    "goal": [
+      28,
+      80
+    ],
+    "success": true,
+    "nodes_explored": 131,
+    "path_length": 86,
+    "execution_time": 3.4483611583709717,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 50,
+    "shelf_name": "17000-17999_dungeon_1094_0.shelf",
+    "pair_id": 4,
+    "start": [
+      79,
+      85
+    ],
+    "goal": [
+      8,
+      13
+    ],
+    "success": true,
+    "nodes_explored": 151,
+    "path_length": 76,
+    "execution_time": 3.9670097827911377,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 51,
+    "shelf_name": "17000-17999_dungeon_1094_1.shelf",
+    "pair_id": 0,
+    "start": [
+      84,
+      71
+    ],
+    "goal": [
+      83,
+      15
+    ],
+    "success": true,
+    "nodes_explored": 78,
+    "path_length": 32,
+    "execution_time": 1.2839951515197754,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 51,
+    "shelf_name": "17000-17999_dungeon_1094_1.shelf",
+    "pair_id": 1,
+    "start": [
+      28,
+      15
+    ],
+    "goal": [
+      62,
+      5
+    ],
+    "success": true,
+    "nodes_explored": 38,
+    "path_length": 23,
+    "execution_time": 0.9090831279754639,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 51,
+    "shelf_name": "17000-17999_dungeon_1094_1.shelf",
+    "pair_id": 2,
+    "start": [
+      57,
+      94
+    ],
+    "goal": [
+      8,
+      76
+    ],
+    "success": true,
+    "nodes_explored": 109,
+    "path_length": 31,
+    "execution_time": 1.9640719890594482,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 51,
+    "shelf_name": "17000-17999_dungeon_1094_1.shelf",
+    "pair_id": 3,
+    "start": [
+      86,
+      24
+    ],
+    "goal": [
+      51,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 99,
+    "path_length": 46,
+    "execution_time": 2.067204236984253,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 51,
+    "shelf_name": "17000-17999_dungeon_1094_1.shelf",
+    "pair_id": 4,
+    "start": [
+      13,
+      61
+    ],
+    "goal": [
+      74,
+      16
+    ],
+    "success": true,
+    "nodes_explored": 124,
+    "path_length": 55,
+    "execution_time": 4.7897419929504395,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 52,
+    "shelf_name": "17000-17999_dungeon_1094_2.shelf",
+    "pair_id": 0,
+    "start": [
+      19,
+      93
+    ],
+    "goal": [
+      15,
+      11
+    ],
+    "success": true,
+    "nodes_explored": 91,
+    "path_length": 44,
+    "execution_time": 1.1015901565551758,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 52,
+    "shelf_name": "17000-17999_dungeon_1094_2.shelf",
+    "pair_id": 1,
+    "start": [
+      51,
+      84
+    ],
+    "goal": [
+      90,
+      85
+    ],
+    "success": true,
+    "nodes_explored": 133,
+    "path_length": 27,
+    "execution_time": 2.661625862121582,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 52,
+    "shelf_name": "17000-17999_dungeon_1094_2.shelf",
+    "pair_id": 2,
+    "start": [
+      22,
+      13
+    ],
+    "goal": [
+      93,
+      84
+    ],
+    "success": true,
+    "nodes_explored": 145,
+    "path_length": 74,
+    "execution_time": 3.0955822467803955,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 52,
+    "shelf_name": "17000-17999_dungeon_1094_2.shelf",
+    "pair_id": 3,
+    "start": [
+      25,
+      16
+    ],
+    "goal": [
+      70,
+      91
+    ],
+    "success": true,
+    "nodes_explored": 146,
+    "path_length": 72,
+    "execution_time": 3.9667389392852783,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 52,
+    "shelf_name": "17000-17999_dungeon_1094_2.shelf",
+    "pair_id": 4,
+    "start": [
+      78,
+      90
+    ],
+    "goal": [
+      45,
+      17
+    ],
+    "success": true,
+    "nodes_explored": 104,
+    "path_length": 56,
+    "execution_time": 2.344327926635742,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 53,
+    "shelf_name": "17000-17999_dungeon_1094_3.shelf",
+    "pair_id": 0,
+    "start": [
+      6,
+      24
+    ],
+    "goal": [
+      89,
+      11
+    ],
+    "success": true,
+    "nodes_explored": 110,
+    "path_length": 47,
+    "execution_time": 1.3048620223999023,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 53,
+    "shelf_name": "17000-17999_dungeon_1094_3.shelf",
+    "pair_id": 1,
+    "start": [
+      6,
+      50
+    ],
+    "goal": [
+      91,
+      63
+    ],
+    "success": true,
+    "nodes_explored": 265,
+    "path_length": 64,
+    "execution_time": 6.827908039093018,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 53,
+    "shelf_name": "17000-17999_dungeon_1094_3.shelf",
+    "pair_id": 2,
+    "start": [
+      81,
+      12
+    ],
+    "goal": [
+      6,
+      91
+    ],
+    "success": true,
+    "nodes_explored": 240,
+    "path_length": 79,
+    "execution_time": 5.652647972106934,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 53,
+    "shelf_name": "17000-17999_dungeon_1094_3.shelf",
+    "pair_id": 3,
+    "start": [
+      53,
+      17
+    ],
+    "goal": [
+      15,
+      34
+    ],
+    "success": true,
+    "nodes_explored": 46,
+    "path_length": 28,
+    "execution_time": 0.9572811126708984,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 53,
+    "shelf_name": "17000-17999_dungeon_1094_3.shelf",
+    "pair_id": 4,
+    "start": [
+      93,
+      65
+    ],
+    "goal": [
+      21,
+      9
+    ],
+    "success": true,
+    "nodes_explored": 157,
+    "path_length": 62,
+    "execution_time": 4.910409212112427,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 54,
+    "shelf_name": "17000-17999_dungeon_1094_4.shelf",
+    "pair_id": 0,
+    "start": [
+      88,
+      59
+    ],
+    "goal": [
+      74,
+      11
+    ],
+    "success": true,
+    "nodes_explored": 152,
+    "path_length": 33,
+    "execution_time": 10.357858896255493,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 54,
+    "shelf_name": "17000-17999_dungeon_1094_4.shelf",
+    "pair_id": 1,
+    "start": [
+      54,
+      86
+    ],
+    "goal": [
+      15,
+      52
+    ],
+    "success": true,
+    "nodes_explored": 118,
+    "path_length": 42,
+    "execution_time": 4.333268165588379,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 54,
+    "shelf_name": "17000-17999_dungeon_1094_4.shelf",
+    "pair_id": 2,
+    "start": [
+      40,
+      7
+    ],
+    "goal": [
+      94,
+      46
+    ],
+    "success": true,
+    "nodes_explored": 165,
+    "path_length": 42,
+    "execution_time": 7.029362916946411,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 54,
+    "shelf_name": "17000-17999_dungeon_1094_4.shelf",
+    "pair_id": 3,
+    "start": [
+      10,
+      44
+    ],
+    "goal": [
+      72,
+      83
+    ],
+    "success": true,
+    "nodes_explored": 115,
+    "path_length": 52,
+    "execution_time": 2.643033027648926,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 54,
+    "shelf_name": "17000-17999_dungeon_1094_4.shelf",
+    "pair_id": 4,
+    "start": [
+      74,
+      16
+    ],
+    "goal": [
+      20,
+      17
+    ],
+    "success": true,
+    "nodes_explored": 33,
+    "path_length": 31,
+    "execution_time": 0.38941502571105957,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 55,
+    "shelf_name": "17000-17999_dungeon_1465_0.shelf",
+    "pair_id": 0,
+    "start": [
+      72,
+      84
+    ],
+    "goal": [
+      28,
+      6
+    ],
+    "success": true,
+    "nodes_explored": 163,
+    "path_length": 69,
+    "execution_time": 3.078568935394287,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 55,
+    "shelf_name": "17000-17999_dungeon_1465_0.shelf",
+    "pair_id": 1,
+    "start": [
+      52,
+      92
+    ],
+    "goal": [
+      91,
+      13
+    ],
+    "success": true,
+    "nodes_explored": 82,
+    "path_length": 55,
+    "execution_time": 1.5094058513641357,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 55,
+    "shelf_name": "17000-17999_dungeon_1465_0.shelf",
+    "pair_id": 2,
+    "start": [
+      85,
+      21
+    ],
+    "goal": [
+      15,
+      70
+    ],
+    "success": true,
+    "nodes_explored": 235,
+    "path_length": 73,
+    "execution_time": 5.329912900924683,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 55,
+    "shelf_name": "17000-17999_dungeon_1465_0.shelf",
+    "pair_id": 3,
+    "start": [
+      60,
+      13
+    ],
+    "goal": [
+      45,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 423,
+    "path_length": 71,
+    "execution_time": 10.414028644561768,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 55,
+    "shelf_name": "17000-17999_dungeon_1465_0.shelf",
+    "pair_id": 4,
+    "start": [
+      5,
+      51
+    ],
+    "goal": [
+      21,
+      92
+    ],
+    "success": true,
+    "nodes_explored": 65,
+    "path_length": 24,
+    "execution_time": 0.9175100326538086,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 56,
+    "shelf_name": "17000-17999_dungeon_1465_1.shelf",
+    "pair_id": 0,
+    "start": [
+      79,
+      87
+    ],
+    "goal": [
+      59,
+      5
+    ],
+    "success": true,
+    "nodes_explored": 254,
+    "path_length": 52,
+    "execution_time": 7.106860876083374,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 56,
+    "shelf_name": "17000-17999_dungeon_1465_1.shelf",
+    "pair_id": 1,
+    "start": [
+      84,
+      80
+    ],
+    "goal": [
+      8,
+      66
+    ],
+    "success": true,
+    "nodes_explored": 158,
+    "path_length": 44,
+    "execution_time": 4.161981821060181,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 56,
+    "shelf_name": "17000-17999_dungeon_1465_1.shelf",
+    "pair_id": 2,
+    "start": [
+      30,
+      18
+    ],
+    "goal": [
+      75,
+      94
+    ],
+    "success": true,
+    "nodes_explored": 109,
+    "path_length": 66,
+    "execution_time": 2.3693699836730957,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 56,
+    "shelf_name": "17000-17999_dungeon_1465_1.shelf",
+    "pair_id": 3,
+    "start": [
+      60,
+      5
+    ],
+    "goal": [
+      15,
+      88
+    ],
+    "success": true,
+    "nodes_explored": 208,
+    "path_length": 82,
+    "execution_time": 5.946584224700928,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 56,
+    "shelf_name": "17000-17999_dungeon_1465_1.shelf",
+    "pair_id": 4,
+    "start": [
+      69,
+      87
+    ],
+    "goal": [
+      88,
+      44
+    ],
+    "success": true,
+    "nodes_explored": 106,
+    "path_length": 29,
+    "execution_time": 2.9789719581604004,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 57,
+    "shelf_name": "17000-17999_dungeon_1465_2.shelf",
+    "pair_id": 0,
+    "start": [
+      10,
+      68
+    ],
+    "goal": [
+      11,
+      34
+    ],
+    "success": true,
+    "nodes_explored": 36,
+    "path_length": 21,
+    "execution_time": 0.5058848857879639,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 57,
+    "shelf_name": "17000-17999_dungeon_1465_2.shelf",
+    "pair_id": 1,
+    "start": [
+      77,
+      12
+    ],
+    "goal": [
+      8,
+      37
+    ],
+    "success": true,
+    "nodes_explored": 83,
+    "path_length": 45,
+    "execution_time": 1.7827601432800293,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 57,
+    "shelf_name": "17000-17999_dungeon_1465_2.shelf",
+    "pair_id": 2,
+    "start": [
+      20,
+      14
+    ],
+    "goal": [
+      18,
+      82
+    ],
+    "success": true,
+    "nodes_explored": 102,
+    "path_length": 37,
+    "execution_time": 1.3070588111877441,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 57,
+    "shelf_name": "17000-17999_dungeon_1465_2.shelf",
+    "pair_id": 3,
+    "start": [
+      23,
+      10
+    ],
+    "goal": [
+      89,
+      33
+    ],
+    "success": true,
+    "nodes_explored": 144,
+    "path_length": 42,
+    "execution_time": 3.51241397857666,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 57,
+    "shelf_name": "17000-17999_dungeon_1465_2.shelf",
+    "pair_id": 4,
+    "start": [
+      43,
+      87
+    ],
+    "goal": [
+      73,
+      84
+    ],
+    "success": true,
+    "nodes_explored": 35,
+    "path_length": 19,
+    "execution_time": 0.34510302543640137,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 58,
+    "shelf_name": "17000-17999_dungeon_1465_3.shelf",
+    "pair_id": 0,
+    "start": [
+      81,
+      14
+    ],
+    "goal": [
+      13,
+      64
+    ],
+    "success": true,
+    "nodes_explored": 366,
+    "path_length": 83,
+    "execution_time": 11.00427508354187,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 58,
+    "shelf_name": "17000-17999_dungeon_1465_3.shelf",
+    "pair_id": 1,
+    "start": [
+      13,
+      85
+    ],
+    "goal": [
+      6,
+      9
+    ],
+    "success": true,
+    "nodes_explored": 153,
+    "path_length": 46,
+    "execution_time": 3.8173036575317383,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 58,
+    "shelf_name": "17000-17999_dungeon_1465_3.shelf",
+    "pair_id": 2,
+    "start": [
+      17,
+      80
+    ],
+    "goal": [
+      81,
+      28
+    ],
+    "success": true,
+    "nodes_explored": 829,
+    "path_length": 72,
+    "execution_time": 15.396752834320068,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 58,
+    "shelf_name": "17000-17999_dungeon_1465_3.shelf",
+    "pair_id": 3,
+    "start": [
+      8,
+      20
+    ],
+    "goal": [
+      92,
+      76
+    ],
+    "success": true,
+    "nodes_explored": 234,
+    "path_length": 73,
+    "execution_time": 5.544428825378418,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 58,
+    "shelf_name": "17000-17999_dungeon_1465_3.shelf",
+    "pair_id": 4,
+    "start": [
+      54,
+      11
+    ],
+    "goal": [
+      80,
+      30
+    ],
+    "success": true,
+    "nodes_explored": 42,
+    "path_length": 21,
+    "execution_time": 0.6092500686645508,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 59,
+    "shelf_name": "17000-17999_dungeon_1465_4.shelf",
+    "pair_id": 0,
+    "start": [
+      71,
+      14
+    ],
+    "goal": [
+      84,
+      54
+    ],
+    "success": true,
+    "nodes_explored": 113,
+    "path_length": 28,
+    "execution_time": 4.2674760818481445,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 59,
+    "shelf_name": "17000-17999_dungeon_1465_4.shelf",
+    "pair_id": 1,
+    "start": [
+      93,
+      53
+    ],
+    "goal": [
+      20,
+      16
+    ],
+    "success": true,
+    "nodes_explored": 87,
+    "path_length": 57,
+    "execution_time": 2.845426321029663,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 59,
+    "shelf_name": "17000-17999_dungeon_1465_4.shelf",
+    "pair_id": 2,
+    "start": [
+      44,
+      8
+    ],
+    "goal": [
+      91,
+      90
+    ],
+    "success": true,
+    "nodes_explored": 233,
+    "path_length": 60,
+    "execution_time": 8.447876930236816,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 59,
+    "shelf_name": "17000-17999_dungeon_1465_4.shelf",
+    "pair_id": 3,
+    "start": [
+      87,
+      83
+    ],
+    "goal": [
+      82,
+      22
+    ],
+    "success": true,
+    "nodes_explored": 70,
+    "path_length": 34,
+    "execution_time": 0.8104197978973389,
+    "algorithm": "edge_sampling_rrt"
+  },
+  {
+    "world_id": 59,
+    "shelf_name": "17000-17999_dungeon_1465_4.shelf",
+    "pair_id": 4,
+    "start": [
+      62,
+      8
+    ],
+    "goal": [
+      47,
+      94
+    ],
+    "success": true,
+    "nodes_explored": 283,
+    "path_length": 71,
+    "execution_time": 5.984651803970337,
+    "algorithm": "edge_sampling_rrt"
+  }
+]
