@@ -109,35 +109,7 @@ def ant_random_point(goal, current_node, edge_of_coverage, pheromone_grid, grid_
         if walkable_cells:
             return random.choice(list(walkable_cells))
         return (grid_size // 2, grid_size // 2)
-    
-def steer(from_node, to_x, to_y, grid, max_step=None, delta=0.2):
-    """
-    Extend from from_node toward (to_x, to_y) as far as possible (up to target or max_step),
-    stopping before collision. delta controls sampling granularity along the ray.
-    If max_step is None, the full distance to target is attempted.
-    """
-    distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
-    limit = distance if max_step is None else min(max_step, distance)
 
-    last_valid_x, last_valid_y = from_node.x, from_node.y
-    traveled = delta
-    while traveled <= limit:
-        new_x = from_node.x + traveled * math.cos(angle)
-        new_y = from_node.y + traveled * math.sin(angle)
-        if grid_value(new_x, new_y, grid) == 0:  # collision at this sample
-            break
-        last_valid_x, last_valid_y = new_x, new_y
-        traveled += delta
-
-    # If no progress into a new discrete cell, fail
-    orig_cell = (int(math.floor(from_node.x)), int(math.floor(from_node.y)))
-    new_cell = (int(math.floor(last_valid_x)), int(math.floor(last_valid_y)))
-    if new_cell == orig_cell:
-        return None
-
-    return (last_valid_x, last_valid_y)
-
-'''
 def steer(from_node, to_x, to_y, grid, step_size):
     # Use standalone's more precise steering with linspace
     distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
@@ -154,7 +126,7 @@ def steer(from_node, to_x, to_y, grid, step_size):
     final_x = from_node.x + step * math.cos(angle)
     final_y = from_node.y + step * math.sin(angle)
     return (final_x, final_y)  # Return float coordinates
-'''
+
 def update_visibility(x, y, grid, visible_grid, max_distance=None):
     # Use standalone's more intensive visibility like standalone
     if max_distance is None:
@@ -270,7 +242,7 @@ def rrt_edge_sampling(grid_param, start, goal, walkable_cells_param, step_size=1
     # Initialize global grids and walkable cells
     grid = grid_param
     visible_grid = np.zeros_like(grid, dtype=np.uint8)
-    pheromone_grid = np.ones_like(grid, dtype=np.float32)  # Initialize with ones instead of zeros
+    pheromone_grid = np.ones_like(grid, dtype=np.float32)
     walkable_cells = walkable_cells_param
 
     # Fix coordinate system - use integers consistently
@@ -324,7 +296,17 @@ def rrt_edge_sampling(grid_param, start, goal, walkable_cells_param, step_size=1
                     if not collision(new_x, new_y, goal_node.x, goal_node.y, grid):
                         goal_node.parent = new_node
                         nodes.append(goal_node)
-                        return nodes, len(nodes)
+                        
+                        # FIXED: Calculate path efficiency here when successful
+                        path_nodes = set()
+                        current = goal_node  # Start from goal
+                        while current is not None:
+                            if hasattr(current, 'x') and hasattr(current, 'y'):
+                                path_nodes.add((int(math.floor(current.x)), int(math.floor(current.y))))
+                            current = current.parent
+                        
+                        nodes_on_final_path = len(path_nodes)
+                        return nodes, len(nodes), nodes_on_final_path
                         
                 # Less frequent debug output
                 if iteration % 1000 == 0 and iteration > 0:
@@ -333,7 +315,8 @@ def rrt_edge_sampling(grid_param, start, goal, walkable_cells_param, step_size=1
                     edge_count = len(edge_of_coverage) if edge_of_coverage else 0
                     print(f"    Iteration {iteration}: {len(nodes)} nodes, {visible_count}/{total_walkable} visible, {edge_count} edge points")
 
-    return None, 0
+    # FIXED: Only one return statement for failure case
+    return None, 0, 0
 
 def load_shelf_worlds(shelf_dir=".", num_worlds=60):
     """Load existing shelf worlds from .dat/.txt/.csv files, searching recursively"""
@@ -511,7 +494,7 @@ def run_experiment(shelf_dir="."):
     print("=" * 60)
     
     # Create results directory
-    results_dir = Path("edge_full_sampling_rrt_results")
+    results_dir = Path("edge_sampling_rrt_results")
     results_dir.mkdir(exist_ok=True)
     
     # Load existing shelf worlds
@@ -531,53 +514,96 @@ def run_experiment(shelf_dir="."):
         print(f"\nShelf {world_id + 1}/{len(worlds)}: {shelf_name}")
         print(f"  Grid size: {grid.shape}")
         
+        # Set seed once per world to ensure consistent start-goal pairs across all RRT algorithms
+        world_seed = 100 + world_id  # Each world gets its own seed
+        random.seed(world_seed)
+        np.random.seed(world_seed)
+        print(f"  World seed: {world_seed}")
+        
         # Create walkable cells set for this world
         walkable_cells = create_walkable_cells(grid)
         print(f"  Found {len(walkable_cells)} walkable cells")
         
-        # Generate 5 start-goal pairs
+        # Generate 5 start-goal pairs (these will be the same for all RRT algorithms)
         pairs = generate_start_goal_pairs(grid, num_pairs=5)
         print(f"  Generated {len(pairs)} start-goal pairs")
         
-        # Test each pair
+        # Test each pair (FIXED INDENTATION - now properly inside world loop)
         for pair_id, (start, goal) in enumerate(pairs):
             print(f"  Pair {pair_id + 1}: Start{start} -> Goal{goal}")
             
+            # Reset to world seed before each RRT run for algorithm consistency
+            random.seed(world_seed)
+            np.random.seed(world_seed)
+            
+            print(f"    Running pair {pair_id + 1} with world seed {world_seed}")
+            
+            # Run Random Edge Sampling RRT
             # Run Random Edge Sampling RRT
             start_time = time.time()
-            nodes, node_count = rrt_edge_sampling(grid, start, goal, walkable_cells, step_size=2, max_iter=5000)
+            nodes, node_count, path_node_count = rrt_edge_sampling(grid, start, goal, walkable_cells, step_size=2, max_iter=5000)
             end_time = time.time()
-            
+
             execution_time = end_time - start_time
             total_runs += 1
-            
+
             if nodes:
                 successful_runs += 1
                 path_len = path_length(nodes[-1])
                 success = True
-                print(f"    SUCCESS: {node_count} nodes, {path_len} path length, {execution_time:.2f}s")
+                
+                # Calculate efficiency
+                path_efficiency = path_node_count / node_count if node_count > 0 else 0
+                
+                print(f"      SUCCESS: {node_count} nodes explored, {path_node_count} on final path ({path_efficiency:.1%} efficiency), {path_len:.1f} path length, {execution_time:.2f}s")
             else:
                 path_len = 0
+                path_node_count = 0
                 success = False
-                print(f"    FAILED: No path found, {execution_time:.2f}s")
-            
+                print(f"      FAILED: No path found, {execution_time:.2f}s")
+
             # Store results
             result = {
                 'world_id': world_id,
                 'shelf_name': shelf_name,
                 'pair_id': pair_id,
+                'world_seed': world_seed,
                 'start': start,
                 'goal': goal,
                 'success': success,
                 'nodes_explored': node_count,
+                'nodes_on_final_path': path_node_count,  # ADD THIS
+                'path_efficiency': path_node_count / node_count if node_count > 0 else 0,  # ADD THIS
                 'path_length': path_len,
                 'execution_time': execution_time,
                 'algorithm': 'edge_sampling_rrt'
             }
             results.append(result)
+        
+        # Per-world summary
+        world_results = [r for r in results if r['world_id'] == world_id]
+        world_successful = sum(1 for r in world_results if r['success'])
+        world_total = len(world_results)
+        
+        print(f"\n  --- World {world_id + 1} Summary ---")
+        print(f"  Total runs: {world_total}")
+        print(f"  Successful runs: {world_successful}")
+        
+        if world_total > 0:
+            print(f"  Success rate: {world_successful/world_total*100:.1f}%")
+            
+            if world_successful > 0:
+                successful_world_results = [r for r in world_results if r['success']]
+                avg_nodes = np.mean([r['nodes_explored'] for r in successful_world_results])
+                avg_path_length = np.mean([r['path_length'] for r in successful_world_results])
+                avg_time = np.mean([r['execution_time'] for r in successful_world_results])
+                
+                print(f"  Average nodes explored: {avg_nodes:.1f}")
+                print(f"  Average path length: {avg_path_length:.1f}")
+                print(f"  Average execution time: {avg_time:.2f}s")
     
     # Save results
-    results_file = results_dir / "edge_full_sampling_rrt_results.json"
+    results_file = results_dir / "edge_sampling_rrt_results.json"
     with open(results_file, 'w') as f:
         json.dump(results, f, indent=2)
     
@@ -594,10 +620,14 @@ def run_experiment(shelf_dir="."):
         if successful_runs > 0:
             successful_results = [r for r in results if r['success']]
             avg_nodes = np.mean([r['nodes_explored'] for r in successful_results])
+            avg_path_nodes = np.mean([r['nodes_on_final_path'] for r in successful_results])  # ADD THIS
+            avg_efficiency = np.mean([r['path_efficiency'] for r in successful_results])  # ADD THIS
             avg_path_length = np.mean([r['path_length'] for r in successful_results])
             avg_time = np.mean([r['execution_time'] for r in successful_results])
             
             print(f"Average nodes explored: {avg_nodes:.1f}")
+            print(f"Average nodes on final path: {avg_path_nodes:.1f}")  # ADD THIS
+            print(f"Average path efficiency: {avg_efficiency:.1%}")  # ADD THIS
             print(f"Average path length: {avg_path_length:.1f}")
             print(f"Average execution time: {avg_time:.2f}s")
     else:

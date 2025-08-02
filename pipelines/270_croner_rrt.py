@@ -15,6 +15,7 @@ pheromone_grid = None
 grid = None
 walkable_cells = None
 corner_list = None
+#Deborah's version
 
 def find_270_corners(grid):
     """
@@ -76,6 +77,36 @@ def find_270_corners(grid):
                     break  # Found a corner, no need to check other patterns
     
     return corners
+
+#Edwin's version
+'''
+def find_270_corners(grid):
+    """
+    Find 270-degree corners using 2x2 block analysis.
+    Grid format: 255 = free space, 0 = obstacles
+    """
+    corners = []
+    h, w = grid.shape
+    
+    # Convert to binary format for the 2x2 analysis
+    # 0 = free space, 1 = obstacles (opposite of your grid format)
+    binary_grid = np.where(grid == 255, 0, 1)
+    
+    for i in range(h - 1):
+        for j in range(w - 1):
+            block = binary_grid[i:i+2, j:j+2]
+            # Check if exactly 3 cells are free (sum == 3) and 1 cell is obstacle
+            if block.sum() == 3:
+                # Find the obstacle cell position within the 2x2 block
+                obstacle_idx = np.argwhere(block == 1)[0]
+                # Calculate the diagonal position (the free cell diagonal to the obstacle)
+                di, dj = 1 - obstacle_idx[0], 1 - obstacle_idx[1]
+                corner_i, corner_j = i + di, j + dj
+                corners.append((corner_j, corner_i))  # Return as (x, y) to match your existing format
+    
+    return corners
+'''
+
 
 # Node class representing each RRT vertex
 class Node:
@@ -209,32 +240,35 @@ def select_best_corner(visible_corners, edge_of_coverage, grid, walkable_cells):
 def corner_based_sampling(goal, current_node, edge_of_coverage, corner_list, grid, walkable_cells, goal_sample_rate=0.05):
     """
     Enhanced sampling strategy using 270-degree corners.
+    Returns (x, y, is_corner) where is_corner indicates if this is a 270-degree corner.
     """
     current_pos = (current_node.x, current_node.y)
     
     # First check: Can we see the target directly?
     if is_target_visible(current_pos, goal, grid):
-        return goal[0] - 0.5, goal[1] - 0.5  # Convert to grid coordinates
+        return goal[0] - 0.5, goal[1] - 0.5, False  # Convert to grid coordinates
     
     # If no edge of coverage, fall back to random sampling
     if not edge_of_coverage:
-        return random.randint(0, grid.shape[1] - 1), random.randint(0, grid.shape[0] - 1)
+        return random.randint(0, grid.shape[1] - 1), random.randint(0, grid.shape[0] - 1), False
     
     # Get visible 270-degree corners
     visible_corners = get_visible_corners(current_pos, corner_list, grid)
     
     if not visible_corners:
         # No corners visible, sample from edge of coverage
-        return random.choice(list(edge_of_coverage))
+        edge_cell = random.choice(list(edge_of_coverage))
+        return edge_cell[0], edge_cell[1], False
     
     # Select the best corner based on edge coverage intersection
     best_corner, intersection_size = select_best_corner(visible_corners, edge_of_coverage, grid, walkable_cells)
     
     if best_corner and intersection_size > 0:
-        return best_corner
+        return best_corner[0], best_corner[1], True  # This is a corner
     else:
         # Fallback to random corner if no good intersection found
-        return random.choice(visible_corners)
+        fallback_corner = random.choice(visible_corners)
+        return fallback_corner[0], fallback_corner[1], True  # This is a corner
 
 def steer(from_node, to_x, to_y, step_size):
     distance, angle = distance_angle(from_node.x, from_node.y, to_x + 0.5, to_y + 0.5)
@@ -248,6 +282,20 @@ def steer(from_node, to_x, to_y, step_size):
             return None
     return (from_node.x + step * math.cos(angle), from_node.y + step * math.sin(angle))
 
+def steer_to_corner(from_node, corner_x, corner_y):
+    """
+    Steer directly to a corner without step size limitation.
+    Returns the corner position if path is clear, None if blocked.
+    """
+    target_x = corner_x + 0.5  # Center of corner cell
+    target_y = corner_y + 0.5
+    
+    # Check if path to corner is clear
+    if not collision(from_node.x, from_node.y, target_x, target_y, grid):
+        return (target_x, target_y)
+    else:
+        return None
+    
 # Updates visibility from a given position by casting rays in all directions
 def update_visibility(x, y, max_distance=None):
     global visible_grid, grid
@@ -400,7 +448,7 @@ def enhanced_rrt(grid_param, start, goal, corner_list_param, walkable_cells_para
         edge_of_coverage = compute_edge_of_coverage(grid, visible_grid, walkable_cells)
 
         # Use enhanced corner-based sampling
-        rand_x, rand_y = corner_based_sampling(
+        rand_x, rand_y, is_corner = corner_based_sampling(
             (goal_node.x, goal_node.y), 
             nodes[-1], 
             edge_of_coverage, 
@@ -412,8 +460,13 @@ def enhanced_rrt(grid_param, start, goal, corner_list_param, walkable_cells_para
         # Find nearest node to that point
         nearest = nearest_node(nodes, rand_x + 0.5, rand_y + 0.5)
 
-        # Try to move toward sampled point
-        steered = steer(nearest, rand_x, rand_y, step_size)
+        # Choose steering method based on whether target is a corner
+        if is_corner:
+            # Go directly to the corner (no step size limit)
+            steered = steer_to_corner(nearest, rand_x, rand_y)
+        else:
+            # Use normal step-limited steering
+            steered = steer(nearest, rand_x, rand_y, step_size)
 
         if steered:
             new_x, new_y = steered
@@ -697,13 +750,13 @@ def run_experiment(shelf_dir="."):
                     path_len = 0
                     success = False
                     print(f"    FAILED: No path found, {execution_time:.2f}s")
-                
+                '''
                 # Save PNG visualization if this is dungeon_4251
                 if is_dungeon_4251:
                     viz_filename = f"dungeon_4251_pair_{pair_id + 1}_{'SUCCESS' if success else 'FAILED'}.png"
                     print(f"    *** SAVING VISUALIZATION: {viz_filename} ***")
                     visualize_rrt_result(grid, nodes if nodes else [], start, goal, corners_270, viz_filename)
-                
+                '''
                 # Store results
                 result = {
                     'world_id': world_id,
@@ -751,7 +804,7 @@ def run_experiment(shelf_dir="."):
     
     print(f"\nResults saved to: {results_file}")
     return results
-
+'''
 def create_dungeon_4251_visualization(shelf_dir=".", save_path="dungeon_4251_world.png"):
     """
     Create a standalone visualization of the dungeon_4251 world without RRT
@@ -1118,11 +1171,11 @@ def debug_failed_cases(shelf_dir="."):
             # Create visualization of this failed case
             viz_filename = f"debug_failed_{shelf_name}_start_{start_x}_{start_y}_goal_{goal_x}_{goal_y}.png"
             visualize_rrt_result(grid, nodes if nodes else [], start, goal, corners_270, viz_filename)
-
+'''
 
 if __name__ == "__main__":
     import sys
-    
+    '''
     if len(sys.argv) > 1 and sys.argv[1] == "create_dungeon":
         # Create standalone dungeon_4251 visualization
         shelf_directory = sys.argv[2] if len(sys.argv) > 2 else "../divided_world_1"
@@ -1141,3 +1194,6 @@ if __name__ == "__main__":
         # Default: run full experiment
         shelf_directory = sys.argv[1] if len(sys.argv) > 1 else "../divided_world_1"
         results = run_experiment(shelf_directory)
+    '''
+    shelf_directory = sys.argv[1] if len(sys.argv) > 1 else "../divided_world_1"
+    results = run_experiment(shelf_directory)

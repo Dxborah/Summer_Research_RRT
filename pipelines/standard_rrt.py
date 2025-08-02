@@ -111,7 +111,7 @@ def interpolate_path(x1, y1, x2, y2, grid):
 def collision(x1, y1, x2, y2, grid):
     path = interpolate_path(x1, y1, x2, y2, grid)
     return len(path) == 0
-
+'''
 def rrt(grid, start, goal, step_size=10, max_iter=1000):
     visited = set()
     start_node = Node(start[0], start[1])  
@@ -138,7 +138,43 @@ def rrt(grid, start, goal, step_size=10, max_iter=1000):
                     return nodes, len(nodes)
 
     return None, 0
+'''
+def rrt(grid, start, goal, step_size=10, max_iter=1000):
+    visited = set()
+    start_node = Node(start[0], start[1])  
+    goal_node = Node(goal[0], goal[1])  
+    visited.add((start_node.x, start_node.y))  
+    nodes = [start_node]  
 
+    for _ in range(max_iter):
+        rand_x, rand_y = random_point(grid.shape[0], goal)
+        nearest = nearest_node(nodes, rand_x, rand_y)
+        steered = steer(nearest, rand_x, rand_y, grid, step_size=step_size)
+
+        if steered:
+            new_x, new_y = steered
+            if (new_x, new_y) not in visited and not collision(nearest.x, nearest.y, new_x, new_y, grid):
+                new_node = Node(new_x, new_y)
+                new_node.parent = nearest
+                nodes.append(new_node)
+                visited.add((new_x, new_y))
+
+                if abs(new_x - goal[0]) + abs(new_y - goal[1]) <= 1:
+                    goal_node.parent = new_node
+                    nodes.append(goal_node)
+                    
+                    # Calculate path efficiency
+                    path_nodes = set()
+                    current = goal_node  # Start from goal
+                    while current is not None:
+                        if hasattr(current, 'x') and hasattr(current, 'y'):
+                            path_nodes.add((int(current.x), int(current.y)))
+                        current = current.parent
+                    
+                    nodes_on_final_path = len(path_nodes)
+                    return nodes, len(nodes), nodes_on_final_path
+
+    return None, 0, 0
 def path_length(goal_node):
     if goal_node is None:
         return 0.0
@@ -364,17 +400,29 @@ def run_experiment(shelf_dir="."):
         print(f"\nShelf {world_id + 1}/{len(worlds)}: {shelf_name}")
         print(f"  Grid size: {grid.shape}")
         
-        # Generate 5 start-goal pairs
+        # Set seed once per world to ensure consistent start-goal pairs across all RRT algorithms
+        world_seed = 100 + world_id  # Each world gets its own seed
+        random.seed(world_seed)
+        np.random.seed(world_seed)
+        print(f"  World seed: {world_seed}")
+        
+        # Generate 5 start-goal pairs (these will be the same for all RRT algorithms)
         pairs = generate_start_goal_pairs(grid, num_pairs=5)
         print(f"  Generated {len(pairs)} start-goal pairs")
         
-        # Test each pair
+        # Test each pair (FIXED INDENTATION - now properly inside world loop)
         for pair_id, (start, goal) in enumerate(pairs):
             print(f"  Pair {pair_id + 1}: Start{start} -> Goal{goal}")
             
+            # Reset to world seed before each RRT run for algorithm consistency
+            random.seed(world_seed)
+            np.random.seed(world_seed)
+            
+            print(f"    Running pair {pair_id + 1} with world seed {world_seed}")
+            
             # Run Standard RRT
             start_time = time.time()
-            nodes, node_count = rrt(grid, start, goal, step_size=2, max_iter=5000)
+            nodes, node_count, path_node_count = rrt(grid, start, goal, step_size=2, max_iter=5000)
             end_time = time.time()
             
             execution_time = end_time - start_time
@@ -384,26 +432,60 @@ def run_experiment(shelf_dir="."):
                 successful_runs += 1
                 path_len = path_length(nodes[-1])
                 success = True
-                print(f"    SUCCESS: {node_count} nodes, {path_len} path length, {execution_time:.2f}s")
+                
+                # Calculate efficiency
+                path_efficiency = path_node_count / node_count if node_count > 0 else 0
+                
+                print(f"      SUCCESS: {node_count} nodes explored, {path_node_count} on final path ({path_efficiency:.1%} efficiency), {path_len:.1f} path length, {execution_time:.2f}s")
             else:
                 path_len = 0
+                path_node_count = 0
                 success = False
-                print(f"    FAILED: No path found, {execution_time:.2f}s")
+                print(f"      FAILED: No path found, {execution_time:.2f}s")
             
             # Store results
             result = {
                 'world_id': world_id,
                 'shelf_name': shelf_name,
                 'pair_id': pair_id,
+                'world_seed': world_seed,
                 'start': start,
                 'goal': goal,
                 'success': success,
                 'nodes_explored': node_count,
+                'nodes_on_final_path': path_node_count,
+                'path_efficiency': path_node_count / node_count if node_count > 0 else 0,
                 'path_length': path_len,
                 'execution_time': execution_time,
                 'algorithm': 'standard_rrt'
             }
             results.append(result)
+        
+        # Per-world summary
+        world_results = [r for r in results if r['world_id'] == world_id]
+        world_successful = sum(1 for r in world_results if r['success'])
+        world_total = len(world_results)
+        
+        print(f"\n  --- World {world_id + 1} Summary ---")
+        print(f"  Total runs: {world_total}")
+        print(f"  Successful runs: {world_successful}")
+        
+        if world_total > 0:
+            print(f"  Success rate: {world_successful/world_total*100:.1f}%")
+            
+            if world_successful > 0:
+                successful_world_results = [r for r in world_results if r['success']]
+                avg_nodes = np.mean([r['nodes_explored'] for r in successful_world_results])
+                avg_path_nodes = np.mean([r['nodes_on_final_path'] for r in successful_world_results])
+                avg_efficiency = np.mean([r['path_efficiency'] for r in successful_world_results])
+                avg_path_length = np.mean([r['path_length'] for r in successful_world_results])
+                avg_time = np.mean([r['execution_time'] for r in successful_world_results])
+                
+                print(f"  Average nodes explored: {avg_nodes:.1f}")
+                print(f"  Average nodes on final path: {avg_path_nodes:.1f}")
+                print(f"  Average path efficiency: {avg_efficiency:.1%}")
+                print(f"  Average path length: {avg_path_length:.1f}")
+                print(f"  Average execution time: {avg_time:.2f}s")
     
     # Save results
     results_file = results_dir / "standard_rrt_results.json"
@@ -423,10 +505,14 @@ def run_experiment(shelf_dir="."):
         if successful_runs > 0:
             successful_results = [r for r in results if r['success']]
             avg_nodes = np.mean([r['nodes_explored'] for r in successful_results])
+            avg_path_nodes = np.mean([r['nodes_on_final_path'] for r in successful_results])
+            avg_efficiency = np.mean([r['path_efficiency'] for r in successful_results])
             avg_path_length = np.mean([r['path_length'] for r in successful_results])
             avg_time = np.mean([r['execution_time'] for r in successful_results])
             
             print(f"Average nodes explored: {avg_nodes:.1f}")
+            print(f"Average nodes on final path: {avg_path_nodes:.1f}")
+            print(f"Average path efficiency: {avg_efficiency:.1%}")
             print(f"Average path length: {avg_path_length:.1f}")
             print(f"Average execution time: {avg_time:.2f}s")
     else:
