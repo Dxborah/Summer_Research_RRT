@@ -8,6 +8,11 @@ import time
 import os
 from pathlib import Path
 
+SEED = 18  # or parameterize this
+random.seed(SEED)
+np.random.seed(SEED)
+
+
 class Node:
     def __init__(self, x, y):
         self.x = x
@@ -136,13 +141,15 @@ def rrt(grid, start, goal, step_size=10, max_iter=1000):
 
 def path_length(goal_node):
     if goal_node is None:
-        return 0
-    path = []
+        return 0.0
+    length = 0.0
     node = goal_node
-    while node is not None:
-        path.append((node.x, node.y))
+    while node.parent is not None:
+        dx = node.x - node.parent.x
+        dy = node.y - node.parent.y
+        length += math.hypot(dx, dy)
         node = node.parent
-    return len(path)
+    return length
 
 def load_shelf_worlds(shelf_dir=".", num_worlds=60):
     """Load existing shelf worlds from .bak/.dir/.dat files, searching recursively"""

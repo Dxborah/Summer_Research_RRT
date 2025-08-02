@@ -8,6 +8,11 @@ import time
 import os
 from pathlib import Path
 
+
+SEED = 100  # or parameterize this
+random.seed(SEED)
+np.random.seed(SEED)
+
 class Node:
     def __init__(self, x, y):
         # Use float coordinates with 0.5 offset like standalone for better precision
@@ -239,13 +244,15 @@ def collision(x1, y1, x2, y2, grid):
 
 def path_length(goal_node):
     if goal_node is None:
-        return 0
-    path = []
+        return 0.0
+    length = 0.0
     node = goal_node
-    while node is not None:
-        path.append((node.x, node.y))
+    while node.parent is not None:
+        dx = node.x - node.parent.x
+        dy = node.y - node.parent.y
+        length += math.hypot(dx, dy)
         node = node.parent
-    return len(path)
+    return length
 
 def create_walkable_cells(grid):
     """Create set of walkable cells from grid"""
