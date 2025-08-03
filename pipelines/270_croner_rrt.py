@@ -86,23 +86,24 @@ def find_270_corners(grid):
     Grid format: 255 = free space, 0 = obstacles
     """
     corners = []
-    h, w = grid.shape
+    rows, cols = grid.shape
     
     # Convert to binary format for the 2x2 analysis
     # 0 = free space, 1 = obstacles (opposite of your grid format)
-    binary_grid = np.where(grid == 255, 0, 1)
+    #binary_grid = np.where(grid == 255, 0, 1)
+    binary_grid = np.where(grid > 128, 0, 1)
     
-    for i in range(h - 1):
-        for j in range(w - 1):
+    for i in range(rows - 1):
+        for j in range(cols - 1):
             block = binary_grid[i:i+2, j:j+2]
             # Check if exactly 3 cells are free (sum == 3) and 1 cell is obstacle
             if block.sum() == 3:
                 # Find the obstacle cell position within the 2x2 block
-                obstacle_idx = np.argwhere(block == 1)[0]
+                obstacle_idx = np.argwhere(block == 0)[0]
                 # Calculate the diagonal position (the free cell diagonal to the obstacle)
                 di, dj = 1 - obstacle_idx[0], 1 - obstacle_idx[1]
                 corner_i, corner_j = i + di, j + dj
-                corners.append((corner_j, corner_i))  # Return as (x, y) to match your existing format
+                corners.append((corner_i, corner_j))  # Return as (x, y) to match your existing format
     
     return corners
 '''
@@ -487,9 +488,17 @@ def enhanced_rrt(grid_param, start, goal, corner_list_param, walkable_cells_para
                 if abs(new_x - goal_node.x) + abs(new_y - goal_node.y) <= 3:
                     goal_node.parent = new_node
                     nodes.append(goal_node)
-                    return nodes, len(nodes)
+                    # Compute path-node count
+                    path_nodes = []
+                    curr = goal_node
+                    while curr:
+                        path_nodes.append(curr)
+                        curr = curr.parent
+                    path_node_count = len(path_nodes)
+                    return nodes, len(nodes), path_node_count  # (tree nodes, total explored, nodes on final path)
 
-    return None, 0
+
+    return None, 0, 0
 
 def load_shelf_worlds(shelf_dir=".", num_worlds=60):
     """Load existing shelf worlds from .bak/.dir/.dat files, searching recursively"""
@@ -677,523 +686,123 @@ def generate_start_goal_pairs(grid, num_pairs=5, min_distance=30):
     
     return pairs
 
+
 def run_experiment(shelf_dir="."):
-    """Main experimental pipeline for 270 Corner RRT"""
+    """Main experimental pipeline for 270 Corner RRT with full metrics"""
     print("=" * 60)
     print("270 CORNER RRT EXPERIMENTAL PIPELINE")
     print("=" * 60)
-    
-    # Create results directory
+
     results_dir = Path("corner_rrt_results")
     results_dir.mkdir(exist_ok=True)
-    
-    # Load existing shelf worlds
-    print(f"Loading shelf worlds from directory: {shelf_dir}")
+
     worlds, shelf_names = load_shelf_worlds(shelf_dir, num_worlds=60)
-    
     if len(worlds) == 0:
         print("ERROR: No worlds loaded! Please check the directory path and file format.")
         return []
-    
+
     results = []
     total_runs = 0
     successful_runs = 0
-    
-    # For each world
+
     for world_id, (grid, shelf_name) in enumerate(zip(worlds, shelf_names)):
         print(f"\nShelf {world_id + 1}/{len(worlds)}: {shelf_name}")
         print(f"  Grid size: {grid.shape}")
-        
-        # Check if this is the dungeon_4251 world
-        is_dungeon_4251 = "dungeon_4251" in shelf_name
-        if is_dungeon_4251:
-            print(f"  *** FOUND TARGET WORLD: {shelf_name} ***")
-        
-        # Create walkable cells set for this world
+
+        # Use a fixed seed per world for reproducibility
+        world_seed = 100 + world_id
+        random.seed(world_seed)
+        np.random.seed(world_seed)
+
         walkable_cells = create_walkable_cells(grid)
         print(f"  Found {len(walkable_cells)} walkable cells")
-        
-        # Find 270-degree corners for this world
+
         corners_270 = find_270_corners(grid)
         print(f"  Found {len(corners_270)} 270-degree corners")
-        
-        # Generate 5 start-goal pairs
+
         pairs = generate_start_goal_pairs(grid, num_pairs=5)
         print(f"  Generated {len(pairs)} start-goal pairs")
-        
-        # Test each pair
+
         for pair_id, (start, goal) in enumerate(pairs):
             print(f"  Pair {pair_id + 1}: Start{start} -> Goal{goal}")
-            
-            # Run with 5 different seeds
-            for seed_id in range(5):
-                seed_value = 100 + seed_id  # Seeds: 100, 101, 102, 103, 104
-                random.seed(seed_value)
-                np.random.seed(seed_value)
-                
-                print(f"    Seed {seed_id + 1} (value: {seed_value})")
-                
-                # Run 270 Corner RRT
-                start_time = time.time()
-                nodes, node_count = enhanced_rrt(grid, start, goal, corners_270, walkable_cells, step_size=2, max_iter=5000)
-                end_time = time.time()
-            
-                execution_time = end_time - start_time
-                total_runs += 1
-                
-                if nodes:
-                    successful_runs += 1
-                    path_len = path_length(nodes[-1])
-                    success = True
-                    print(f"    SUCCESS: {node_count} nodes, {path_len} path length, {execution_time:.2f}s")
-                else:
-                    path_len = 0
-                    success = False
-                    print(f"    FAILED: No path found, {execution_time:.2f}s")
-                '''
-                # Save PNG visualization if this is dungeon_4251
-                if is_dungeon_4251:
-                    viz_filename = f"dungeon_4251_pair_{pair_id + 1}_{'SUCCESS' if success else 'FAILED'}.png"
-                    print(f"    *** SAVING VISUALIZATION: {viz_filename} ***")
-                    visualize_rrt_result(grid, nodes if nodes else [], start, goal, corners_270, viz_filename)
-                '''
-                # Store results
-                result = {
-                    'world_id': world_id,
-                    'shelf_name': shelf_name,
-                    'pair_id': pair_id,
-                    'start': start,
-                    'goal': goal,
-                    'success': success,
-                    'nodes_explored': node_count,
-                    'path_length': path_len,
-                    'execution_time': execution_time,
-                    'algorithm': '270_corner_rrt',
-                    'corners_found': len(corners_270)
-                }
-                results.append(result)
-    
-    # Save results
+
+            # Use the same seed per pair for consistent behavior
+            random.seed(world_seed)
+            np.random.seed(world_seed)
+
+            start_time = time.time()
+            nodes, node_count, path_node_count = enhanced_rrt(
+                grid, start, goal, corners_270, walkable_cells, step_size=2, max_iter=5000
+            )
+            end_time = time.time()
+            execution_time = end_time - start_time
+            total_runs += 1
+
+            if nodes:
+                successful_runs += 1
+                path_len = path_length(nodes[-1])
+                path_efficiency = path_node_count / node_count if node_count > 0 else 0
+                success = True
+                print(f"    SUCCESS: {node_count} nodes, {path_node_count} on final path ({path_efficiency:.1%}), {path_len:.1f} path length, {execution_time:.2f}s")
+            else:
+                path_len = 0
+                path_node_count = 0
+                path_efficiency = 0
+                success = False
+                print(f"    FAILED: No path found, {execution_time:.2f}s")
+
+            results.append({
+                'world_id': world_id,
+                'shelf_name': shelf_name,
+                'pair_id': pair_id,
+                'world_seed': world_seed,
+                'start': start,
+                'goal': goal,
+                'success': success,
+                'nodes_explored': node_count,
+                'nodes_on_final_path': path_node_count,
+                'path_efficiency': path_efficiency,
+                'path_length': path_len,
+                'execution_time': execution_time,
+                'algorithm': '270_corner_rrt',
+                'corners_found': len(corners_270)
+            })
+
     results_file = results_dir / "corner_rrt_results.json"
     with open(results_file, 'w') as f:
         json.dump(results, f, indent=2)
-    
-    # Print summary statistics
+
     print("\n" + "=" * 60)
     print("270 CORNER RRT - FINAL RESULTS SUMMARY")
     print("=" * 60)
     print(f"Total runs: {total_runs}")
     print(f"Successful runs: {successful_runs}")
-    
+
     if total_runs > 0:
         print(f"Success rate: {successful_runs/total_runs*100:.1f}%")
-        
         if successful_runs > 0:
             successful_results = [r for r in results if r['success']]
             avg_nodes = np.mean([r['nodes_explored'] for r in successful_results])
+            avg_path_nodes = np.mean([r['nodes_on_final_path'] for r in successful_results])
+            avg_efficiency = np.mean([r['path_efficiency'] for r in successful_results])
             avg_path_length = np.mean([r['path_length'] for r in successful_results])
             avg_time = np.mean([r['execution_time'] for r in successful_results])
             avg_corners = np.mean([r['corners_found'] for r in results])
-            
+
             print(f"Average nodes explored: {avg_nodes:.1f}")
+            print(f"Average nodes on final path: {avg_path_nodes:.1f}")
+            print(f"Average path efficiency: {avg_efficiency:.1%}")
             print(f"Average path length: {avg_path_length:.1f}")
             print(f"Average execution time: {avg_time:.2f}s")
             print(f"Average corners found per world: {avg_corners:.1f}")
     else:
         print("No runs completed - check if worlds were loaded correctly!")
-    
+
     print(f"\nResults saved to: {results_file}")
     return results
-'''
-def create_dungeon_4251_visualization(shelf_dir=".", save_path="dungeon_4251_world.png"):
-    """
-    Create a standalone visualization of the dungeon_4251 world without RRT
-    """
-    print("Creating dungeon_4251 world visualization...")
-    
-    # Load worlds and find dungeon_4251
-    worlds, shelf_names = load_shelf_worlds(shelf_dir, num_worlds=100)
-    
-    dungeon_4251_grid = None
-    dungeon_4251_name = None
-    
-    for grid, shelf_name in zip(worlds, shelf_names):
-        if "dungeon_4251" in shelf_name:
-            dungeon_4251_grid = grid
-            dungeon_4251_name = shelf_name
-            print(f"Found dungeon_4251: {shelf_name}")
-            break
-    
-    if dungeon_4251_grid is None:
-        print("ERROR: dungeon_4251 not found in the loaded worlds!")
-        return
-    
-    # Create walkable cells and find corners
-    walkable_cells = create_walkable_cells(dungeon_4251_grid)
-    corners_270 = find_270_corners(dungeon_4251_grid)
-    
-    fig, ax = plt.subplots(1, 1, figsize=(15, 15))
-    
-    # Create RGB visualization of the dungeon world
-    height, width = dungeon_4251_grid.shape
-    rgb_grid = np.zeros((height, width, 3), dtype=np.uint8)
-    
-    # Set colors: obstacles=black, free space=white
-    free_mask = dungeon_4251_grid > 128  # Free space
-    obstacle_mask = dungeon_4251_grid <= 128  # Obstacles
-    
-    rgb_grid[free_mask] = [255, 255, 255]  # Pure white for free space
-    rgb_grid[obstacle_mask] = [0, 0, 0]    # Black for obstacles
-    
-    # Show the dungeon world
-    ax.imshow(rgb_grid, origin='lower', extent=[0, width, 0, height])
-    
-    # Plot 270-degree corners as blue squares
-    if corners_270:
-        corner_x = [c[0] + 0.5 for c in corners_270]  # Center in cell
-        corner_y = [c[1] + 0.5 for c in corners_270]
-        ax.scatter(corner_x, corner_y, c='blue', s=100, marker='s', 
-                  label=f'270° Corners ({len(corners_270)})', alpha=0.8, 
-                  edgecolors='navy', linewidths=1, zorder=5)
-    
-    # Calculate statistics
-    free_cells = len(walkable_cells)
-    total_cells = width * height
-    free_ratio = free_cells / total_cells
-    
-    # Formatting
-    ax.set_xlim(0, width)
-    ax.set_ylim(0, height)
-    ax.set_aspect('equal')
-    
-    # Add legend if there are corners
-    if corners_270:
-        ax.legend(loc='upper right', fontsize=12, framealpha=0.9)
-    
-    title = f'Dungeon 4251 World Layout\n'
-    title += f'Size: {width}×{height}, Free Space: {free_ratio:.1%}, '
-    title += f'270° Corners: {len(corners_270)}'
-    
-    ax.set_title(title, fontsize=16, fontweight='bold', pad=20)
-    ax.set_xlabel('X coordinate', fontsize=12)
-    ax.set_ylabel('Y coordinate', fontsize=12)
-    
-    # Remove ticks for cleaner look
-    ax.set_xticks([])
-    ax.set_yticks([])
-    
-    # Save the figure with high resolution
-    plt.tight_layout()
-    plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white', 
-                edgecolor='none')
-    plt.close()
-    print(f"Dungeon 4251 visualization saved to: {save_path}")
-    
-    # Save detailed analysis
-    analysis_path = save_path.replace('.png', '_analysis.txt')
-    with open(analysis_path, 'w') as f:
-        f.write(f"Dungeon 4251 World Analysis\n")
-        f.write(f"==========================\n")
-        f.write(f"Source: {dungeon_4251_name}\n")
-        f.write(f"Grid size: {width} × {height}\n")
-        f.write(f"Total cells: {total_cells}\n")
-        f.write(f"Free cells: {free_cells} ({free_ratio:.1%})\n")
-        f.write(f"Obstacle cells: {total_cells - free_cells} ({1-free_ratio:.1%})\n")
-        f.write(f"270° corners found: {len(corners_270)}\n")
-        if corners_270:
-            f.write(f"Corner positions: {corners_270}\n")
-        f.write(f"\nWorld Characteristics\n")
-        f.write(f"===================\n")
-        f.write(f"This appears to be a dungeon-style environment with:\n")
-        f.write(f"- Corridors and rooms (white areas)\n")
-        f.write(f"- Walls and obstacles (black areas)\n")
-        f.write(f"- Strategic 270° corners for navigation\n")
-    
-    print(f"Analysis saved to: {analysis_path}")
-    return dungeon_4251_grid, corners_270
 
-def visualize_rrt_result(grid, nodes, start, goal, corner_list, save_path="rrt_result.png"):
-    """
-    Visualize the RRT result showing the actual world, corners, tree, and path
-    """
-    fig, ax = plt.subplots(1, 1, figsize=(15, 15))
-    
-    # Create RGB visualization of the actual world
-    # Black = obstacles (0), White = free space (255)
-    height, width = grid.shape
-    rgb_grid = np.zeros((height, width, 3), dtype=np.uint8)
-    
-    # Set colors: obstacles=black, free space=light gray
-    free_mask = grid > 128  # Free space
-    obstacle_mask = grid <= 128  # Obstacles
-    
-    rgb_grid[free_mask] = [240, 240, 240]  # Light gray for free space
-    rgb_grid[obstacle_mask] = [0, 0, 0]    # Black for obstacles
-    
-    # Show the actual world
-    ax.imshow(rgb_grid, origin='lower', extent=[0, width, 0, height])
-    
-    # Plot 270-degree corners as blue squares
-    if corner_list:
-        corner_x = [c[0] + 0.5 for c in corner_list]  # Center in cell
-        corner_y = [c[1] + 0.5 for c in corner_list]
-        ax.scatter(corner_x, corner_y, c='blue', s=150, marker='s', 
-                  label=f'270° Corners ({len(corner_list)})', alpha=0.9, 
-                  edgecolors='white', linewidths=2, zorder=5)
-        
-        # Print corner positions
-        print(f"270° Corners detected at: {corner_list}")
-    
-    # Plot RRT tree in green
-    if nodes and len(nodes) > 1:
-        tree_edges_x = []
-        tree_edges_y = []
-        
-        for i, node in enumerate(nodes[1:], 1):  # Skip start node
-            if node.parent:
-                tree_edges_x.extend([node.parent.x, node.x, None])
-                tree_edges_y.extend([node.parent.y, node.y, None])
-        
-        # Draw all tree edges at once
-        ax.plot(tree_edges_x, tree_edges_y, 'g-', alpha=0.4, linewidth=1, 
-               label=f'RRT Tree ({len(nodes)} nodes)', zorder=2)
-        
-        # Extract and highlight the final path in red
-        if nodes and nodes[-1].parent:  # If goal was reached
-            path_nodes = []
-            current = nodes[-1]
-            while current:
-                path_nodes.append(current)
-                current = current.parent
-            path_nodes.reverse()
-            
-            # Draw final path in red with thick line
-            path_x = [node.x for node in path_nodes]
-            path_y = [node.y for node in path_nodes]
-            ax.plot(path_x, path_y, 'r-', linewidth=4, alpha=0.9, 
-                   label=f'Final Path ({len(path_nodes)} nodes)', zorder=4)
-            
-            print(f"Path found with {len(path_nodes)} waypoints")
-    
-    # Plot start as large green circle
-    ax.scatter(start[0] + 0.5, start[1] + 0.5, c='lime', s=400, marker='o', 
-              label='Start', edgecolors='darkgreen', linewidths=3, zorder=6)
-    
-    # Plot goal as large red star
-    ax.scatter(goal[0] + 0.5, goal[1] + 0.5, c='red', s=500, marker='*', 
-              label='Goal', edgecolors='darkred', linewidths=3, zorder=6)
-    
-    # Formatting
-    ax.set_xlim(0, width)
-    ax.set_ylim(0, height)
-    ax.set_aspect('equal')
-    ax.legend(loc='upper left', bbox_to_anchor=(0, 1), fontsize=12)
-    
-    # Calculate some statistics
-    free_cells = np.sum(grid > 128)
-    total_cells = grid.size
-    free_ratio = free_cells / total_cells
-    
-    title = f'270° Corner RRT on Actual World\n'
-    title += f'Start({start[0]}, {start[1]}) → Goal({goal[0]}, {goal[1]})\n'
-    title += f'World: {width}×{height}, Free Space: {free_ratio:.1%}, '
-    title += f'Corners: {len(corner_list) if corner_list else 0}'
-    
-    ax.set_title(title, fontsize=14, fontweight='bold', pad=20)
-    ax.set_xlabel('X coordinate', fontsize=12)
-    ax.set_ylabel('Y coordinate', fontsize=12)
-    
-    # Add a subtle grid
-    ax.grid(True, alpha=0.2, linewidth=0.5)
-    
-    # Save the figure with high resolution
-    plt.tight_layout()
-    plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white')
-    plt.close()
-    print(f"High-resolution visualization saved to: {save_path}")
-    
-    # Also save world analysis
-    analysis_path = save_path.replace('.png', '_analysis.txt')
-    with open(analysis_path, 'w') as f:
-        f.write(f"World Analysis\n")
-        f.write(f"=============\n")
-        f.write(f"Grid size: {width} × {height}\n")
-        f.write(f"Total cells: {total_cells}\n")
-        f.write(f"Free cells: {free_cells} ({free_ratio:.1%})\n")
-        f.write(f"Obstacle cells: {total_cells - free_cells} ({1-free_ratio:.1%})\n")
-        f.write(f"270° corners found: {len(corner_list) if corner_list else 0}\n")
-        if corner_list:
-            f.write(f"Corner positions: {corner_list}\n")
-        f.write(f"\nPath Planning Results\n")
-        f.write(f"====================\n")
-        f.write(f"Start position: {start}\n")
-        f.write(f"Goal position: {goal}\n")
-        if nodes:
-            path_length_val = path_length(nodes[-1])
-            f.write(f"Nodes explored: {len(nodes)}\n")
-            f.write(f"Path length: {path_length_val:.2f}\n")
-            f.write(f"Success: Yes\n")
-        else:
-            f.write(f"Success: No\n")
-    
-    print(f"Analysis saved to: {analysis_path}")
-
-def run_single_visualization_example(shelf_dir=".", shelf_index=0, pair_index=0):
-    """
-    Run a single example and save visualization
-    """
-    print("=" * 60)
-    print("270 CORNER RRT - SINGLE VISUALIZATION EXAMPLE")
-    print("=" * 60)
-    
-    # Load worlds
-    worlds, shelf_names = load_shelf_worlds(shelf_dir, num_worlds=min(10, shelf_index + 1))
-    
-    if len(worlds) <= shelf_index:
-        print(f"ERROR: Not enough worlds loaded. Requested index {shelf_index}, but only {len(worlds)} available.")
-        return
-    
-    # Select the specific world
-    grid = worlds[shelf_index]
-    shelf_name = shelf_names[shelf_index]
-    
-    print(f"Using Shelf {shelf_index + 1}: {shelf_name}")
-    print(f"Grid size: {grid.shape}")
-    
-    # Create walkable cells and find corners
-    walkable_cells = create_walkable_cells(grid)
-    corners_270 = find_270_corners(grid)
-    print(f"Found {len(walkable_cells)} walkable cells")
-    print(f"Found {len(corners_270)} 270-degree corners")
-    
-    # Generate start-goal pairs
-    pairs = generate_start_goal_pairs(grid, num_pairs=max(5, pair_index + 1))
-    
-    if len(pairs) <= pair_index:
-        print(f"ERROR: Not enough pairs generated. Requested index {pair_index}, but only {len(pairs)} available.")
-        return
-    
-    start, goal = pairs[pair_index]
-    print(f"Using Pair {pair_index + 1}: Start{start} -> Goal{goal}")
-    
-    # Run 270 Corner RRT
-    print("Running 270 Corner RRT...")
-    start_time = time.time()
-    nodes, node_count = enhanced_rrt(grid, start, goal, corners_270, walkable_cells, 
-                                   step_size=2, max_iter=5000)
-    end_time = time.time()
-    
-    execution_time = end_time - start_time
-    
-    if nodes:
-        path_len = path_length(nodes[-1])
-        print(f"SUCCESS: {node_count} nodes, {path_len:.2f} path length, {execution_time:.2f}s")
-        
-        # Create visualization
-        viz_filename = f"corner_rrt_shelf_{shelf_index}_pair_{pair_index}.png"
-        visualize_rrt_result(grid, nodes, start, goal, corners_270, viz_filename)
-        
-    else:
-        print(f"FAILED: No path found, {execution_time:.2f}s")
-        # Still create visualization to show the environment
-        viz_filename = f"corner_rrt_shelf_{shelf_index}_pair_{pair_index}_FAILED.png"
-        visualize_rrt_result(grid, nodes, start, goal, corners_270, viz_filename)
-
-def debug_failed_cases(shelf_dir="."):
-    """
-    Debug the specific failed cases
-    """
-    print("=" * 60)
-    print("DEBUGGING FAILED CASES")
-    print("=" * 60)
-    
-    # Load the specific worlds that failed
-    failed_cases = [
-        {"shelf_pattern": "16000-16999_dungeon_2210_4", "pairs": [(18, 40, 55, 8), (13, 29, 82, 66)]},
-        {"shelf_pattern": "16000-16999_dungeon_2691_3", "pairs": [(60, 11, 25, 68)]}
-    ]
-    
-    worlds, shelf_names = load_shelf_worlds(shelf_dir, num_worlds=60)
-    
-    for case in failed_cases:
-        # Find the matching shelf
-        matching_indices = [i for i, name in enumerate(shelf_names) 
-                          if case["shelf_pattern"] in name]
-        
-        if not matching_indices:
-            print(f"Could not find shelf matching pattern: {case['shelf_pattern']}")
-            continue
-            
-        shelf_idx = matching_indices[0]
-        grid = worlds[shelf_idx]
-        shelf_name = shelf_names[shelf_idx]
-        
-        print(f"\nAnalyzing failed shelf: {shelf_name}")
-        print(f"Grid size: {grid.shape}")
-        
-        # Analyze the grid
-        walkable_cells = create_walkable_cells(grid)
-        corners_270 = find_270_corners(grid)
-        
-        free_ratio = len(walkable_cells) / (grid.shape[0] * grid.shape[1])
-        print(f"Walkable cells: {len(walkable_cells)} ({free_ratio:.1%})")
-        print(f"270-degree corners: {len(corners_270)}")
-        
-        # Test each failed pair
-        for start_x, start_y, goal_x, goal_y in case["pairs"]:
-            start = (start_x, start_y)
-            goal = (goal_x, goal_y)
-            print(f"\nTesting failed pair: Start{start} -> Goal{goal}")
-            
-            # Check if start and goal are in walkable cells
-            if start not in walkable_cells:
-                print(f"  ERROR: Start position {start} is not walkable!")
-            if goal not in walkable_cells:
-                print(f"  ERROR: Goal position {goal} is not walkable!")
-            
-            # Check direct distance
-            distance = math.sqrt((goal_x - start_x)**2 + (goal_y - start_y)**2)
-            print(f"  Direct distance: {distance:.2f}")
-            
-            # Try to find path with more iterations
-            print("  Attempting with increased iterations...")
-            start_time = time.time()
-            nodes, node_count = enhanced_rrt(grid, start, goal, corners_270, walkable_cells, 
-                                           step_size=1, max_iter=10000)  # Smaller steps, more iterations
-            end_time = time.time()
-            
-            if nodes:
-                path_len = path_length(nodes[-1])
-                print(f"  SUCCESS with increased iterations: {node_count} nodes, {path_len:.2f} path length, {end_time - start_time:.2f}s")
-            else:
-                print(f"  Still FAILED even with increased iterations ({end_time - start_time:.2f}s)")
-            
-            # Create visualization of this failed case
-            viz_filename = f"debug_failed_{shelf_name}_start_{start_x}_{start_y}_goal_{goal_x}_{goal_y}.png"
-            visualize_rrt_result(grid, nodes if nodes else [], start, goal, corners_270, viz_filename)
-'''
 
 if __name__ == "__main__":
     import sys
-    '''
-    if len(sys.argv) > 1 and sys.argv[1] == "create_dungeon":
-        # Create standalone dungeon_4251 visualization
-        shelf_directory = sys.argv[2] if len(sys.argv) > 2 else "../divided_world_1"
-        create_dungeon_4251_visualization(shelf_directory, "dungeon_4251_world.png")
-    elif len(sys.argv) > 1 and sys.argv[1] == "debug":
-        # Debug failed cases
-        shelf_directory = sys.argv[2] if len(sys.argv) > 2 else "../divided_world_1"
-        debug_failed_cases(shelf_directory)
-    elif len(sys.argv) >= 3:
-        # Run single visualization
-        shelf_directory = sys.argv[1] if sys.argv[1] != "." else "../divided_world_1"
-        shelf_index = int(sys.argv[2]) if sys.argv[2].isdigit() else 0
-        pair_index = int(sys.argv[3]) if len(sys.argv) > 3 and sys.argv[3].isdigit() else 0
-        run_single_visualization_example(shelf_directory, shelf_index, pair_index)
-    else:
-        # Default: run full experiment
-        shelf_directory = sys.argv[1] if len(sys.argv) > 1 else "../divided_world_1"
-        results = run_experiment(shelf_directory)
-    '''
     shelf_directory = sys.argv[1] if len(sys.argv) > 1 else "../divided_world_1"
     results = run_experiment(shelf_directory)
