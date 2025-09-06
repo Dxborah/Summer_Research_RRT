@@ -15,8 +15,8 @@ pheromone_grid = None
 grid = None
 walkable_cells = None
 corner_list = None
-#Deborah's version
 
+#Deborah's version
 def find_270_corners(grid):
     """
     Find actual 270-degree corners: outward-pointing corners of black obstacles.

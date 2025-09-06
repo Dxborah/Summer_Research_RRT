@@ -211,7 +211,7 @@ goal = (95, 75)
 if grid[start[1], start[0]] == 0 or grid[goal[1], goal[0]] == 0:
     raise ValueError("Start or goal is inside an obstacle.")
 
-nodes = rrt(grid, start, goal, step_size=1, max_iter=5000)
+nodes = rrt(grid, start, goal, step_size=2, max_iter=5000)
 
 #visualize
 if nodes:

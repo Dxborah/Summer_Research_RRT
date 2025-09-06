@@ -2,7 +2,7 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 
-image = Image.open("../IMG_8864.png").convert("L")
+image = Image.open("../divided_world_1/15000-15999/dungeon_757.png").convert("L")
 grid = np.array(image) // 255 
 
 print(f"Image shape: {grid.shape}")
